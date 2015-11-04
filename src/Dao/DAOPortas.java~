@@ -98,11 +98,8 @@ public class DAOPortas {
 				ps.setString(2, tipoVlan.get(i).toString());
 				ps.setString(3, velocidade.get(i).toString());
 				ps.setString(4, estadoPorta.get(i).toString());
-				if (tipo_conector.isEmpty()) {
-					ps.setString(5, "");	
-				}else{
-					ps.setString(5, tipo_conector.get(i).toString());	
-				}
+				//ps.setString(5, "" + tipo_conector.get(i).toString());
+				ps.setString(5, "");
 				ps.setInt(6, id.get(i));
 				ps.setString(7, oid.get(i).toString());
 				ps.setString(8, valor.get(i).toString());
@@ -117,4 +114,3 @@ public class DAOPortas {
 
 	}
 }
-
