@@ -20,10 +20,10 @@ import br.ufrn.service.Consulta;
 
 
 /** Esta classe tem por finalidade persistir as configurações das portas.
-*
-* @author silas
-*
-*/
+ *
+ * @author silas
+ *
+ */
 
 public class DAOPortas {
 	private Connection conexao;
@@ -100,17 +100,43 @@ public class DAOPortas {
 			try{
 				PreparedStatement ps = conexao.prepareStatement(sql);
 				ps.setLong(1, tombo);
-				ps.setString(2, tipoVlan.get(i).toString());
-				ps.setString(3, velocidade.get(i).toString());
-				ps.setString(4, estadoPorta.get(i).toString());
+				if(tipoVlan.isEmpty()){
+					ps.setString(2, "");
+				}else{
+					ps.setString(2, tipoVlan.get(i).toString());	
+				}
+				if (velocidade.isEmpty()){
+					ps.setString(3, "");
+				}else{
+					ps.setString(3, velocidade.get(i).toString());	
+				}
+				if (estadoPorta.isEmpty()){
+					ps.setString(4, "");
+				}else{
+					ps.setString(4, estadoPorta.get(i).toString());	
+				}
 				if (tipo_conector.isEmpty()) {
 					ps.setString(5, "");	
 				}else{
 					ps.setString(5, tipo_conector.get(i).toString());	
 				}
-				ps.setInt(6, id.get(i));
-				ps.setString(7, oid.get(i).toString());
-				ps.setString(8, valor.get(i).toString());
+				if (id.isEmpty()){
+					ps.setString(6, "");
+				}else{
+					ps.setInt(6, id.get(i));	
+				}
+				if (oid.isEmpty()){
+					ps.setString(7, "");
+				}else{
+					ps.setString(7, oid.get(i).toString());	
+				}
+				if (valor.isEmpty()){
+					ps.setString(8, "");
+				}else{
+					ps.setString(8, valor.get(i).toString());	
+				}
+
+
 				ps.execute();
 				ps.close();
 			}catch(SQLException erro){

@@ -46,8 +46,10 @@ public class Porta3COMService implements Interfaces{
 		for (TableEvent event : events) {
 			//Varrerá linha por linha da lista e retornará determinandas colunas.
 			for (VariableBinding vb : event.getColumns()) {
+				if (vb.getVariable().toString().contains("Ethernet")) {
 				//Adiciona o resultado no arraylist
 				strList.add(vb.getVariable().toString());
+				}
 			}
 		}
 		return strList;
