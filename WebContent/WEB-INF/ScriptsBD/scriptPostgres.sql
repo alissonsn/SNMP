@@ -4,19 +4,19 @@ DROP TABLE interface;
 DROP TABLE switch;
 
 CREATE TABLE switch(
-id_switch int UNIQUE,
+id_switch varchar(50) UNIQUE,
 PRIMARY KEY (id_switch));
 
 
 CREATE TABLE interface
 (
 id_porta serial UNIQUE,
-id_switch int,
+id_switch varchar(50),
 tipo_vlan varchar(50),
 velocidade varchar(50),
 estado varchar(50),
 tipo_conector varchar(50),
-id_interface_snmp int,
+id_interface_snmp varchar(50),
 oid_interface_snmp varchar(50),
 valor_interface varchar(50),
 PRIMARY KEY (id_porta, id_switch),
@@ -36,7 +36,3 @@ modelo varchar(50),
 classeInterface varchar(50),
 classeVlan varchar(50),
 PRIMARY KEY (enterprise));
-
-
-
-
