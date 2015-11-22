@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ufrn.conexao.ConnectionFactory;
-import br.ufrn.service.Registro;
+import br.ufrn.model.Registro;
 
 
 

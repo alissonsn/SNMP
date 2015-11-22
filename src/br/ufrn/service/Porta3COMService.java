@@ -46,10 +46,9 @@ public class Porta3COMService implements Interfaces{
 		for (TableEvent event : events) {
 			//Varrerá linha por linha da lista e retornará determinandas colunas.
 			for (VariableBinding vb : event.getColumns()) {
-				if (vb.getVariable().toString().contains("Ethernet")) {
 				//Adiciona o resultado no arraylist
 				strList.add(vb.getVariable().toString());
-				}
+				
 			}
 		}
 		return strList;
@@ -80,8 +79,10 @@ public class Porta3COMService implements Interfaces{
 		for (TableEvent event : events) {
 			//Varrerá linha por linha da lista e retornará determinandas colunas.
 			for (VariableBinding vb : event.getColumns()) {
+				
 				//Adiciona o o OID no arraylist
 				strList.add(vb.getOid().toString());
+				
 			}
 		}
 		return strList;
@@ -112,8 +113,10 @@ public class Porta3COMService implements Interfaces{
 		for (TableEvent event : events) {
 			//Varrerá linha por linha da lista e retornará determinandas colunas.
 			for (VariableBinding vb : event.getColumns()) {
+				
 				//Adiciona o ID no arraylist
 				strList.add(vb.getOid().get(11));
+				
 			}
 		}
 		return strList;

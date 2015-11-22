@@ -3,10 +3,21 @@ package br.ufrn.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+
+
+
+
+
+
 
 import br.ufrn.conexao.ConnectionFactory;
-import br.ufrn.service.Registro;
+import br.ufrn.model.Registro;
 
 
 /** Esta classe tem por finalidade fazer o registro inicial dos modelos de ativos.
@@ -42,5 +53,33 @@ public class DAORegistro {
 			throw new RuntimeException(erro);
 
 		}
+	}
+
+	public List<Registro> getAll(){
+		
+		List<Registro> listModelos = new ArrayList<Registro>();
+		ResultSet rs;
+		String sql = "select enterprise, modelo, classeinterface, classevlan from modelo;";
+		java.sql.Statement st;
+		try {
+			st = conexao.createStatement();
+			rs = st.executeQuery(sql);
+			while(rs.next()){
+				Registro registro = new Registro();
+				registro.setEnterprise(rs.getString("enterprise"));
+				registro.setModelo(rs.getString("modelo"));
+				registro.setClassePorta(rs.getString("classeinterface"));
+				registro.setClasseVlan(rs.getString("classeVlan"));
+				listModelos.add(registro);
+
+				//System.out.println(modelo);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return listModelos;
+
 	}
 }
