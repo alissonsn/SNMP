@@ -120,8 +120,8 @@ public class DAOPortas {
 				if (tipo_conector.isEmpty()) {
 					ps.setString(5, "");
 				}else{
-					ps.setString(5, "");
-					//ps.setString(5, tipo_conector.get(i).toString());
+					//ps.setString(5, "");
+					ps.setString(5, tipo_conector.get(i).toString());
 				}
 				if (id.isEmpty()){
 					ps.setString(6, "");
@@ -138,8 +138,8 @@ public class DAOPortas {
 				if (valor.isEmpty()){
 					ps.setString(8, "");
 				}else{
-					ps.setString(8, "");
-					//ps.setString(8, valor.get(i).toString());
+					//ps.setString(8, "");
+					ps.setString(8, valor.get(i).toString());
 				}
 
 
