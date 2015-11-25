@@ -13,7 +13,9 @@ import org.snmp4j.UserTarget;
 
 import br.ufrn.conexao.ConnectionFactory;
 import br.ufrn.interfaces.InterfacesVlans;
+import br.ufrn.model.Porta;
 import br.ufrn.model.Switch;
+import br.ufrn.model.Vlan;
 import br.ufrn.service.Consulta;
 
 
@@ -29,10 +31,12 @@ public class DAOVlan {
 	private Connection conexao;
 	//Vlan vlan;
 	DAOConsulta ConsultaDAO;
+	Porta interfaces;
 	public DAOVlan(){
 		this.conexao = new ConnectionFactory().getConnection();
 		try {
 			ConsultaDAO = new DAOConsulta();
+			interfaces = new Porta();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -149,10 +153,8 @@ public class DAOVlan {
 		return id_porta;
 	}
 
-	public List<Switch> getAll(){
-		List<Switch> listVlan = new ArrayList<Switch>();
-		ArrayList<Object> vlan = new ArrayList<Object>();
-		Switch comutador = new Switch();
+	public List<Vlan> getAll(){
+		ArrayList<Vlan> vlan = new ArrayList<Vlan>();
 		ResultSet rs;
 		String sql = "select distinct vlan from vlan;";
 		java.sql.Statement st;
@@ -160,22 +162,26 @@ public class DAOVlan {
 			st = conexao.createStatement();
 			rs = st.executeQuery(sql);
 			while(rs.next()){
-				vlan.add(rs.getString("vlan"));
-				comutador.setVlan(vlan);
-				listVlan.add(comutador);
+				Vlan objVlan = new Vlan();
+				//interfaces = new Interfaces();
+				objVlan.setVlan(rs.getString("vlan"));
+				vlan.add(objVlan);
+				//interfaces.setVlan(vlan);
+				//listVlan.add(comutador);
 				//System.out.println(modelo);
 			}
+			
+			//listVlan.add(interfaces);
+			rs.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return listVlan;
+		return vlan;
 	}
 
-	public List<Switch> getVlan(String id_switch){
-		List<Switch> listVlan = new ArrayList<Switch>();
-		ArrayList<Object> vlan = new ArrayList<Object>();
-		Switch comutador = new Switch();
+	public List<Vlan> getVlan(String id_switch){
+		ArrayList<Vlan> vlan = new ArrayList<Vlan>();
 		ResultSet rs;
 		String sql = "select distinct vlan from vlan INNER JOIN interface on vlan.id_porta = interface.id_porta and interface.id_switch = '" + id_switch + "';";
 		java.sql.Statement st;
@@ -183,24 +189,30 @@ public class DAOVlan {
 			st = conexao.createStatement();
 			rs = st.executeQuery(sql);
 			while(rs.next()){
-
-				vlan.add(rs.getString("vlan"));
-				comutador.setVlan(vlan);
-				listVlan.add(comutador);
+				Vlan objVlan = new Vlan();
+				//interfaces = new Interfaces();
+				objVlan.setVlan(rs.getString("vlan"));
+				vlan.add(objVlan);
+				//interfaces.setVlan(vlan);
+				//listVlan.add(comutador);
 				//System.out.println(modelo);
 			}
+			
+			//listVlan.add(interfaces);
+			rs.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return listVlan;
+		return vlan;
 	}
 
 
+
 	public List<Switch> getSwitchVlan(String vlan){
-		List<Switch> listVlan = new ArrayList<Switch>();
-		ArrayList<Object> id_switch = new ArrayList<Object>();
-		Switch comutador = new Switch();
+		List<Switch> listSwitches= new ArrayList<Switch>();
+		//ArrayList<Object> id_switch = new ArrayList<Object>();
+		
 		ResultSet rs;
 		String sql = "select distinct id_switch from vlan INNER JOIN interface on vlan.id_porta = interface.id_porta and vlan.vlan = '" + vlan + "';";
 		java.sql.Statement st;
@@ -208,17 +220,20 @@ public class DAOVlan {
 			st = conexao.createStatement();
 			rs = st.executeQuery(sql);
 			while(rs.next()){
-				id_switch.add(Integer.parseInt(rs.getString("id_switch")));
-				comutador.setId_switch(id_switch);
-				listVlan.add(comutador);
+				Switch comutador = new Switch();
+				//id_switch.add(Integer.parseInt(rs.getString("id_switch")));
+				comutador.setId_switch(rs.getString("id_switch"));
+				listSwitches.add(comutador);
+				//listVlan.add(comutador);
 
 				//System.out.println(modelo);
 			}
+			rs.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return listVlan;
+		return listSwitches;
 	}
 
 }

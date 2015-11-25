@@ -14,6 +14,7 @@ id_switch int,
 tipo_vlan varchar(50),
 velocidade varchar(50),
 estado varchar(50),
+ligada varchar(50),
 tipo_conector varchar(50),
 id_interface_snmp int,
 oid_interface_snmp varchar(50),
@@ -35,3 +36,4 @@ modelo varchar(50),
 classeInterface varchar(50),
 classeVlan varchar(50),
 PRIMARY KEY (enterprise));
+

@@ -12,8 +12,9 @@ import org.snmp4j.UserTarget;
 import br.ufrn.conexao.ConnectionFactory;
 import br.ufrn.interfaces.Interfaces;
 import br.ufrn.model.Switch;
+import br.ufrn.model.Vlan;
+import br.ufrn.model.Porta;
 import br.ufrn.service.Consulta;
-
 
 
 /** Esta classe tem por finalidade persistir as configurações das portas.
@@ -26,12 +27,14 @@ public class DAOPortas {
 	private Connection conexao;
 	String enterprise;
 	DAOConsulta ConsultaDAO;
+	Porta interfaces;
 
 
 	public DAOPortas() throws ClassNotFoundException{
 		this.conexao = new ConnectionFactory().getConnection();
 		ConsultaDAO = new DAOConsulta();
 		enterprise = "";
+		interfaces = new Porta();
 	}
 
 	/** Metodo persiste o switch no banco
@@ -89,13 +92,14 @@ public class DAOPortas {
 		ArrayList<Integer> id = Ports.id(snmp, target);
 		ArrayList<Object> velocidade = Ports.Velocidade(snmp, target);
 		ArrayList<Object> estadoPorta = Ports.Estado_porta(snmp, target);
+		ArrayList<Object> ligada = Ports.Porta_ligada(snmp, target);
 		ArrayList<Object> tipo_conector = Ports.Tipo_conector(snmp, target);
 		ArrayList<Object> tipoVlan = Ports.TypeVlan(snmp, target);
 
 		//varrendo o arrylist das portas
 		for (int i = 0; i < valor.size(); i++) {
 			//Fazendo uma string com o comando para inserir os dados na tabela interface
-			String sql = "INSERT INTO interface (id_switch, tipo_vlan, velocidade, estado, tipo_conector, id_interface_snmp, oid_interface_snmp, valor_interface) VALUES (?,?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO interface (id_switch, tipo_vlan, velocidade, estado, ligada, tipo_conector, id_interface_snmp, oid_interface_snmp, valor_interface) VALUES (?,?,?,?,?,?,?,?,?)";
 			try{
 				PreparedStatement ps = conexao.prepareStatement(sql);
 				ps.setLong(1, tombo);
@@ -117,29 +121,37 @@ public class DAOPortas {
 					//ps.setString(4, "");
 					ps.setString(4, estadoPorta.get(i).toString());
 				}
-				if (tipo_conector.isEmpty()) {
+				if (ligada.isEmpty()) {
 					ps.setString(5, "");
 				}else{
 					//ps.setString(5, "");
-					ps.setString(5, tipo_conector.get(i).toString());
+					ps.setString(5, ligada.get(i).toString());
+					
 				}
-				if (id.isEmpty()){
+				if (tipo_conector.isEmpty()){
 					ps.setString(6, "");
 				}else{
-					ps.setInt(6, id.get(i));
+					ps.setString(6, tipo_conector.get(i).toString());
+					
 					//ps.setString(6, "");
 				}
-				if (oid.isEmpty()){
+				if (id.isEmpty()){
 					ps.setString(7, "");
 				}else{
 					//ps.setString(7, "");
-					ps.setString(7, oid.get(i).toString());
+					ps.setInt(7, id.get(i));
+					
 				}
-				if (valor.isEmpty()){
+				if (oid.isEmpty()){
 					ps.setString(8, "");
 				}else{
 					//ps.setString(8, "");
-					ps.setString(8, valor.get(i).toString());
+					ps.setString(8, oid.get(i).toString());
+					
+				}if (valor.isEmpty()){
+					ps.setString(9, "");
+				}else{
+					ps.setString(9, valor.get(i).toString());
 				}
 
 
@@ -153,16 +165,17 @@ public class DAOPortas {
 
 	public ArrayList<Switch> pegarTudo(String id_switch){
 		ArrayList<Switch> config = new ArrayList<Switch>();
-		ArrayList<Object> id_interface = new ArrayList<Object>();
-		ArrayList<Object> oid_interface = new ArrayList<Object>();
-		ArrayList<Object> estado = new ArrayList<Object>();
-		ArrayList<Object> conector = new ArrayList<Object>();
-		ArrayList<Object> id_porta = new ArrayList<Object>();
-		ArrayList<Object> velocidade = new ArrayList<Object>();
-		ArrayList<Object> valor_interface = new ArrayList<Object>();
-		ArrayList<Object> tipoVlan = new ArrayList<Object>();
-		ArrayList<Object> vlan = new ArrayList<Object>();
-		ArrayList<Object> list_id_switch = new ArrayList<Object>();
+		Object id_interface = new Object();
+		Object oid_interface = new Object();
+		Object estado = new Object();
+		Object conector = new Object();
+		Object id_porta = new Object();
+		Object velocidade = new Object();
+		Object valor_interface = new Object();
+		Object tipoVlan = new Object();
+		ArrayList<Vlan> vlan = new ArrayList<Vlan>();
+		ArrayList<Porta> interfacess = new ArrayList<Porta>();
+		Object encaminhador = new Object();
 		Switch comutador = new Switch();
 
 		ResultSet rs;
@@ -170,35 +183,49 @@ public class DAOPortas {
 		try{
 			java.sql.Statement st = conexao.createStatement();
 			rs = st.executeQuery(sql);
+			Object id_porta_anterior = -1;
 			while(rs.next()){
+					Vlan objVlan = new Vlan();
+					id_interface = (rs.getString("id_interface_snmp"));
+					if(id_interface.equals(id_porta_anterior)){
+						objVlan.setVlan(rs.getString("vlan"));
+						vlan.add(objVlan);
+						//interfaces.setVlan(vlan);
+						//comutador.setInterfaces(interfaces);
+					}else{
+						vlan = new ArrayList<Vlan>();
+						interfaces = new Porta();
+						oid_interface = (rs.getString("oid_interface_snmp"));
+						estado = (rs.getString("estado"));
+						conector = (rs.getString("tipo_conector"));
+						id_porta = (rs.getString("id_porta"));
+						velocidade = (rs.getString("velocidade"));
+						valor_interface = (rs.getString("valor_interface"));
+						tipoVlan = (rs.getString("tipo_vlan"));
+						objVlan.setVlan(rs.getString("vlan"));
+						vlan.add(objVlan);
+						encaminhador = (rs.getString("id_switch"));
 
-				id_interface.add(rs.getString("id_interface_snmp"));
-				oid_interface.add(rs.getString("oid_interface_snmp"));
-				estado.add(rs.getString("estado"));
-				conector.add(rs.getString("tipo_conector"));
-				id_porta.add(rs.getString("id_porta"));
-				velocidade.add(rs.getString("velocidade"));
-				valor_interface.add(rs.getString("valor_interface"));
-				tipoVlan.add(rs.getString("tipo_vlan"));
-				vlan.add(rs.getString("vlan"));
+						interfaces.setId(id_interface);
+						interfaces.setOid(oid_interface);
+						interfaces.setEstadoPorta(estado);
+						interfaces.setTipo_conector(conector);
+						interfaces.setId_porta(id_porta);
+						interfaces.setVelocidade(velocidade);
+						interfaces.setValor(valor_interface);
+						interfaces.setTipoVlan(tipoVlan);
+						interfaces.setVlan(vlan);
+						interfacess.add(interfaces);
+						//interfaces.setVlan(vlan);
 
-
-				list_id_switch.add(Integer.parseInt(rs.getString("id_switch")));
-
-
-				comutador.setId(id_interface);
-				comutador.setOid(oid_interface);
-				comutador.setEstadoPorta(estado);
-				comutador.setTipo_conector(conector);
-				comutador.setId_porta(id_porta);
-				comutador.setVelocidade(velocidade);
-				comutador.setPorta(valor_interface);
-				comutador.setId_switch(list_id_switch);
-				comutador.setTipoVlan(tipoVlan);
-				comutador.setVlan(vlan);
-				config.add(comutador);
-				//vlans = rs.getString("vlan");
+						comutador.setInterfaces(interfacess);
+						comutador.setId_switch(encaminhador);
+						id_porta_anterior = id_interface;
+				}
+					
 			}
+			
+			config.add(comutador);
 			rs.close();
 		}catch(SQLException erro){
 			throw new RuntimeException(erro);
@@ -206,23 +233,28 @@ public class DAOPortas {
 		return config;
 	}
 
-	public ArrayList<Switch> StatusPorta(String id_porta, String id_switch){
-		ArrayList<Switch> status = new ArrayList<Switch>();
-		ArrayList<Object> velocidade = new ArrayList<Object>();
-		ArrayList<Object> estado = new ArrayList<Object>();
-		Switch comutador = new Switch();
+	public ArrayList<Porta> StatusPorta(String id_porta, String id_switch){
+		ArrayList<Porta> status = new ArrayList<Porta>();
+		Object estado = new Object();
+		Object velocidade = new Object();
+		Object ligada = new Object();
 		ResultSet rs;
-		String sql = "select estado, velocidade from interface where id_switch = " + id_switch + "" + " and id_porta =" + id_porta + ";";
+		String sql = "select estado, velocidade, ligada from interface where id_switch = " + id_switch + "" + " and id_porta =" + id_porta + ";";
 		try{
 			java.sql.Statement st = conexao.createStatement();
 			rs = st.executeQuery(sql);
 			while(rs.next()){
-				estado.add(rs.getString("estado"));
-				velocidade.add(rs.getString("velocidade"));
-				comutador.setEstadoPorta(estado);
-				comutador.setVelocidade(velocidade);
-				status.add(comutador);
+				Porta porta = new Porta();
+				
+				estado = rs.getString("estado");
+				velocidade = rs.getString("velocidade");
+				ligada = rs.getString("ligada");
+				porta.setEstadoPorta(estado);
+				porta.setVelocidade(velocidade);
+				porta.setLigada(ligada);
+				status.add(porta);
 			}
+			
 			rs.close();
 		}catch(SQLException erro){
 			throw new RuntimeException(erro);
@@ -230,20 +262,24 @@ public class DAOPortas {
 		return status;
 	}
 
-	public ArrayList<Switch> PortasLivres(String id_switch, String vlan){
-		ArrayList<Switch> list_portasLivres = new ArrayList<Switch>();
-		ArrayList<Object> valorInterface = new ArrayList<Object>();
-		Switch comutador = new Switch();
+	public ArrayList<Porta> PortasLivres(String id_switch, String vlan){
+		ArrayList<Porta> list_portasLivres = new ArrayList<Porta>();
+		Object Interface = new Object();
 		ResultSet rs;
 		String sql = "select valor_interface from vlan INNER JOIN interface on vlan.id_porta = interface.id_porta and interface.id_switch ='" + id_switch + "'" + " and vlan.vlan='" + vlan + "'" + " and interface.estado ='Down';";
 		try{
 			java.sql.Statement st = conexao.createStatement();
 			rs = st.executeQuery(sql);
 			while(rs.next()){
-				valorInterface.add(rs.getString("valor_interface"));
-				comutador.setPorta(valorInterface);
-				list_portasLivres.add(comutador);
+				Porta interfaces = new Porta();
+				Interface = rs.getString("valor_interface");
+				
+				//valorInterface.add(rs.getString("valor_interface"));
+				interfaces.setValor(Interface);
+				list_portasLivres.add(interfaces);	
+				//list_portasLivres.add(comutador);
 			}
+			
 			rs.close();
 		}catch(SQLException erro){
 			throw new RuntimeException(erro);

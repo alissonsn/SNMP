@@ -142,7 +142,7 @@ public class PortaH3CService implements Interfaces{
 		ArrayList<Object> strList = new ArrayList<Object>();
 		//Vetor de OIDs que será feito o metodo snmpwalk para consulta.
 		OID[] interfaces = new OID[] {
-				new OID(".1.3.6.1.2.1.2.2.1.7")
+				new OID(".1.3.6.1.2.1.2.2.1.8")
 		};
 		//Classe que fornece funções de utilidade para recuperar dados SNMP tabulares.
 		TableUtils tUtils = new TableUtils(snmp,new DefaultPDUFactory());
@@ -168,6 +168,40 @@ public class PortaH3CService implements Interfaces{
 		return strList;
 	}
 
+	@Override
+	public ArrayList<Object> Porta_ligada(Snmp snmp, UserTarget target) {
+		//Arraylist que receberá o resultado da consulta
+		ArrayList<Object> strList = new ArrayList<Object>();
+		//Vetor de OIDs que será feito o metodo snmpwalk para consulta.
+		OID[] interfaces = new OID[] {
+				new OID(".1.3.6.1.2.1.2.2.1.7")
+		};
+		//Classe que fornece funções de utilidade para recuperar dados SNMP tabulares.
+		TableUtils tUtils = new TableUtils(snmp,new DefaultPDUFactory());
+		//Obtém dados SNMP tabulares sincrono de uma ou mais tabelas.
+		//Os dados são retornados linha por linha como uma lista de instâncias TableEvent.
+		//Cada instância representa uma linha (ou uma condição de erro).
+		//Além do agente alvo, os OIDs dos objetos colunar tem que ser especificado para quais instâncias devem ser recuperados.
+		//Com um índice de limite inferior e um índice limite superior.
+		List<TableEvent> events = tUtils.getTable(target, interfaces ,null,null);
+		for (TableEvent event : events) {
+			//Varrerá linha por linha da lista e retornará determinandas colunas.
+			for (VariableBinding vb : event.getColumns()) {
+				//Compara que tipo de inteiro ele retorna
+				if (vb.getVariable().toString().equals("1")) {
+					//Adiciona o up no arraylist
+					strList.add("No Shutdown");
+				}else if (vb.getVariable().toString().equals("2")) {
+					//Adiciona o Down no arraylist
+					strList.add("Shutdown");
+				}
+			}
+		}
+		return strList;
+	}
+
+	
+	
 	/** Metodo que consulta a OID das portas.
 	 *
 	 * @param Snmp, metodo de envio e recebimento de PDUs SNMP.

@@ -3,7 +3,6 @@ package br.ufrn.recurso;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -17,7 +16,9 @@ import org.snmp4j.UserTarget;
 
 import br.ufrn.dao.DAOPortas;
 import br.ufrn.dao.DAOVlan;
+import br.ufrn.model.Porta;
 import br.ufrn.model.Switch;
+import br.ufrn.model.Vlan;
 import br.ufrn.service.Consulta;
 import br.ufrn.service.Credenciais;
 
@@ -72,16 +73,15 @@ public class ConsultaRecurso {
 	@GET
 	@Path("/vlans")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public List<Switch> verVlans(){
+	public List<Vlan> verVlans(){
 		return daovlan.getAll();
-
 	}
 
 	//Pega as vlans de um determinado switch
 	@GET
 	@Path("/vlans/{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public List<Switch> verTodasVlans(@PathParam("id") String id_switch){
+	public List<Vlan> verTodasVlans(@PathParam("id") String id_switch){
 		return daovlan.getVlan(id_switch);
 	}
 
@@ -107,7 +107,7 @@ public class ConsultaRecurso {
 	@GET
 	@Path("/porta/{id_porta}/{id_switch}/status")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public ArrayList<Switch> StatusPorta(
+	public ArrayList<Porta> StatusPorta(
 			@PathParam("id_porta") String id_porta,
 			@PathParam("id_switch") String id_switch)
 			{
@@ -118,7 +118,7 @@ public class ConsultaRecurso {
 		@GET
 		@Path("/porta/{vlan}/{id_switch}/equiv")
 		@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-		public ArrayList<Switch> PortaLivre(
+		public ArrayList<Porta> PortaLivre(
 				@PathParam("id_switch") String id_switch,
 				@PathParam("vlan") String vlan)
 				{

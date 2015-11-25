@@ -62,4 +62,5 @@ public interface Interfaces {
 	 * @return ArrayList<Object>, Contendo o estado da porta se ela está up ou down, Exemplo: De uma porta Down.
 	 */
 	public ArrayList<Object> Estado_porta(Snmp snmp, UserTarget target);
+	ArrayList<Object> Porta_ligada(Snmp snmp, UserTarget target);
 }
