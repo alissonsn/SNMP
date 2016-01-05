@@ -39,7 +39,6 @@ public class ConsultaRecurso {
 			daoportas = new DAOPortas();
 			daovlan = new DAOVlan();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		snmp = new Snmp();
@@ -71,12 +70,12 @@ public class ConsultaRecurso {
 			daoportas.adicionarInterface_h(snmp, target, consulta, tombo);
 			daovlan.adicionarVlan_h(snmp, target, consulta, tombo);
 		}
-			
-		
+
+
 		return "OK";
 	}
 
-	
+
 
 	//Todas as vlans da universidade
 	@GET
@@ -84,33 +83,6 @@ public class ConsultaRecurso {
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public List<Vlan> verVlan(){
 		return daovlan.getAll();
-	}
-
-
-	//Todas configurações do switch
-	@GET
-	@Path("/switch/verificar/{id_switch}/{ip}/{usuario}/{senha}")
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public List<Switch> verificarSwitch(
-			@FormParam("id_switch") String id_switch,
-			@FormParam("ip") String ip,
-			@FormParam("usuario") String usuario,
-			@FormParam("senha") String senha
-
-			){
-
-
-		snmp = credenciais.snmp();
-		target = credenciais.target(ip, usuario);
-		if (snmp == null || target == null){
-			return null;
-		}
-		credenciais.credenciais(usuario, senha);
-
-		//daoportas.comparar(snmp, target, consulta, id_switch);
-		//daoportas.pegarTudo(id_switch);
-
-		return daoportas.comparar(snmp, target, consulta, id_switch);
 	}
 
 
@@ -129,6 +101,245 @@ public class ConsultaRecurso {
 	public List<Switch> verSwitchVlan(@PathParam("id") String vlan){
 		return daovlan.getSwitchVlan(vlan);
 	}
+
+	//Retorna OK se o switch está atualizado senão retorna MODIFICADO
+	@GET
+	@Path("/switchs/{id}")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public String compara(
+			@PathParam("id") String id_switch){
+
+		ArrayList<Switch> config = new ArrayList<Switch>();
+		String bool = "";
+		config.addAll(daoportas.pegarTudo(id_switch));
+		config.addAll(daoportas.pegarTudo_h(id_switch));
+
+		ArrayList<Porta> portas = config.get(0).getInterfaces();
+		//ArrayList<Porta> portas2 = config.get(1).getInterfaces();
+
+		//ArrayList<Vlan> vlans = config.get(0).getInterfaces().get(0).getVlan();
+		//ArrayList<Vlan> vlans2 = config.get(1).getInterfaces().get(0).getVlan();
+
+
+		//Varre o vetor de portas atuais do switch
+		for (int i = 0; i < portas.size(); i++) {
+			ArrayList<Vlan> vlans = config.get(0).getInterfaces().get(i).getVlan();
+			//ArrayList<Vlan> vlans2 = config.get(1).getInterfaces().get(i).getVlan();
+			//Varre o vetor de vlans atuais de cada porta do switch
+
+			//Varre o vetor de portas anterior do switch
+			for (int j = 0; j < vlans.size(); j++) {
+				//Varre o vetor de vlans anterior de cada porta do switch
+				//for (int l = 0; l < vlans2.size(); l++) {
+					//Compara se o ip da configuração atual é igual da anterior
+					if (config.get(0).getIp().equals(config.get(1).getIp()) &&
+							//Compara se o id do switch da configuração atual é igual da anterior
+							config.get(0).getId_switch().equals(config.get(1).getId_switch()) &&
+							//Compara se o id da porta do switch da configuração atual é igual da anterior
+							config.get(0).getInterfaces().get(0).getId_porta().equals(config.get(1).getInterfaces().get(0).getId_porta()) &&
+							//Compara se o nome da porta da configuração atual é igual da anterior
+							config.get(0).getInterfaces().get(0).getValor().equals(config.get(1).getInterfaces().get(0).getValor()) &&
+							//Compara se o oid de consulta a esta porta da configuração atual é igual da anterior
+							config.get(0).getInterfaces().get(0).getOid().equals(config.get(1).getInterfaces().get(0).getOid()) &&
+							//Compara se o id snmp para consulta da porta da configuração atual é igual da anterior
+							config.get(0).getInterfaces().get(0).getId().equals(config.get(1).getInterfaces().get(0).getId()) &&
+							//Compara se a velocidade da porta da configuração atual é igual da anterior
+							config.get(0).getInterfaces().get(0).getVelocidade().equals(config.get(1).getInterfaces().get(0).getVelocidade()) &&
+							//Compara se o estado da porta da configuração atual é igual da anterior
+							config.get(0).getInterfaces().get(0).getEstadoPorta().equals(config.get(1).getInterfaces().get(0).getEstadoPorta()) &&
+							//Compara se a porta ligada da configuração atual é igual da anterior
+							config.get(0).getInterfaces().get(0).getLigada().equals(config.get(1).getInterfaces().get(0).getLigada()) &&
+							//Compara se o tipo do conector da configuração atual é igual da anterior
+							config.get(0).getInterfaces().get(0).getTipo_conector().equals(config.get(1).getInterfaces().get(0).getTipo_conector()) &&
+							config.get(0).getInterfaces().get(i).getVlan().size() == config.get(1).getInterfaces().get(i).getVlan().size() &&
+							config.get(0).getInterfaces().get(i).getVlan().get(j).equals(config.get(1).getInterfaces().get(i).getVlan().get(j)))
+							
+							//Compara se o tipo da vlan da configuração atual é igual da anterior
+							//config.get(0).getInterfaces().get(0).getVlan().get(0).equals(config.get(1).getInterfaces().get(0).getVlan().get(0)
+							
+
+							//(config.get(0).getInterfaces().get(i).getVlan().size() == config.get(1).getInterfaces().get(i).getVlan().size()
+							//config.get(0).getInterfaces().get(i).getVlan().get(k).equals(config.get(1).getInterfaces().get(l)
+									{
+					
+						/*if (config.get(0).getInterfaces().get(0).getVlan().size() != config.get(1).getInterfaces().get(0).getVlan().size() &&
+							config.get(0).getInterfaces().get(0).getVlan().get(j).equals(config.get(1).getInterfaces().get(0).getVlan().get(l)))
+					{*/
+						//Compara se o numero de vlans da configuração atual é igual da anterior
+							
+							
+
+						//}
+						bool = "Atualizado";
+					}else{
+						bool = "Modificado";
+						break;
+					}
+					vlans.clear();
+
+				}
+			//}
+			
+			
+		}
+
+		return  bool;
+	}
+
+
+	//Retorna OK se o switch está atualizado senão retorna MODIFICADO
+	@GET
+	@Path("/switchs/teste/{id}")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public String compa(
+			@PathParam("id") String id_switch){
+
+		ArrayList<Switch> config = new ArrayList<Switch>();
+		String bool = "";
+		config.addAll(daoportas.pegarTudo(id_switch));
+		config.addAll(daoportas.pegarTudo_h(id_switch));
+
+		ArrayList<Porta> portas = config.get(0).getInterfaces();
+		//ArrayList<Porta> portas2 = config.get(1).getInterfaces();
+
+		//ArrayList<Vlan> vlans = config.get(0).getInterfaces().get(0).getVlan();
+		//ArrayList<Vlan> vlans2 = config.get(1).getInterfaces().get(0).getVlan();
+
+
+		//Varre o vetor de portas atuais do switch
+		for (int i = 0; i < portas.size(); i++) {
+			ArrayList<Vlan> vlans = config.get(0).getInterfaces().get(i).getVlan();
+			//Varre o vetor de vlans atuais de cada porta do switch
+			for (int k = 0; k < vlans.size(); k++) {
+
+				//Varre o vetor de portas anterior do switch
+				//for (int j = 0; j < portas2.size(); j++) {
+				//Varre o vetor de vlans anterior de cada porta do switch
+				//for (int l = 0; l < vlans2.size(); l++) {
+				//Compara se o ip da configuração atual é igual da anterior
+				if (config.get(0).getInterfaces().get(0).getVlan().get(k).equals(config.get(1).getInterfaces().get(0).getVlan().get(k)
+						//config.get(0).getInterfaces().get(i).getVlan().get(k).equals(config.get(1).getInterfaces().get(l)
+						)){
+					//Compara se o numero de vlans da configuração atual é igual da anterior
+					//if (config.get(0).getInterfaces().get(i).getVlan().size() == config.get(1).getInterfaces().get(i).getVlan().size() &&
+					//config.get(0).getInterfaces().get(i).getVlan().get(k).equals(config.get(1).getInterfaces().get(i).getVlan().get(l))){
+					bool = "Atualizado";
+					//}
+				}else{
+					bool = "Modificado"; 
+					//}
+				}
+				
+				//}
+			}
+			vlans.clear();
+		}
+
+		return  bool;
+	}
+
+
+
+
+
+	//Retorna todas as configura��es do switch da tablea historico
+	@GET
+	@Path("/switch/di/{id}")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public List<Switch> compar(
+			@PathParam("id") String id_switch){
+
+		ArrayList<Switch> config = new ArrayList<Switch>();
+		config.addAll(daoportas.pegarTudo(id_switch));
+		config.addAll(daoportas.pegarTudo_h(id_switch));
+
+
+
+		return  config;
+	}
+
+	@GET
+	@Path("/switch/dif/{id}")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public Porta compar1(
+			@PathParam("id") String id_switch){
+
+		ArrayList<Switch> config = new ArrayList<Switch>();
+		config.addAll(daoportas.pegarTudo(id_switch));
+		config.addAll(daoportas.pegarTudo_h(id_switch));
+
+		return  config.get(0).getInterfaces().get(1);
+	}
+
+	//Retorna a porta especificada do switch
+	@GET
+	@Path("/switch/diff/{id}/{id_porta}")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public Porta compar2(
+			@PathParam("id") String id_switch,
+			@PathParam("id_porta") int id_porta)
+	{
+
+		ArrayList<Switch> config = new ArrayList<Switch>();
+		config.addAll(daoportas.pegarTudo(id_switch));
+		config.addAll(daoportas.pegarTudo_h(id_switch));
+
+
+
+		return  config.get(0).getInterfaces().get(id_porta-1);
+	}
+
+	//Retorna as vlans da porta primeira porta do switch
+	@GET
+	@Path("/switch/vlans/atual/{id}")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public ArrayList<Vlan> compar3(
+			@PathParam("id") String id_switch){
+
+		ArrayList<Switch> config = new ArrayList<Switch>();
+		config.addAll(daoportas.pegarTudo(id_switch));
+		config.addAll(daoportas.pegarTudo_h(id_switch));
+
+
+
+		return  config.get(0).getInterfaces().get(0).getVlan();
+	}
+	
+	//Retorna as vlans da porta primeira porta do switch
+		@GET
+		@Path("/switch/vlans/anterior/{id}")
+		@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+		public ArrayList<Vlan> compar7(
+				@PathParam("id") String id_switch){
+
+			ArrayList<Switch> config = new ArrayList<Switch>();
+			config.addAll(daoportas.pegarTudo(id_switch));
+			config.addAll(daoportas.pegarTudo_h(id_switch));
+
+
+			return  config.get(1).getInterfaces().get(0).getVlan();
+		}
+	
+	
+	//Retorna as vlans da porta primeira porta do switch
+	@GET
+	@Path("/switch/diffss/{id}/{id_vlan}")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public Vlan compar4(
+			@PathParam("id") String id_switch,
+			@PathParam("id_vlan") int id_vlan
+			){
+
+		ArrayList<Switch> config = new ArrayList<Switch>();
+		config.addAll(daoportas.pegarTudo(id_switch));
+		config.addAll(daoportas.pegarTudo_h(id_switch));
+
+
+
+		return  config.get(0).getInterfaces().get(0).getVlan().get(id_vlan);
+	}
+
+
 
 	//Retorna todas as configura��es do switch
 	@GET

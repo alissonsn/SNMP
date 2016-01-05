@@ -14,9 +14,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Switch {
 
-	Object id_switch;
-	Object ip;
-	ArrayList<Porta> interfaces;
+	private Object id_switch;
+	private Object ip;
+	private ArrayList<Porta> interfaces;
 
 	public Switch(){
 		id_switch =  new Object();
@@ -33,7 +33,7 @@ public class Switch {
 		this.interfaces = interfaces;
 	}
 
-	
+
 
 	public Object getIp() {
 		return ip;
@@ -55,5 +55,21 @@ public class Switch {
 	}
 
 
-	
+    @Override
+	    public boolean equals(Object obj){
+    		
+	        boolean isEqual = false;
+	        if (this.getClass() == obj.getClass())
+	        {
+	        	Switch comutador = new Switch();
+	            if (
+	            		(comutador.getId_switch()).equals(this.getId_switch()) &&
+	            		(comutador.getIp()).equals(this.getIp()) &&
+	                    (comutador.getInterfaces().equals(this.getInterfaces())))
+	            {
+	                isEqual = true;
+	            }
+	        }
+	        return isEqual;
+	    }
 }

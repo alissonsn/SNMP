@@ -10,16 +10,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 public class Porta {
-	Object id_porta;
-	Object valor;
-	Object oid;
-	Object id;
-	Object velocidade;
-	Object estadoPorta;
-	Object ligada;
-	Object tipo_conector;
-	Object tipoVlan;
-	ArrayList<Vlan> vlan;
+	private Object id_porta;
+	private Object valor;
+	private Object oid;
+	private Object id;
+	private Object velocidade;
+	private Object estadoPorta;
+	private Object ligada;
+	private Object tipo_conector;
+	private Object tipoVlan;
+	private ArrayList<Vlan> vlan;
 
 
 	public Porta(){

@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 public class Vlan {
-	Object vlan;
+	private Object vlan;
 	
 	public Vlan(){
 		vlan = new Object();

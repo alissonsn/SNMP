@@ -14,10 +14,10 @@ import org.snmp4j.util.TableUtils;
 import br.ufrn.interfaces.Interfaces;
 
 /** Classe para objetos Porta3Com, ele pegará todas as configurações de ativos do modelo 3com.
-*
-* @author silas
-*
-*/
+ *
+ * @author silas
+ *
+ */
 public class Porta3COMService implements Interfaces{
 
 
@@ -42,13 +42,15 @@ public class Porta3COMService implements Interfaces{
 		//Cada instância representa uma linha (ou uma condição de erro).
 		//Além do agente alvo, os OIDs dos objetos colunar tem que ser especificado para quais instâncias devem ser recuperados.
 		//Com um índice de limite inferior e um índice limite superior.
-		List<TableEvent> events = tUtils.getTable(target, interfaces ,null,null);
+		List<TableEvent> events=tUtils.getTable(target, interfaces , null, null);
 		for (TableEvent event : events) {
 			//Varrerá linha por linha da lista e retornará determinandas colunas.
 			for (VariableBinding vb : event.getColumns()) {
-				//Adiciona o resultado no arraylist
-				strList.add(vb.getVariable().toString());
-				
+				//Compara que tipo de string se for uma porta ele adiciona no arraylist
+				if (vb.getVariable().toString().contains("Ethernet")) {
+					//Adiciona o resulta no arraylist
+					strList.add(vb.getVariable().toString());
+				}
 			}
 		}
 		return strList;
@@ -75,14 +77,15 @@ public class Porta3COMService implements Interfaces{
 		//Cada instância representa uma linha (ou uma condição de erro).
 		//Além do agente alvo, os OIDs dos objetos colunar tem que ser especificado para quais instâncias devem ser recuperados.
 		//Com um índice de limite inferior e um índice limite superior.
-		List<TableEvent> events=tUtils.getTable(target, interfaces ,null,null);
+		List<TableEvent> events=tUtils.getTable(target, interfaces , null, null);
 		for (TableEvent event : events) {
 			//Varrerá linha por linha da lista e retornará determinandas colunas.
 			for (VariableBinding vb : event.getColumns()) {
-				
-				//Adiciona o o OID no arraylist
-				strList.add(vb.getOid().toString());
-				
+				//Compara que tipo de string se for uma porta ele adiciona no arraylist
+				if (vb.getVariable().toString().contains("Ethernet")) {
+					//Adiciona o resulta no arraylist
+					strList.add(vb.getOid().toString());
+				}
 			}
 		}
 		return strList;
@@ -113,10 +116,11 @@ public class Porta3COMService implements Interfaces{
 		for (TableEvent event : events) {
 			//Varrerá linha por linha da lista e retornará determinandas colunas.
 			for (VariableBinding vb : event.getColumns()) {
-				
-				//Adiciona o ID no arraylist
-				strList.add(vb.getOid().get(11));
-				
+				//Compara que tipo de string se for uma porta ele adiciona no arraylist
+				if (vb.getVariable().toString().contains("Ethernet")) {
+					//Adiciona o resulta no arraylist
+					strList.add(vb.getOid().get(11));
+				}
 			}
 		}
 		return strList;
@@ -132,6 +136,8 @@ public class Porta3COMService implements Interfaces{
 	public ArrayList<Object> TypeVlan(Snmp snmp, UserTarget target) {
 		//Arraylist que receberá o resultado da consulta
 		ArrayList<Object> strList = new ArrayList<Object>();
+		ArrayList<Integer> strList2 = new ArrayList<Integer>();
+		strList2 = id(snmp, target);
 		//Vetor de OIDs que será feito o metodo snmpwalk para consulta.
 		OID[] interfaces = new OID[] {
 				new OID(".1.3.6.1.4.1.43.45.1.2.23.1.1.1.1.5")
@@ -147,19 +153,28 @@ public class Porta3COMService implements Interfaces{
 		for (TableEvent event : events) {
 			//Varrerá linha por linha da lista e retornará determinandas colunas.
 			for (VariableBinding vb : event.getColumns()) {
-				//Compara que tipo de inteiro ele retorna
-				if (vb.getVariable().toString().equals("1")) {
-					//Adiciona o trunk no arraylist
-					strList.add("trunk");
-				}else if (vb.getVariable().toString().equals("2")) {
-					//Adiciona o access no arraylist
-					strList.add("access");
-				}else if (vb.getVariable().toString().equals("3")) {
-					//Adiciona o hybrid no arraylist
-					strList.add("hybrid");
-				}else{
-					//Adiciona o unknown no arraylist
-					strList.add("unknown");
+				for (int i = 0; i < strList2.size(); i++) {
+					int resultado = vb.getOid().get(16);
+
+					if (strList2.get(i).equals(resultado)) {
+						//strList.add(resultado);
+						//System.out.println(" Resultado: " + resultado);
+
+						//Compara que tipo de inteiro ele retorna
+						if (vb.getVariable().toString().equals("1")) {
+							//Adiciona o trunk no arraylist
+							strList.add("trunk");
+						}else if (vb.getVariable().toString().equals("2")) {
+							//Adiciona o access no arraylist
+							strList.add("access");
+						}else if (vb.getVariable().toString().equals("3")) {
+							//Adiciona o hybrid no arraylist
+							strList.add("hybrid");
+						}else{
+							//Adiciona o unknown no arraylist
+							strList.add("unknown");
+						}
+					}
 				}
 			}
 		}
@@ -176,6 +191,8 @@ public class Porta3COMService implements Interfaces{
 	public ArrayList<Object> Velocidade(Snmp snmp, UserTarget target) {
 		//Arraylist que receberá o resultado da consulta
 		ArrayList<Object> strList = new ArrayList<Object>();
+		ArrayList<Integer> strList2 = new ArrayList<Integer>();
+		strList2 = id(snmp, target);
 		//Vetor de OIDs que será feito o metodo snmpwalk para consulta.
 		OID[] interfaces = new OID[] {
 				new OID(".1.3.6.1.2.1.31.1.1.1.15")
@@ -191,8 +208,17 @@ public class Porta3COMService implements Interfaces{
 		for (TableEvent event : events) {
 			//Varrerá linha por linha da lista e retornará determinandas colunas.
 			for (VariableBinding vb : event.getColumns()) {
+
+				for (int i = 0; i < strList2.size(); i++) {
+					int resultado = vb.getOid().get(11);
+					if (strList2.get(i).equals(resultado)) {
+						strList.add(vb.getVariable().toString());
+						//System.out.println(" Resultado: " + resultado);
+					}
+				}
+
 				//Adiciona o resultado no arraylist
-				strList.add(vb.getVariable().toString());
+				//strList.add(vb.getVariable().toString());
 			}
 		}
 		return strList;
@@ -208,6 +234,8 @@ public class Porta3COMService implements Interfaces{
 	public ArrayList<Object> Tipo_conector(Snmp snmp, UserTarget target) {
 		//Arraylist que receberá o resultado da consulta
 		ArrayList<Object> strList = new ArrayList<Object>();
+		ArrayList<Integer> strList2 = new ArrayList<Integer>();
+		strList2 = id(snmp, target);
 		//Vetor de OIDs que será feito o metodo snmpwalk para consulta.
 		OID[] interfaces = new OID[] {
 				new OID(".1.3.6.1.2.1.26.2.2.1.2")
@@ -223,15 +251,23 @@ public class Porta3COMService implements Interfaces{
 		for (TableEvent event : events) {
 			//Varrerá linha por linha da lista e retornará determinandas colunas.
 			for (VariableBinding vb : event.getColumns()) {
-				//Compara que tipo de inteiro ele retorna
-				if (vb.getVariable().toString().equals("1")) {
-					//Adiciona o Fibra Otica no arraylist
-					strList.add("Fibra Otica");
-				}else if (vb.getVariable().toString().equals("2")) {
-					//Adiciona o RJ45 no arraylist
-					strList.add("RJ45");
-				}else {
-					strList.add("");
+
+				for (int i = 0; i < strList2.size(); i++) {
+					int resultado = vb.getOid().get(11);
+
+					if (strList2.get(i).equals(resultado)) {
+
+						//Compara que tipo de inteiro ele retorna
+						if (vb.getVariable().toString().equals("1")) {
+							//Adiciona o Fibra Otica no arraylist
+							strList.add("Fibra Otica");
+						}else if (vb.getVariable().toString().equals("2")) {
+							//Adiciona o RJ45 no arraylist
+							strList.add("RJ45");
+						}else {
+							strList.add("");
+						}
+					}
 				}
 			}
 		}
@@ -249,6 +285,8 @@ public class Porta3COMService implements Interfaces{
 	public ArrayList<Object> Estado_porta(Snmp snmp, UserTarget target) {
 		//Arraylist que receberá o resultado da consulta
 		ArrayList<Object> strList = new ArrayList<Object>();
+		ArrayList<Integer> strList2 = new ArrayList<Integer>();
+		strList2 = id(snmp, target);
 		//Vetor de OIDs que será feito o metodo snmpwalk para consulta.
 		OID[] interfaces = new OID[] {
 				new OID(".1.3.6.1.2.1.2.2.1.8")
@@ -264,13 +302,22 @@ public class Porta3COMService implements Interfaces{
 		for (TableEvent event : events) {
 			//Varrerá linha por linha da lista e retornará determinandas colunas.
 			for (VariableBinding vb : event.getColumns()) {
-				//Compara que tipo de inteiro ele retorna
-				if (vb.getVariable().toString().equals("1")) {
-					//Adiciona o up no arraylist
-					strList.add("Up");
-				}else if (vb.getVariable().toString().equals("2")) {
-					//Adiciona o Down no arraylist
-					strList.add("Down");
+
+
+				for (int i = 0; i < strList2.size(); i++) {
+					int resultado = vb.getOid().get(10);
+
+					if (strList2.get(i).equals(resultado)) {
+
+						//Compara que tipo de inteiro ele retorna
+						if (vb.getVariable().toString().equals("1")) {
+							//Adiciona o up no arraylist
+							strList.add("Up");
+						}else if (vb.getVariable().toString().equals("2")) {
+							//Adiciona o Down no arraylist
+							strList.add("Down");
+						}
+					}
 				}
 			}
 		}
@@ -280,34 +327,43 @@ public class Porta3COMService implements Interfaces{
 	@Override
 	public ArrayList<Object> Porta_ligada(Snmp snmp, UserTarget target) {
 		//Arraylist que receberá o resultado da consulta
-				ArrayList<Object> strList = new ArrayList<Object>();
-				//Vetor de OIDs que será feito o metodo snmpwalk para consulta.
-				OID[] interfaces = new OID[] {
-						new OID(".1.3.6.1.2.1.2.2.1.7")
-				};
-				//Classe que fornece funções de utilidade para recuperar dados SNMP tabulares.
-				TableUtils tUtils = new TableUtils(snmp,new DefaultPDUFactory());
-				//Obtém dados SNMP tabulares sincrono de uma ou mais tabelas.
-				//Os dados são retornados linha por linha como uma lista de instâncias TableEvent.
-				//Cada instância representa uma linha (ou uma condição de erro).
-				//Além do agente alvo, os OIDs dos objetos colunar tem que ser especificado para quais instâncias devem ser recuperados.
-				//Com um índice de limite inferior e um índice limite superior.
-				List<TableEvent> events = tUtils.getTable(target, interfaces ,null,null);
-				for (TableEvent event : events) {
-					//Varrerá linha por linha da lista e retornará determinandas colunas.
-					for (VariableBinding vb : event.getColumns()) {
-						//Compara que tipo de inteiro ele retorna
+		ArrayList<Object> strList = new ArrayList<Object>();
+		ArrayList<Integer> strList2 = new ArrayList<Integer>();
+		strList2 = id(snmp, target);
+		//Vetor de OIDs que será feito o metodo snmpwalk para consulta.
+		OID[] interfaces = new OID[] {
+				new OID(".1.3.6.1.2.1.2.2.1.7")
+		};
+		//Classe que fornece funções de utilidade para recuperar dados SNMP tabulares.
+		TableUtils tUtils = new TableUtils(snmp,new DefaultPDUFactory());
+		//Obtém dados SNMP tabulares sincrono de uma ou mais tabelas.
+		//Os dados são retornados linha por linha como uma lista de instâncias TableEvent.
+		//Cada instância representa uma linha (ou uma condição de erro).
+		//Além do agente alvo, os OIDs dos objetos colunar tem que ser especificado para quais instâncias devem ser recuperados.
+		//Com um índice de limite inferior e um índice limite superior.
+		List<TableEvent> events = tUtils.getTable(target, interfaces ,null,null);
+		for (TableEvent event : events) {
+			//Varrerá linha por linha da lista e retornará determinandas colunas.
+			for (VariableBinding vb : event.getColumns()) {
+
+				for (int i = 0; i < strList2.size(); i++) {
+					int resultado = vb.getOid().get(10);
+					if (strList2.get(i).equals(resultado)) {
+						//strList.add(vb.getVariable().toString());
+						//System.out.println(vb.getVariable().toString());
+						//System.out.println(" Resultado: " + resultado);
+
 						if (vb.getVariable().toString().equals("1")) {
-							//Adiciona o up no arraylist
 							strList.add("No Shutdown");
 						}else if (vb.getVariable().toString().equals("2")) {
-							//Adiciona o Down no arraylist
 							strList.add("Shutdown");
 						}
 					}
 				}
-				return strList;
 			}
+		}
+		return strList;
+	}
 
 }
 

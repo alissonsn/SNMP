@@ -38,7 +38,6 @@ public class DAOVlan {
 			ConsultaDAO = new DAOConsulta();
 			interfaces = new Porta();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -59,13 +58,10 @@ public class DAOVlan {
 			//Instanciando a classe correta para determinado modelo
 			Vlan = (InterfacesVlans) Class.forName(classe).newInstance();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		//ID da porta
@@ -146,13 +142,10 @@ public class DAOVlan {
 			//Instanciando a classe correta para determinado modelo
 			Vlan = (InterfacesVlans) Class.forName(classe).newInstance();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		//ID da porta
@@ -262,7 +255,7 @@ public class DAOVlan {
 	public List<Vlan> getAll(){
 		ArrayList<Vlan> vlan = new ArrayList<Vlan>();
 		ResultSet rs;
-		String sql = "select distinct vlan from vlan_h;";
+		String sql = "select distinct vlan from vlan;";
 		java.sql.Statement st;
 		try {
 			st = conexao.createStatement();
@@ -280,7 +273,6 @@ public class DAOVlan {
 			//listVlan.add(interfaces);
 			rs.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return vlan;
@@ -289,7 +281,7 @@ public class DAOVlan {
 	public List<Vlan> getVlan(String id_switch){
 		ArrayList<Vlan> vlan = new ArrayList<Vlan>();
 		ResultSet rs;
-		String sql = "select distinct vlan from vlan_h INNER JOIN interface_h on vlan_h.id_porta = interface_h.id_porta and interface_h.id_switch = '" + id_switch + "';";
+		String sql = "select distinct vlan from vlan INNER JOIN interface on vlan.id_porta = interface.id_porta and interface.id_switch = '" + id_switch + "';";
 		java.sql.Statement st;
 		try {
 			st = conexao.createStatement();
@@ -307,7 +299,6 @@ public class DAOVlan {
 			//listVlan.add(interfaces);
 			rs.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return vlan;
@@ -320,7 +311,7 @@ public class DAOVlan {
 		//ArrayList<Object> id_switch = new ArrayList<Object>();
 		
 		ResultSet rs;
-		String sql = "select distinct id_switch from vlan_h INNER JOIN interface_h on vlan_h.id_porta = interface_h.id_porta and vlan_h.vlan = '" + vlan + "';";
+		String sql = "select distinct id_switch from vlan INNER JOIN interface on vlan.id_porta = interface.id_porta and vlan.vlan = '" + vlan + "';";
 		java.sql.Statement st;
 		try {
 			st = conexao.createStatement();
@@ -336,7 +327,6 @@ public class DAOVlan {
 			}
 			rs.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return listSwitches;

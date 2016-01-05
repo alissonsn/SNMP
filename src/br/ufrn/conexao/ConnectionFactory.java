@@ -17,7 +17,7 @@ public class ConnectionFactory {
 	//private String senha = "root";
 	//String driver = "org.gjt.mm.mysql.Driver";
 
-	private String url = "jdbc:postgresql://localhost/snmp";
+	private String url = "jdbc:postgresql://localhost/snmp2";
 	private String usuario = "postgres";
 	private String senha = "postgres";
 	String driver = "org.postgresql.Driver";
@@ -33,7 +33,6 @@ public class ConnectionFactory {
 			try {
 				Class.forName(driver);
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			conexao = DriverManager.getConnection(url, usuario, senha);

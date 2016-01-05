@@ -24,7 +24,6 @@ public class RegistroRecurso {
 		try {
 			daoRegistro = new DAORegistro();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
