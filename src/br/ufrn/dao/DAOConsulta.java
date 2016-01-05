@@ -39,7 +39,7 @@ public class DAOConsulta {
 			java.sql.Statement st = conexao.createStatement();
 			rs = st.executeQuery(sql);
 			while(rs.next()){
-				modelo = rs.getString("classeInterface");
+				modelo = rs.getString("classeinterface");
 				//System.out.println(modelo);
 			}
 			rs.close();

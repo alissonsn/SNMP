@@ -15,12 +15,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Switch {
 
 	Object id_switch;
+	Object ip;
 	ArrayList<Porta> interfaces;
 
 	public Switch(){
 		id_switch =  new Object();
 		interfaces = new ArrayList<Porta>();
-		
 	}
 
 
@@ -31,6 +31,17 @@ public class Switch {
 
 	public void setInterfaces(ArrayList<Porta> interfaces) {
 		this.interfaces = interfaces;
+	}
+
+	
+
+	public Object getIp() {
+		return ip;
+	}
+
+
+	public void setIp(Object ip) {
+		this.ip = ip;
 	}
 
 

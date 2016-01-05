@@ -61,21 +61,58 @@ public class ConsultaRecurso {
 			return "ERRO";
 		}
 		credenciais.credenciais(usuario, senha);
-		int tombo2 = Integer.parseInt(tombo);
 
-		daoportas.adicionarswitch(tombo2);
-		daoportas.adicionarInterface(snmp, target, consulta, tombo2);
-		daovlan.adicionarVlan(snmp, target, consulta, tombo2);
+		if (daoportas.VerificarSwitch(tombo).isEmpty()) {
+			daoportas.adicionarswitch(tombo,ip);
+			daoportas.adicionarInterface(snmp, target, consulta, tombo);
+			daovlan.adicionarVlan(snmp, target, consulta, tombo);	
+		}else{
+			daoportas.adicionarswitch_h(tombo,ip);
+			daoportas.adicionarInterface_h(snmp, target, consulta, tombo);
+			daovlan.adicionarVlan_h(snmp, target, consulta, tombo);
+		}
+			
+		
 		return "OK";
 	}
 
+	
+
 	//Todas as vlans da universidade
 	@GET
-	@Path("/vlans")
+	@Path("/vlans/")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public List<Vlan> verVlans(){
+	public List<Vlan> verVlan(){
 		return daovlan.getAll();
 	}
+
+
+	//Todas configurações do switch
+	@GET
+	@Path("/switch/verificar/{id_switch}/{ip}/{usuario}/{senha}")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public List<Switch> verificarSwitch(
+			@FormParam("id_switch") String id_switch,
+			@FormParam("ip") String ip,
+			@FormParam("usuario") String usuario,
+			@FormParam("senha") String senha
+
+			){
+
+
+		snmp = credenciais.snmp();
+		target = credenciais.target(ip, usuario);
+		if (snmp == null || target == null){
+			return null;
+		}
+		credenciais.credenciais(usuario, senha);
+
+		//daoportas.comparar(snmp, target, consulta, id_switch);
+		//daoportas.pegarTudo(id_switch);
+
+		return daoportas.comparar(snmp, target, consulta, id_switch);
+	}
+
 
 	//Pega as vlans de um determinado switch
 	@GET
@@ -92,7 +129,6 @@ public class ConsultaRecurso {
 	public List<Switch> verSwitchVlan(@PathParam("id") String vlan){
 		return daovlan.getSwitchVlan(vlan);
 	}
-
 
 	//Retorna todas as configura��es do switch
 	@GET
@@ -112,18 +148,18 @@ public class ConsultaRecurso {
 			@PathParam("id_switch") String id_switch)
 			{
 		return  daoportas.StatusPorta(id_porta, id_switch);
-	}
+			}
 
 	//Retorna todas as portas livres de determinada vlan
-		@GET
-		@Path("/porta/{vlan}/{id_switch}/equiv")
-		@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-		public ArrayList<Porta> PortaLivre(
-				@PathParam("id_switch") String id_switch,
-				@PathParam("vlan") String vlan)
-				{
-			return  daoportas.PortasLivres(id_switch, vlan);
-		}
+	@GET
+	@Path("/porta/{vlan}/{id_switch}/equiv")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public ArrayList<Porta> PortaLivre(
+			@PathParam("id_switch") String id_switch,
+			@PathParam("vlan") String vlan)
+			{
+		return  daoportas.PortasLivres(id_switch, vlan);
+			}
 
 
 }
