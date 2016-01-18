@@ -17,7 +17,7 @@ public class ConnectionFactory {
 	//private String senha = "root";
 	//String driver = "org.gjt.mm.mysql.Driver";
 
-	private String url = "jdbc:postgresql://localhost/snmp2";
+	private String url = "jdbc:postgresql://localhost/teste4";
 	private String usuario = "postgres";
 	private String senha = "postgres";
 	String driver = "org.postgresql.Driver";

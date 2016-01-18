@@ -1,9 +1,12 @@
 package br.ufrn.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import org.snmp4j.Snmp;
@@ -45,7 +48,7 @@ public class DAOPortas {
 
 	public void adicionarswitch(String id_switch, String ip){
 		//Fazendo uma string com o comando para inserir os dados na tabela interface
-		String sql = "INSERT INTO switch (id_switch, ip) VALUES (?,?)";
+		String sql = "INSERT INTO switch (serialtombo, ip) VALUES (?,?)";
 		try{
 			PreparedStatement ps = conexao.prepareStatement(sql);
 			ps.setString(1, id_switch);
@@ -66,7 +69,7 @@ public class DAOPortas {
 
 	public void adicionarswitch_h(String id_switch, String ip){
 		//Fazendo uma string com o comando para inserir os dados na tabela interface
-		String sql = "INSERT INTO switch_h (id_switch, ip) VALUES (?,?)";
+		String sql = "INSERT INTO switch_h (serialtombo, ip) VALUES (?,?)";
 		try{
 			PreparedStatement ps = conexao.prepareStatement(sql);
 			ps.setString(1, id_switch);
@@ -88,7 +91,8 @@ public class DAOPortas {
 	 */
 
 	public void adicionarInterface(Snmp snmp, UserTarget target, Consulta consulta, String tombo){
-
+		ArrayList<Integer> id_sw  = VerificarSwitch(tombo);
+		
 		//Variavel para saber apartir de determinado ativo qual classe a ser instanciada
 		String classe = ConsultaDAO.SelecionarClasseInterface(consulta.Modelo(snmp, target));
 		Interfaces Ports = null;
@@ -116,11 +120,12 @@ public class DAOPortas {
 
 		//varrendo o arrylist das portas
 		for (int i = 0; i < valor.size(); i++) {
+			String data2 = "10/01/2016";
 			//Fazendo uma string com o comando para inserir os dados na tabela interface
 			String sql = "INSERT INTO interface (id_switch, tipo_vlan, velocidade, estado, ligada, tipo_conector, id_interface_snmp, oid_interface_snmp, valor_interface) VALUES (?,?,?,?,?,?,?,?,?)";
 			try{
 				PreparedStatement ps = conexao.prepareStatement(sql);
-				ps.setString(1, tombo);
+				ps.setLong(1, id_sw.get(0));
 				if(tipoVlan.isEmpty()){
 					ps.setString(2, "");
 				}else{
@@ -172,6 +177,7 @@ public class DAOPortas {
 				}
 
 
+
 				ps.execute();
 				ps.close();
 			}catch(SQLException erro){
@@ -189,7 +195,9 @@ public class DAOPortas {
 	 */
 
 	public void adicionarInterface_h(Snmp snmp, UserTarget target, Consulta consulta, String tombo){
-
+		ArrayList<Integer> id_sw  = VerificarSwitch_h(tombo);
+		
+		
 		//Variavel para saber apartir de determinado ativo qual classe a ser instanciada
 		String classe = ConsultaDAO.SelecionarClasseInterface(consulta.Modelo(snmp, target));
 		Interfaces Ports = null;
@@ -217,11 +225,12 @@ public class DAOPortas {
 
 		//varrendo o arrylist das portas
 		for (int i = 0; i < valor.size(); i++) {
+			String data2 = "11/01/2016";
 			//Fazendo uma string com o comando para inserir os dados na tabela interface
 			String sql = "INSERT INTO interface_h (id_switch, tipo_vlan, velocidade, estado, ligada, tipo_conector, id_interface_snmp, oid_interface_snmp, valor_interface) VALUES (?,?,?,?,?,?,?,?,?)";
 			try{
 				PreparedStatement ps = conexao.prepareStatement(sql);
-				ps.setString(1, tombo);
+				ps.setLong(1, id_sw.get(0));
 				if(tipoVlan.isEmpty()){
 					ps.setString(2, "");
 				}else{
@@ -300,7 +309,7 @@ public class DAOPortas {
 		Switch comutador = new Switch();
 
 		ResultSet rs;
-		String sql = "select id_interface_snmp, valor_interface, oid_interface_snmp, estado, ligada, tipo_conector, interface.id_porta, velocidade, tipo_vlan, ip, interface.id_switch, vlan from interface interface INNER JOIN vlan vlan on vlan.id_porta = interface.id_porta inner join switch switch on switch.id_switch = interface.id_switch  and switch.id_switch = '" + id_switch + "' order by id_porta;";
+		String sql = "select id_interface_snmp, valor_interface, oid_interface_snmp, estado, ligada, tipo_conector, interface.id_porta, velocidade, tipo_vlan, ip, interface.serialtombo, vlan from interface interface INNER JOIN vlan vlan on vlan.id_porta = interface.id_porta inner join switch switch on switch.serialtombo = interface.serialtombo  and switch.serialtombo = '" + id_switch + "' order by id_porta;";
 		try{
 			java.sql.Statement st = conexao.createStatement();
 			rs = st.executeQuery(sql);
@@ -327,7 +336,7 @@ public class DAOPortas {
 					objVlan.setVlan(rs.getString("vlan"));
 					vlan.add(objVlan);
 					ip = (rs.getString("ip"));
-					encaminhador = (rs.getString("id_switch"));
+					encaminhador = (rs.getString("serialtombo"));
 
 					interfaces.setId(id_interface);
 					interfaces.setOid(oid_interface);
@@ -347,7 +356,6 @@ public class DAOPortas {
 					comutador.setIp(ip);
 					id_porta_anterior = id_interface;
 				}
-
 			}
 
 			config.add(comutador);
@@ -376,7 +384,7 @@ public class DAOPortas {
 		Switch comutador = new Switch();
 
 		ResultSet rs;
-		String sql = "select id_interface_snmp, valor_interface, oid_interface_snmp, estado, ligada, tipo_conector, interface_h.id_porta, velocidade, tipo_vlan, ip, interface_h.id_switch, vlan from interface_h interface_h INNER JOIN vlan_h vlan_h on vlan_h.id_porta = interface_h.id_porta inner join switch_h switch_h on switch_h.id_switch = interface_h.id_switch  and switch_h.id_switch = '" + id_switch + "' order by id_porta;";
+		String sql = "select id_interface_snmp, valor_interface, oid_interface_snmp, estado, ligada, tipo_conector, interface_h.id_porta, velocidade, tipo_vlan, ip, interface_h.serialtombo, vlan from interface_h interface_h INNER JOIN vlan_h vlan_h on vlan_h.id_porta = interface_h.id_porta inner join switch_h switch_h on switch_h.serialtombo= interface_h.serialtombo and switch_h.serialtombo= '" + id_switch + "' order by id_porta;";
 		try{
 			java.sql.Statement st = conexao.createStatement();
 			rs = st.executeQuery(sql);
@@ -403,7 +411,7 @@ public class DAOPortas {
 					objVlan.setVlan(rs.getString("vlan"));
 					vlan.add(objVlan);
 					ip = (rs.getString("ip"));
-					encaminhador = (rs.getString("id_switch"));
+					encaminhador = (rs.getString("serialtombo"));
 
 					interfaces.setId(id_interface);
 					interfaces.setOid(oid_interface);
@@ -441,7 +449,7 @@ public class DAOPortas {
 		Object velocidade = new Object();
 		Object ligada = new Object();
 		ResultSet rs;
-		String sql = "select estado, velocidade, ligada from interface_h where id_switch = " + id_switch + "" + " and id_porta =" + id_porta + ";";
+		String sql = "select estado, velocidade, ligada from interface_h where serialtombo = " + id_switch + "" + " and id_porta =" + id_porta + ";";
 		try{
 			java.sql.Statement st = conexao.createStatement();
 			rs = st.executeQuery(sql);
@@ -468,7 +476,7 @@ public class DAOPortas {
 		ArrayList<Porta> list_portasLivres = new ArrayList<Porta>();
 		Object Interface = new Object();
 		ResultSet rs;
-		String sql = "select valor_interface from vlan_h INNER JOIN interface_h on vlan_h.id_porta = interface_h.id_porta and interface_h.id_switch ='" + id_switch + "'" + " and vlan_h.vlan='" + vlan + "'" + " and interface_h.estado ='Down';";
+		String sql = "select valor_interface from vlan_h INNER JOIN interface_h on vlan_h.id_porta = interface_h.id_porta and interface_h.serialtombo ='" + id_switch + "'" + " and vlan_h.vlan='" + vlan + "'" + " and interface_h.estado ='Down';";
 		try{
 			java.sql.Statement st = conexao.createStatement();
 			rs = st.executeQuery(sql);
@@ -489,21 +497,21 @@ public class DAOPortas {
 		return list_portasLivres;
 	}
 
-	public ArrayList<Switch> VerificarSwitch(String id_switch){
-		ArrayList<Switch> id_sw = new ArrayList<Switch>();
+	public ArrayList<Integer> VerificarSwitch(String id_switch){
+		ArrayList<Integer> id_sw = new ArrayList<Integer>();
 		ResultSet rs;
 		String sql = "select id_switch from switch where id_switch = '" + id_switch + "';";
-		String id = "";
+		int id = 0;
 		try{
 			java.sql.Statement st = conexao.createStatement();
 			rs = st.executeQuery(sql);
 			while(rs.next()){
-				Switch comutador = new Switch();
-				id = rs.getString("id_switch");
+				//Switch comutador = new Switch();
+				id = Integer.parseInt(rs.getString("id_switch"));
 
 				//valorInterface.add(rs.getString("valor_interface"));
-				comutador.setId_switch(id);
-				id_sw.add(comutador);
+				//comutador.setId_switch(id);
+				id_sw.add(id);
 				//list_portasLivres.add(comutador);
 			}
 
@@ -515,5 +523,31 @@ public class DAOPortas {
 
 	}
 
+	public ArrayList<Integer> VerificarSwitch_h(String id_switch){
+		ArrayList<Integer> id_sw = new ArrayList<Integer>();
+		ResultSet rs;
+		String sql = "select id_switch from switch_h where id_switch = '" + id_switch + "';";
+		int id = 0;
+		try{
+			java.sql.Statement st = conexao.createStatement();
+			rs = st.executeQuery(sql);
+			while(rs.next()){
+				//Switch comutador = new Switch();
+				id = Integer.parseInt(rs.getString("id_switch"));
+
+				//valorInterface.add(rs.getString("valor_interface"));
+				//comutador.setId_switch(id);
+				id_sw.add(id);
+				//list_portasLivres.add(comutador);
+			}
+
+			rs.close();
+		}catch(SQLException erro){
+			throw new RuntimeException(erro);
+		}
+		return id_sw;
+
+	}
+	
 
 }

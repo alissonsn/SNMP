@@ -19,6 +19,7 @@ public class Porta {
 	private Object ligada;
 	private Object tipo_conector;
 	private Object tipoVlan;
+	private Object data;
 	private ArrayList<Vlan> vlan;
 
 
@@ -123,6 +124,16 @@ public class Porta {
 
 	public void setTipoVlan(Object tipoVlan) {
 		this.tipoVlan = tipoVlan;
+	}
+
+
+	public Object getData() {
+		return data;
+	}
+
+
+	public void setData(Object data) {
+		this.data = data;
 	}
 
 
