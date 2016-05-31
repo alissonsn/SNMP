@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 
 import br.ufrn.dao.DAOSala;
 import br.ufrn.model.Municipio;
+import br.ufrn.model.Pavimento;
 import br.ufrn.model.Sala;
 
 import com.google.gson.Gson;
@@ -46,6 +47,13 @@ public class SalaRecurso {
 		return daosala.ListarSala(id);
 	}
 
+	@GET
+	@Path("/consulta/pavimento/{id}")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public List<Sala> verSalaPavimento(@PathParam("id") String id){
+		return daosala.ListarSalasPavimento(id);
+	}
+	
 	@PUT
 	@Path("/edit/{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })

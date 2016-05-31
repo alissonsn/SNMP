@@ -19,11 +19,11 @@ public class Switch {
 	private Object serialtombo;
 	private Object usuario;
 	private Object senha;
-	private Municipio municipio;
-	private Unidade unidade;
-	private Predio predio;
-	private Pavimento pavimento;
-	private Sala sala;
+	private Municipio municipio = new Municipio();
+	private Unidade unidade = new Unidade();
+	private Predio predio = new Predio();
+	private Pavimento pavimento = new Pavimento();
+	private Sala sala = new Sala();
 	
 	private ArrayList<Porta> interfaces;
 
