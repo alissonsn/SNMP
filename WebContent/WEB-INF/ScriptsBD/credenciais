@@ -1,0 +1,38 @@
+switch
+10.7.0.18
+MD5
+user: SNMPv3
+Gob0l1nux2046
+
+snmpwalk -v3 -u SNMPv3 -l authPriv -a MD5  -A Gob0l1nux2046 -X Gob0l1nux2046 10.7.0.18
+snmpwalk -v2c -c public 10.3.128.29
+snmpwalk -v3 -u SNMPv3 -l authPriv -a MD5  -A Gob0l1nux2046 -X Gob0l1nux2046 10.10.100.5
+snmpwalk -v3 -u SNMPv3 -l authPriv -a MD5  -A Gob0l1nux2046 -X Gob0l1nux2046 192.168.0.2
+snmpwalk -v3 -u tcc -l authPriv -a SHA -x AES -A 4lug4w-53wulh3r35 -X 4lug4w-53wulh3r35 10.3.130.209
+snmpwalk -v3 -u SNMPv3 -l authPriv -a MD5  -A Gob0l1nux2046 -X Gob0l1nux2046 10.12.12.4
+
+snmpwalk -v3 -u SNMPv3 -l authPriv -a MD5  -A Gob0l1nux2046 -X Gob0l1nux2046 172.16.10.1
+
+10.13.96.2
+10.13.96.3
+10.13.96.4
+10.13.96.5
+10.13.96.6
+
+
+SNMPv3
+
+Switch lab666
+silas
+Gob0l1nux
+porta 1
+172.16.10.1
+
+
+
+Servidor Aplicacao
+
+177.20.144.247:8080
+10.3.225.88:8080
+
+
