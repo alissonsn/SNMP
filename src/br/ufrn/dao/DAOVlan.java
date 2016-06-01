@@ -342,7 +342,8 @@ public class DAOVlan {
 			while(rs.next()){
 				Switch comutador = new Switch();
 				//id_switch.add(Integer.parseInt(rs.getString("id_switch")));
-				comutador.setId_switch(rs.getString("id_switch"));
+				int id_ativo = Integer.parseInt(rs.getString("id_switch"));
+				comutador.setId_switch(id_ativo);
 				listSwitches.add(comutador);
 				//listVlan.add(comutador);
 

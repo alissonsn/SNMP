@@ -405,7 +405,7 @@ public class DAOPortas {
 		Object tipoVlan = new Object();
 		ArrayList<Vlan> vlan = new ArrayList<Vlan>();
 		ArrayList<Porta> interfacess = new ArrayList<Porta>();
-		Object encaminhador = new Object();
+		//Integer encaminhador = 0;
 		Object ip = new Object();
 		Switch comutador = new Switch();
 
@@ -441,7 +441,9 @@ public class DAOPortas {
 					objVlan.setVlan(rs.getString("vlan"));
 					vlan.add(objVlan);
 					ip = (rs.getString("ip"));
-					encaminhador = (rs.getString("id_switch"));
+					int id_ativo = Integer.parseInt(rs.getString("id_switch"));
+					 
+							
 
 					interfaces.setId(id_interface);
 					interfaces.setOid(oid_interface);
@@ -457,7 +459,7 @@ public class DAOPortas {
 					//interfaces.setVlan(vlan);
 
 					comutador.setInterfaces(interfacess);
-					comutador.setId_switch(encaminhador);
+					comutador.setId_switch(id_ativo);
 					comutador.setIp(ip);
 					id_porta_anterior = id_interface;
 				}
@@ -521,7 +523,7 @@ public class DAOPortas {
 							objVlan.setVlan(rs.getString("vlan"));
 							vlan.add(objVlan);
 							ip = (rs.getString("ip"));
-							encaminhador = (rs.getString("id_switch"));
+							//encaminhador = (rs.getString("id_switch"));
 
 							interfaces.setId(id_interface);
 							interfaces.setOid(oid_interface);
@@ -682,7 +684,8 @@ public class DAOPortas {
 					objVlan.setVlan(rs.getString("vlan"));
 					vlan.add(objVlan);
 					ip = (rs.getString("ip"));
-					encaminhador = (rs.getString("id_switch"));
+					int id_ativo = Integer.parseInt(rs.getString("id_switch"));
+					//encaminhador = (rs.getString("id_switch"));
 
 					interfaces.setId(id_interface);
 					interfaces.setOid(oid_interface);
@@ -698,7 +701,7 @@ public class DAOPortas {
 					//interfaces.setVlan(vlan);
 
 					comutador.setInterfaces(interfacess);
-					comutador.setId_switch(encaminhador);
+					comutador.setId_switch(id_ativo);
 					comutador.setIp(ip);
 					id_porta_anterior = id_interface;
 				}

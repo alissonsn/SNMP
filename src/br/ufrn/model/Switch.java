@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Switch {
 
-	private Object id_switch;
+	private Integer id_switch;
 	private Object ip;
 	private Object serialtombo;
 	private Object usuario;
@@ -28,7 +28,6 @@ public class Switch {
 	private ArrayList<Porta> interfaces;
 
 	public Switch(){
-		id_switch =  new Object();
 		interfaces = new ArrayList<Porta>();
 	}
 
@@ -65,12 +64,12 @@ public class Switch {
 	}
 
 
-	public Object getId_switch() {
+	public Integer getId_switch() {
 		return id_switch;
 	}
 
 
-	public void setId_switch(Object id_switch) {
+	public void setId_switch(Integer id_switch) {
 		this.id_switch = id_switch;
 	}
 

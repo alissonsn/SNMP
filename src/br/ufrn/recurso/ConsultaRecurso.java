@@ -230,15 +230,16 @@ public class ConsultaRecurso {
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Switch com(
 			@PathParam("id") String id_switch){
-
-		Switch config = new Switch();
-		config = daoportas.pegarTudo(id_switch);
-		//System.out.println(daodata.dataHoje());
-		//System.out.println(daodata.SelecionaridData(daodata.dataHoje()));
-		//config.add(daoportas.pegarTudo_h(id_switch, daodata.SelecionaridData(daodata.dataHoje())));
-
-		return  config;
+		return  daoportas.pegarTudo(id_switch);
 	}
+	
+	@GET
+	@Path("/todos")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public List<Switch> listarTodos(){
+		return  daoswitch.listarSwitch();
+	}
+	
 	
 	@PUT
 	@Path("/switchs/{msg}")
