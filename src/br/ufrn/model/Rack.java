@@ -17,10 +17,7 @@ public class Rack implements Serializable{
 		private Predio predio = new Predio();
 		private Pavimento pavimento = new Pavimento();
 		private Sala sala = new Sala();
-		
-		
-		
-		
+				
 		public Integer getId() {
 			return id;
 		}
@@ -98,5 +95,4 @@ public class Rack implements Serializable{
 		// TODO Auto-generated method stub
 		return super.clone();
 		}
-
 }

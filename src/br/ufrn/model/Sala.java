@@ -17,9 +17,6 @@ public class Sala implements Serializable{
 		private Predio predio;
 		private Pavimento pavimento;
 		
-		
-		
-		
 		public Integer getId() {
 			return id;
 		}
@@ -91,5 +88,4 @@ public class Sala implements Serializable{
 		// TODO Auto-generated method stub
 		return super.clone();
 		}
-
 }

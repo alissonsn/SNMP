@@ -1,14 +1,10 @@
 package br.ufrn.model;
 
-
-
-
 import java.util.ArrayList;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
@@ -31,12 +27,9 @@ public class Switch {
 		interfaces = new ArrayList<Porta>();
 	}
 
-
-
 	public ArrayList<Porta> getInterfaces() {
 		return interfaces;
 	}
-
 
 	public void setInterfaces(ArrayList<Porta> interfaces) {
 		this.interfaces = interfaces;
@@ -46,118 +39,81 @@ public class Switch {
 		return serialtombo;
 	}
 
-
-
 	public void setSerialtombo(Object serialtombo) {
 		this.serialtombo = serialtombo;
 	}
-
-
 
 	public Object getIp() {
 		return ip;
 	}
 
-
 	public void setIp(Object ip) {
 		this.ip = ip;
 	}
-
 
 	public Integer getId_switch() {
 		return id_switch;
 	}
 
-
 	public void setId_switch(Integer id_switch) {
 		this.id_switch = id_switch;
 	}
-
 
 	public Object getUsuario() {
 		return usuario;
 	}
 
-
-
 	public void setUsuario(Object usuario) {
 		this.usuario = usuario;
 	}
-
-
 
 	public Object getSenha() {
 		return senha;
 	}
 
-
-
 	public void setSenha(Object senha) {
 		this.senha = senha;
-	}
-
-
-	
+	}	
 
 	public Municipio getMunicipio() {
 		return municipio;
 	}
 
-
-
 	public void setMunicipio(Municipio municipio) {
 		this.municipio = municipio;
 	}
-
-
 
 	public Unidade getUnidade() {
 		return unidade;
 	}
 
-
-
 	public void setUnidade(Unidade unidade) {
 		this.unidade = unidade;
 	}
-
-
 
 	public Predio getPredio() {
 		return predio;
 	}
 
-
-
 	public void setPredio(Predio predio) {
 		this.predio = predio;
 	}
-
-
 
 	public Pavimento getPavimento() {
 		return pavimento;
 	}
 
-
-
 	public void setPavimento(Pavimento pavimento) {
 		this.pavimento = pavimento;
 	}
-
-
 
 	public Sala getSala() {
 		return sala;
 	}
 
-
-
 	public void setSala(Sala sala) {
 		this.sala = sala;
 	}
-
-
 
 	@Override
 	public int hashCode() {
@@ -170,8 +126,6 @@ public class Switch {
 				+ ((serialtombo == null) ? 0 : serialtombo.hashCode());
 		return result;
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -199,5 +153,4 @@ public class Switch {
 			return false;
 		return true;
 	}
-
 }

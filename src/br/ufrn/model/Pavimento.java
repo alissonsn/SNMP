@@ -15,8 +15,7 @@ public class Pavimento implements Serializable{
 	private Predio predio;
 	private Unidade unidade;
 	private Municipio municipio;
-	
-	
+		
 	public Pavimento(){
 		predio = new Predio();
 	}
@@ -55,5 +54,4 @@ public class Pavimento implements Serializable{
 	public void setMunicipio(Municipio municipio) {
 		this.municipio = municipio;
 	}
-	
 }

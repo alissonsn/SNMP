@@ -23,7 +23,6 @@ import com.google.gson.Gson;
 public class SalaRecurso {
 	private DAOSala daosala = new DAOSala();
 	
-
 	@POST
 	@Path("/add")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })

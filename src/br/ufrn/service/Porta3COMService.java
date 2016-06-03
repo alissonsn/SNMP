@@ -364,6 +364,4 @@ public class Porta3COMService implements Interfaces{
 		}
 		return strList;
 	}
-
 }
-

@@ -6,18 +6,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import br.ufrn.conexao.ConnectionFactory;
 import br.ufrn.model.Municipio;
 import br.ufrn.model.Pavimento;
-import br.ufrn.model.Porta;
 import br.ufrn.model.Predio;
 import br.ufrn.model.Sala;
 import br.ufrn.model.Switch;
 import br.ufrn.model.Unidade;
-
 
 
 /** Esta classe tem por finalidade persistir as configurações das portas.
@@ -119,8 +116,7 @@ public class DAOSwitch {
 				ativo.setPredio(predio);
 				ativo.setPavimento(pavimento);
 				ativo.setSala(sala);
-				listaSwitchs.add(ativo);
-				
+				listaSwitchs.add(ativo);		
 				
 			}
 			st.close();
@@ -130,8 +126,6 @@ public class DAOSwitch {
 		}
 		return listaSwitchs;
 	}
-	
-	
 	
 	public void removerSwitch(String tombo){
 		//String tombo = Selecionarid_switch(id_switch);
@@ -145,5 +139,4 @@ public class DAOSwitch {
 			throw new RuntimeException(erro);
 		}
 	}
-
 }

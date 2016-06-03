@@ -129,7 +129,6 @@ public class DAORegistro {
 		}
 	}
 
-
 	public void deletarModelo(int id){
 		String sql = "DELETE FROM modelo "
 				+ "where id = " + id+ ";";
@@ -142,5 +141,4 @@ public class DAORegistro {
 			throw new RuntimeException(erro);
 		}
 	}
-
 }

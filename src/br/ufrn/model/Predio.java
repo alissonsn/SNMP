@@ -38,6 +38,4 @@ public class Predio implements Serializable{
 	public void setMunicipio(Municipio municipio) {
 		this.municipio = municipio;
 	}
-	
-
 }

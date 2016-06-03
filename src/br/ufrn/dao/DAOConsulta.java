@@ -10,8 +10,6 @@ import java.util.List;
 import br.ufrn.conexao.ConnectionFactory;
 import br.ufrn.model.Registro;
 
-
-
 /** Esta classe tem por finalidade verificar qual classes são é de qual modelo.
 *
 * @author silas

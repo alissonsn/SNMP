@@ -25,7 +25,6 @@ import com.google.gson.Gson;
 public class RackRecurso {
 	private DAORack daorack = new DAORack();
 	
-
 	@POST
 	@Path("/add")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -35,7 +34,6 @@ public class RackRecurso {
 		daorack.adicionarRack(rack);
 	}
 
-	
 	@GET
 	@Path("/consulta")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -56,7 +54,6 @@ public class RackRecurso {
 	public List<Rack> verRackSala(@PathParam("id") String id){
 		return daorack.listarRacksSala(id);
 	}
-	
 	
 	@PUT
 	@Path("/edit/{id}")

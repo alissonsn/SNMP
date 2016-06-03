@@ -26,7 +26,6 @@ public class RegistroRecurso {
 	Registro registro;
 	DAORegistro daoRegistro;
 
-
 	public RegistroRecurso(){
 		registro = new Registro();
 		try {
@@ -36,13 +35,11 @@ public class RegistroRecurso {
 		}
 	}
 
-
 	@POST
 	@Path("/add")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public void addSwitch(
 			String modelo){
-
 			Gson gson = new Gson();
 			Registro model = gson.fromJson(modelo, Registro.class);
 
@@ -66,8 +63,6 @@ public class RegistroRecurso {
 	public Registro verModelo(@PathParam("id") String id){
 		return daoRegistro.ListarModelo(id);
 	}
-
-
 
 	@PUT
 	@Path("/modelo/{id}")
@@ -98,5 +93,4 @@ public class RegistroRecurso {
 	public void DeletarModelo(@PathParam("id") int id){
 		daoRegistro.deletarModelo(id);
 	}
-
 }

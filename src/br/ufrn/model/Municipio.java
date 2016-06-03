@@ -59,5 +59,4 @@ public class Municipio implements Serializable{
 		// TODO Auto-generated method stub
 		return super.clone();
 		}
-
 }

@@ -36,9 +36,7 @@ public class UnidadeRecurso {
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public List<Unidade> verUnidades(){
 		return daounidade.ListarUnidades();
-
 	}
-
 
 	@GET
 	@Path("/consulta/{id}")
@@ -53,7 +51,6 @@ public class UnidadeRecurso {
 	public List<Unidade> verUnidadeMunicipio(@PathParam("id") String id){
 		return daounidade.ListarUnidadeMunicipio(id);
 	}
-
 
 	@PUT
 	@Path("/edit/{id}")

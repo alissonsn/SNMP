@@ -19,8 +19,6 @@ import br.ufrn.model.Switch;
 import br.ufrn.model.Vlan;
 import br.ufrn.service.Consulta;
 
-
-
 public class DAOVlan {
 
 	/** Esta classe tem por finalidade persistir as configurações das vlans.

@@ -31,5 +31,4 @@ public class Unidade implements Serializable{
 	public void setMunicipio(Municipio municipio) {
 		this.municipio = municipio;
 	}
-
 }

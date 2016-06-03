@@ -71,5 +71,4 @@ public class PavimentoRecurso {
 	public void DeletarPavimento(@PathParam("id") int id){
 		daopavimento.deletarPavimento(id);
 	}
-
 }

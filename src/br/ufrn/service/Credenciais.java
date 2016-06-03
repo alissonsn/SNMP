@@ -81,8 +81,4 @@ public class Credenciais {
 		snmp.getUSM().addUser(new OctetString(usuario), user);
 		return user;
 	}
-
-
-
-
 }
