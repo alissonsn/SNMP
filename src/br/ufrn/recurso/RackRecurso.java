@@ -23,7 +23,7 @@ import com.google.gson.Gson;
 
 @Path("/rack")
 public class RackRecurso {
-	private DAORack daorack= new DAORack();
+	private DAORack daorack = new DAORack();
 	
 
 	@POST

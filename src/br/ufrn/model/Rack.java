@@ -12,11 +12,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Rack implements Serializable{
 		private Integer id;
 		private String nome;
-		private Municipio municipio;
-		private Unidade unidade;
-		private Predio predio;
-		private Pavimento pavimento;
-		private Sala sala;
+		private Municipio municipio = new Municipio();
+		private Unidade unidade = new Unidade();
+		private Predio predio = new Predio();
+		private Pavimento pavimento = new Pavimento();
+		private Sala sala = new Sala();
 		
 		
 		
