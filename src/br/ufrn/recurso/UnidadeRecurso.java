@@ -27,7 +27,6 @@ public class UnidadeRecurso {
 	public void adicionarUnidade(String local){
 		Gson gson = new Gson();
 		Unidade unidade = gson.fromJson(local, Unidade.class);
-		//municipio.setNome(cidade.getNome());
 		daounidade.adicionarUnidade(unidade);
 	}
 
