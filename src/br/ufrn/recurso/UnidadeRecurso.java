@@ -34,21 +34,21 @@ public class UnidadeRecurso {
 	@Path("/consulta")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public List<Unidade> verUnidades(){
-		return daounidade.ListarUnidades();
+		return daounidade.listarUnidades();
 	}
 
 	@GET
 	@Path("/consulta/{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Unidade verUnidade(@PathParam("id") String id){
-		return daounidade.ListarUnidade(id);
+		return daounidade.listarUnidade(id);
 	}
 
 	@GET
 	@Path("/consulta/municipio/{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public List<Unidade> verUnidadeMunicipio(@PathParam("id") String id){
-		return daounidade.ListarUnidadeMunicipio(id);
+		return daounidade.listarUnidadeMunicipio(id);
 	}
 
 	@PUT

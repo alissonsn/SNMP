@@ -35,7 +35,7 @@ public class DAOPredio {
 		}
 	}
 
-	public List<Predio> ListarPredios(){
+	public List<Predio> listarPredios(){
 		List<Predio> predios = new ArrayList<Predio>();
 		ResultSet rs;
 		String sql = "select id_municipio, nomemunicipio, id_unidade, nomeunidade, "
@@ -75,7 +75,7 @@ public class DAOPredio {
 		return predios;
 	}
 
-	public Predio ListarPredio(String codigo){
+	public Predio listarPredio(String codigo){
 		Predio predio = new Predio();
 		ResultSet rs;
 		String sql = "select id_municipio, nomemunicipio, id_unidade, nomeunidade, "
@@ -88,6 +88,7 @@ public class DAOPredio {
 			st = conexao.createStatement();
 			rs = st.executeQuery(sql);
 			while(rs.next()){
+				
 				Municipio municipio = new Municipio();
 				int id_municipio = Integer.parseInt(rs.getString("id_municipio")); 
 				municipio.setId(id_municipio);
@@ -114,7 +115,7 @@ public class DAOPredio {
 		return predio;
 	}
 
-	public List<Predio> ListarPredioUnidade(String codigo){
+	public List<Predio> listarPredioUnidade(String codigo){
 		List<Predio> predios = new ArrayList<Predio>();
 		ResultSet rs;
 		String sql = "select nomepredio,id_predio,id_predio_unidade, "

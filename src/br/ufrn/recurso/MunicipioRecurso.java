@@ -32,14 +32,14 @@ public class MunicipioRecurso {
 	@Path("/consulta")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public List<Municipio> verMunicipios(){
-		return daomunicipio.ListarMuncipios();
+		return daomunicipio.listarMuncipios();
 	}
 
 	@GET
 	@Path("/consulta/{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Municipio verMunicipio(@PathParam("id") String id){
-		return daomunicipio.ListarMuncipio(id);
+		return daomunicipio.listarMuncipio(id);
 	}
 
 	@PUT

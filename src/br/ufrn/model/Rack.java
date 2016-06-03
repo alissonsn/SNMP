@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Rack implements Serializable{
 		private Integer id;
 		private String nome;
+		private String qtdUS;
 		private Municipio municipio = new Municipio();
 		private Unidade unidade = new Unidade();
 		private Predio predio = new Predio();
@@ -29,6 +30,12 @@ public class Rack implements Serializable{
 		}
 		public void setNome(String nome) {
 			this.nome = nome;
+		}
+		public String getQtdUS() {
+			return qtdUS;
+		}
+		public void setQtdUS(String qtdUS) {
+			this.qtdUS = qtdUS;
 		}
 		public Municipio getMunicipio() {
 			return municipio;

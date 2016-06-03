@@ -35,7 +35,7 @@ public class DAOUnidade {
 	}
 
 
-	public List<Unidade> ListarUnidades(){
+	public List<Unidade> listarUnidades(){
 		List<Unidade> unidades = new ArrayList<Unidade>();
 		ResultSet rs;
 		String sql = "select id_unidade,nomeunidade,nomemunicipio,id_unidade_municipio "
@@ -66,7 +66,7 @@ public class DAOUnidade {
 		return unidades;
 	}
 
-	public Unidade ListarUnidade(String codigo){
+	public Unidade listarUnidade(String codigo){
 		Unidade unidade = new Unidade();
 		ResultSet rs;
 		String sql = "select nomeunidade,id_unidade,id_unidade_municipio, nomemunicipio "
@@ -94,7 +94,7 @@ public class DAOUnidade {
 		return unidade;
 	}
 
-	public List<Unidade> ListarUnidadeMunicipio(String codigo){
+	public List<Unidade> listarUnidadeMunicipio(String codigo){
 		List<Unidade> unidades = new ArrayList<Unidade>();
 
 		ResultSet rs;

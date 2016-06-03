@@ -30,7 +30,6 @@ public class DAOSwitch {
 	boolean teste2;
 
 
-
 	public DAOSwitch() throws ClassNotFoundException{
 		this.conexao = new ConnectionFactory().getConnection();
 	}

@@ -35,7 +35,7 @@ public class PredioRecurso {
 	@Path("/consulta")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public List<Predio> verPredios() {
-		return daopredio.ListarPredios();
+		return daopredio.listarPredios();
 
 	}
 
@@ -43,14 +43,14 @@ public class PredioRecurso {
 	@Path("/consulta/{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Predio verPredio(@PathParam("id") String id) {
-		return daopredio.ListarPredio(id);
+		return daopredio.listarPredio(id);
 	}
 
 	@GET
 	@Path("/consulta/unidade/{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public List<Predio> verPredioUnidade(@PathParam("id") String id){
-		return daopredio.ListarPredioUnidade(id);
+		return daopredio.listarPredioUnidade(id);
 	}
 	
 	@PUT

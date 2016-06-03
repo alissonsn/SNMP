@@ -25,11 +25,12 @@ public class DAORack {
 
 	public void adicionarRack(Rack rack){
 		//Fazendo uma string com o comando para inserir os dados na tabela interface
-		String sql = "INSERT INTO rack (nomerack, id_rack_sala) VALUES (?,?)";
+		String sql = "INSERT INTO rack (nomerack, qtdUS, id_rack_sala) VALUES (?,?,?)";
 		try{
 			PreparedStatement ps = conexao.prepareStatement(sql);
 			ps.setString(1, rack.getNome());
-			ps.setLong(2, rack.getSala().getId());
+			ps.setString(2, rack.getQtdUS());
+			ps.setLong(3, rack.getSala().getId());
 			//ps.setArray(i, inte.get(i));
 			ps.execute();
 			ps.close();
@@ -43,7 +44,7 @@ public class DAORack {
 		List<Rack> racks = new ArrayList<Rack>();
 		ResultSet rs;
 		String sql = "select id_municipio, nomemunicipio, id_unidade, nomeunidade, id_predio, nomepredio, id_pavimento, nomepavimento, "
-				+ "id_sala, nomesala,nomerack, id_rack from rack rack INNER JOIN sala on id_rack_sala = id_sala INNER JOIN pavimento on id_sala_pavimento = id_pavimento "
+				+ "id_sala, nomesala, id_rack, nomerack, qtdus from rack rack INNER JOIN sala on id_rack_sala = id_sala INNER JOIN pavimento on id_sala_pavimento = id_pavimento "
 				+ "INNER JOIN predio on id_predio = id_pavimento_predio INNER JOIN unidade on id_predio_unidade = id_unidade "
 				+ "INNER JOIN municipio on id_municipio = id_unidade_municipio;";
 		Statement st;
@@ -81,6 +82,7 @@ public class DAORack {
 				int id_rack = Integer.parseInt(rs.getString("id_rack"));
 				rack.setId(id_rack);
 				rack.setNome(rs.getString("nomerack"));
+				rack.setQtdUS(rs.getString("qtdus"));
 				rack.setMunicipio(municipio);
 				rack.setUnidade(unidade);
 				rack.setPredio(predio);
@@ -100,7 +102,7 @@ public class DAORack {
 		Rack rack = new Rack();
 		ResultSet rs;
 		String sql = "select id_municipio, nomemunicipio, id_unidade, nomeunidade, id_predio, nomepredio,"
-				+ " id_pavimento, nomepavimento, id_sala, nomesala,nomerack, id_rack from rack rack "
+				+ " id_pavimento, nomepavimento, id_sala, nomesala, id_rack, nomerack, qtdus from rack rack "
 				+ "INNER JOIN sala on id_rack_sala = id_sala "
 				+ "INNER JOIN pavimento on id_sala_pavimento = id_pavimento "
 				+ "INNER JOIN predio on id_predio = id_pavimento_predio "
@@ -142,6 +144,7 @@ public class DAORack {
 				int id_rack = Integer.parseInt(rs.getString("id_rack"));
 				rack.setId(id_rack);
 				rack.setNome(rs.getString("nomerack"));
+				rack.setQtdUS(rs.getString("qtdus"));
 				rack.setMunicipio(municipio);
 				rack.setUnidade(unidade);
 				rack.setPredio(predio);
@@ -191,7 +194,7 @@ public class DAORack {
 		List<Rack> racks = new ArrayList<Rack>();
 		ResultSet rs;
 		String sql = "select id_municipio, nomemunicipio, id_unidade, nomeunidade, id_predio, nomepredio, id_pavimento, nomepavimento, "
-				+ "id_sala, nomesala,nomerack, id_rack from rack rack INNER JOIN sala on id_rack_sala = id_sala INNER JOIN pavimento on id_sala_pavimento = id_pavimento "
+				+ "id_sala, nomesala, id_rack, nomerack, qtdus from rack rack INNER JOIN sala on id_rack_sala = id_sala INNER JOIN pavimento on id_sala_pavimento = id_pavimento "
 				+ "INNER JOIN predio on id_predio = id_pavimento_predio INNER JOIN unidade on id_predio_unidade = id_unidade "
 				+ "INNER JOIN municipio on id_municipio = id_unidade_municipio"
 				+ "where id_sala = '"+ codigo+ "';";
@@ -230,6 +233,7 @@ public class DAORack {
 				int id_rack = Integer.parseInt(rs.getString("id_rack"));
 				rack.setId(id_rack);
 				rack.setNome(rs.getString("nomerack"));
+				rack.setQtdUS(rs.getString("qtdus"));
 				rack.setMunicipio(municipio);
 				rack.setUnidade(unidade);
 				rack.setPredio(predio);

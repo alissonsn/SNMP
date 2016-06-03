@@ -37,7 +37,7 @@ public class DAOSala {
 		}
 	}
 
-	public List<Sala> ListarSalas(){
+	public List<Sala> listarSalas(){
 		List<Sala> salas = new ArrayList<Sala>();
 		ResultSet rs;
 		String sql = "select id_municipio, nomemunicipio, id_unidade, nomeunidade, id_predio, nomepredio, id_pavimento, nomepavimento, "
@@ -88,7 +88,7 @@ public class DAOSala {
 		return salas;
 	}
 
-	public List<Sala> ListarSalasPavimento(String codigo){
+	public List<Sala> listarSalasPavimento(String codigo){
 		List<Sala> salas = new ArrayList<Sala>();
 		ResultSet rs;
 		String sql = "select id_municipio, nomemunicipio, id_unidade, nomeunidade, id_predio, nomepredio, id_pavimento, nomepavimento, "
@@ -140,7 +140,7 @@ public class DAOSala {
 		return salas;
 	}
 	
-	public Sala ListarSala(String codigo){
+	public Sala listarSala(String codigo){
 		Sala sala = new Sala();
 		ResultSet rs;
 		String sql = "select nomesala ,id_sala from sala where id_sala = '"+ codigo+ "';";

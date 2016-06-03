@@ -37,7 +37,7 @@ public class PavimentoRecurso {
 	@Path("/consulta")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public List<Pavimento> verPavimentos(){
-		return daopavimento.ListarPavimentos();
+		return daopavimento.listarPavimentos();
 
 	}
 
@@ -45,14 +45,14 @@ public class PavimentoRecurso {
 	@Path("/consulta/{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Pavimento verPavimento(@PathParam("id") String id){
-		return daopavimento.ListarPavimento(id);
+		return daopavimento.listarPavimento(id);
 	}
 
 	@GET
 	@Path("/consulta/predio/{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public List<Pavimento> verPavimentoPredio(@PathParam("id") String id){
-		return daopavimento.ListarPavimentoPredio(id);
+		return daopavimento.listarPavimentoPredio(id);
 	}
 	
 	@PUT

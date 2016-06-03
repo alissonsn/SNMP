@@ -36,21 +36,21 @@ public class SalaRecurso {
 	@Path("/consulta")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public List<Sala> verSalas(){
-		return daosala.ListarSalas();
+		return daosala.listarSalas();
 	}
 
 	@GET
 	@Path("/consulta/{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Sala verSala(@PathParam("id") String id){
-		return daosala.ListarSala(id);
+		return daosala.listarSala(id);
 	}
 
 	@GET
 	@Path("/consulta/pavimento/{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public List<Sala> verSalaPavimento(@PathParam("id") String id){
-		return daosala.ListarSalasPavimento(id);
+		return daosala.listarSalasPavimento(id);
 	}
 	
 	@PUT

@@ -35,7 +35,7 @@ public class DAOPavimento {
 		}
 	}
 	
-	public List<Pavimento> ListarPavimentos(){
+	public List<Pavimento> listarPavimentos(){
 		
 		List<Pavimento> pavimentos = new ArrayList<Pavimento>();
 		ResultSet rs;
@@ -85,7 +85,7 @@ public class DAOPavimento {
 		return pavimentos;
 	}
 
-	public Pavimento ListarPavimento(String codigo){
+	public Pavimento listarPavimento(String codigo){
 		Pavimento pavimento = new Pavimento();
 		ResultSet rs;
 		String sql = "select id_pavimento,nomepavimento,nomepredio,id_pavimento_predio "
@@ -117,7 +117,7 @@ public class DAOPavimento {
 		return pavimento;
 	}
 
-	public List<Pavimento> ListarPavimentoPredio(String codigo){
+	public List<Pavimento> listarPavimentoPredio(String codigo){
 		List<Pavimento> pavimentos = new ArrayList<Pavimento>();
 		ResultSet rs;
 		String sql = "select id_predio,nomepredio,id_pavimento,nomepavimento "

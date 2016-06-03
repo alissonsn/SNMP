@@ -33,7 +33,7 @@ public class DAOMunicipio {
 		}
 	}
 
-	public List<Municipio> ListarMuncipios(){
+	public List<Municipio> listarMuncipios(){
 		List<Municipio> municipios = new ArrayList<Municipio>();
 		ResultSet rs;
 		String sql = "select nomemunicipio, id_municipio from municipio;";
@@ -57,7 +57,7 @@ public class DAOMunicipio {
 		return municipios;
 	}
 
-	public Municipio ListarMuncipio(String codigo){
+	public Municipio listarMuncipio(String codigo){
 		Municipio municipio = new Municipio();
 		ResultSet rs;
 		String sql = "select nomemunicipio,id_municipio from municipio where id_municipio = '"+ codigo+ "';";
