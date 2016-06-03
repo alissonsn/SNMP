@@ -38,12 +38,12 @@ public class DAORack {
 		}
 	}
 
-	/*
-	public List<Rack> ListarRacks(){
+	
+	public List<Rack> listarRacks(){
 		List<Rack> racks = new ArrayList<Rack>();
 		ResultSet rs;
 		String sql = "select id_municipio, nomemunicipio, id_unidade, nomeunidade, id_predio, nomepredio, id_pavimento, nomepavimento, "
-				+ "id_sala, nomesala from sala sala INNER JOIN pavimento on id_sala_pavimento = id_pavimento "
+				+ "id_sala, nomesala,nomerack, id_rack from rack rack INNER JOIN sala on id_rack_sala = id_sala INNER JOIN pavimento on id_sala_pavimento = id_pavimento "
 				+ "INNER JOIN predio on id_predio = id_pavimento_predio INNER JOIN unidade on id_predio_unidade = id_unidade "
 				+ "INNER JOIN municipio on id_municipio = id_unidade_municipio;";
 		Statement st;
@@ -76,28 +76,37 @@ public class DAORack {
 				sala.setNome(rs.getString("nomesala"));
 				int id_sala = Integer.parseInt(rs.getString("id_sala"));
 				sala.setId(id_sala);
-				sala.setMunicipio(municipio);
-				sala.setUnidade(unidade);
-				sala.setPredio(predio);
-				sala.setPavimento(pavimento);
-				salas.add(sala);
+				
+				Rack rack = new Rack();
+				int id_rack = Integer.parseInt(rs.getString("id_rack"));
+				rack.setId(id_rack);
+				rack.setNome(rs.getString("nomerack"));
+				rack.setMunicipio(municipio);
+				rack.setUnidade(unidade);
+				rack.setPredio(predio);
+				rack.setPavimento(pavimento);		
+				rack.setSala(sala);
+				racks.add(rack);
 			}
 			st.close();
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return salas;
+		return racks;
 	}
 
-	public List<Sala> ListarSalasPavimento(String codigo){
-		List<Sala> salas = new ArrayList<Sala>();
+	public Rack listarRack(String codigo){
+		Rack rack = new Rack();
 		ResultSet rs;
-		String sql = "select id_municipio, nomemunicipio, id_unidade, nomeunidade, id_predio, nomepredio, id_pavimento, nomepavimento, "
-				+ "id_sala, nomesala from sala sala INNER JOIN pavimento on id_sala_pavimento = id_pavimento "
-				+ "INNER JOIN predio on id_predio = id_pavimento_predio INNER JOIN unidade on id_predio_unidade = id_unidade "
-				+ "INNER JOIN municipio on id_municipio = id_unidade_municipio "
-				+ " where id_pavimento = '" + codigo + "';";
+		String sql = "select id_municipio, nomemunicipio, id_unidade, nomeunidade, id_predio, nomepredio,"
+				+ " id_pavimento, nomepavimento, id_sala, nomesala,nomerack, id_rack from rack rack "
+				+ "INNER JOIN sala on id_rack_sala = id_sala "
+				+ "INNER JOIN pavimento on id_sala_pavimento = id_pavimento "
+				+ "INNER JOIN predio on id_predio = id_pavimento_predio "
+				+ "INNER JOIN unidade on id_predio_unidade = id_unidade "
+				+ "INNER JOIN municipio on id_municipio = id_unidade_municipio"
+				+ "where id_rack = '"+ codigo+ "';";
 		Statement st;
 		try {
 			st = conexao.createStatement();
@@ -128,65 +137,111 @@ public class DAORack {
 				sala.setNome(rs.getString("nomesala"));
 				int id_sala = Integer.parseInt(rs.getString("id_sala"));
 				sala.setId(id_sala);
-				sala.setMunicipio(municipio);
-				sala.setUnidade(unidade);
-				sala.setPredio(predio);
-				sala.setPavimento(pavimento);
-				salas.add(sala);
+				
+				
+				int id_rack = Integer.parseInt(rs.getString("id_rack"));
+				rack.setId(id_rack);
+				rack.setNome(rs.getString("nomerack"));
+				rack.setMunicipio(municipio);
+				rack.setUnidade(unidade);
+				rack.setPredio(predio);
+				rack.setPavimento(pavimento);		
+				rack.setSala(sala);
+				
+				
 			}
 			st.close();
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return salas;
+		return rack;
 	}
 	
-	public Sala ListarSala(String codigo){
-		Sala sala = new Sala();
+		
+	
+
+
+	public void atualizarRack(Rack rack){
+		String sql = "UPDATE rack set nomerack ='"+ rack.getNome() 	+ "' "
+				+ "where id_rack = '" + rack.getId()+ "'";
+		try{
+			PreparedStatement ps = conexao.prepareStatement(sql);
+			//ps.setArray(i, inte.get(i));
+			ps.execute();
+			ps.close();
+		}catch(SQLException erro){
+			throw new RuntimeException(erro);
+		}
+	}
+
+	public void deletarRack(int id){
+		String sql = "DELETE FROM rack where id_rack = '" + id+ "';";
+		try{
+			PreparedStatement ps = conexao.prepareStatement(sql);
+			//ps.setArray(i, inte.get(i));
+			ps.execute();
+			ps.close();
+		}catch(SQLException erro){
+			throw new RuntimeException(erro);
+		}
+	}
+
+	public List<Rack> listarRacksSala(String codigo) {
+		List<Rack> racks = new ArrayList<Rack>();
 		ResultSet rs;
-		String sql = "select nomesala ,id_sala from sala where id_sala = '"+ codigo+ "';";
+		String sql = "select id_municipio, nomemunicipio, id_unidade, nomeunidade, id_predio, nomepredio, id_pavimento, nomepavimento, "
+				+ "id_sala, nomesala,nomerack, id_rack from rack rack INNER JOIN sala on id_rack_sala = id_sala INNER JOIN pavimento on id_sala_pavimento = id_pavimento "
+				+ "INNER JOIN predio on id_predio = id_pavimento_predio INNER JOIN unidade on id_predio_unidade = id_unidade "
+				+ "INNER JOIN municipio on id_municipio = id_unidade_municipio"
+				+ "where id_sala = '"+ codigo+ "';";
 		Statement st;
 		try {
 			st = conexao.createStatement();
 			rs = st.executeQuery(sql);
 			while(rs.next()){
+				
+				Municipio municipio = new Municipio();
+				int id_municipio = Integer.parseInt(rs.getString("id_municipio")); 
+				municipio.setId(id_municipio);
+				municipio.setNome(rs.getString("nomemunicipio"));
+				
+				Unidade unidade = new Unidade();
+				int id_unidade= Integer.parseInt(rs.getString("id_unidade"));
+				unidade.setId(id_unidade);
+				unidade.setNome(rs.getString("nomeunidade"));
+					
+				Predio predio = new Predio();
+				int id_predio = Integer.parseInt(rs.getString("id_predio"));
+				predio.setId(id_predio);
+				predio.setNome(rs.getString("nomepredio"));
+			
+				int id_pavimento = Integer.parseInt(rs.getString("id_pavimento"));
+				Pavimento pavimento = new Pavimento();
+				pavimento.setId(id_pavimento);
+				pavimento.setNome(rs.getString("nomepavimento"));
+				
+				Sala sala = new Sala();
 				sala.setNome(rs.getString("nomesala"));
-				int id = Integer.parseInt(rs.getString("id_sala"));
-				sala.setId(id);
+				int id_sala = Integer.parseInt(rs.getString("id_sala"));
+				sala.setId(id_sala);
+				
+				Rack rack = new Rack();
+				int id_rack = Integer.parseInt(rs.getString("id_rack"));
+				rack.setId(id_rack);
+				rack.setNome(rs.getString("nomerack"));
+				rack.setMunicipio(municipio);
+				rack.setUnidade(unidade);
+				rack.setPredio(predio);
+				rack.setPavimento(pavimento);		
+				rack.setSala(sala);
+				racks.add(rack);
 			}
 			st.close();
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return sala;
+		return racks;
 	}
-
-
-	public void atualizarSala(Sala sala){
-		String sql = "UPDATE sala set nomesala ='"+ sala.getNome() 	+ "' "
-				+ "where id_sala = '" + sala.getId()+ "'";
-		try{
-			PreparedStatement ps = conexao.prepareStatement(sql);
-			//ps.setArray(i, inte.get(i));
-			ps.execute();
-			ps.close();
-		}catch(SQLException erro){
-			throw new RuntimeException(erro);
-		}
-	}
-
-	public void deletarSala(int id){
-		String sql = "DELETE FROM sala where id_sala = '" + id+ "';";
-		try{
-			PreparedStatement ps = conexao.prepareStatement(sql);
-			//ps.setArray(i, inte.get(i));
-			ps.execute();
-			ps.close();
-		}catch(SQLException erro){
-			throw new RuntimeException(erro);
-		}
-	}
-	*/
 }

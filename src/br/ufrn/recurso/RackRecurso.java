@@ -35,43 +35,43 @@ public class RackRecurso {
 		daorack.adicionarRack(rack);
 	}
 
-	/*
+	
 	@GET
 	@Path("/consulta")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public List<Sala> verSalas(){
-		return daosala.ListarSalas();
+	public List<Rack> verRacks(){
+		return daorack.listarRacks();
 	}
-
+	
 	@GET
 	@Path("/consulta/{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Sala verSala(@PathParam("id") String id){
-		return daosala.ListarSala(id);
+	public Rack verRack(@PathParam("id") String id){
+		return daorack.listarRack(id);
 	}
-
+	
 	@GET
-	@Path("/consulta/pavimento/{id}")
+	@Path("/consulta/sala/{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public List<Sala> verSalaPavimento(@PathParam("id") String id){
-		return daosala.ListarSalasPavimento(id);
+	public List<Rack> verRackSala(@PathParam("id") String id){
+		return daorack.listarRacksSala(id);
 	}
+	
 	
 	@PUT
 	@Path("/edit/{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public void editarSala(String local){
+	public void editarRack(String local){
 		Gson gson = new Gson();
-		Sala sala = gson.fromJson(local, Sala.class);
-		daosala.atualizarSala(sala);
+		Rack rack = gson.fromJson(local, Rack.class);
+		daorack.atualizarRack(rack);
 	}
 
 	@DELETE
 	@Path("/remove/{id}")
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public void deletarSala(@PathParam("id") int id){
-		daosala.deletarSala(id);
+	public void deletarRack(@PathParam("id") int id){
+		daorack.deletarRack(id);
 	}
-	*/
 }
