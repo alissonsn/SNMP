@@ -146,6 +146,4 @@ public class Vlan3COMService implements InterfacesVlans{
 		}
 		return mape;
 	}
-
-
 }
