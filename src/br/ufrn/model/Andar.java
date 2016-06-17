@@ -9,14 +9,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
-public class Sala implements Serializable{
+public class Andar implements Serializable{
 		private Integer id;
 		private String nome;
 		private Municipio municipio;
 		private Unidade unidade;
 		private Predio predio;
 		private Pavimento pavimento;
-		private Andar andar;
+		
 		
 		public Integer getId() {
 			return id;
@@ -54,14 +54,6 @@ public class Sala implements Serializable{
 		public void setPavimento(Pavimento pavimento) {
 			this.pavimento = pavimento;
 		}
-		
-		public Andar getAndar() {
-			return andar;
-		}
-		public void setAndar(Andar andar) {
-			this.andar = andar;
-		}
-		
 		@Override
 		public int hashCode() {
 			final int prime = 31;
@@ -78,7 +70,7 @@ public class Sala implements Serializable{
 				return false;
 			if (getClass() != obj.getClass())
 				return false;
-			Sala other = (Sala) obj;
+			Andar other = (Andar) obj;
 			if (id == null) {
 				if (other.id != null)
 					return false;
