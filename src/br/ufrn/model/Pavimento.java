@@ -11,14 +11,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Pavimento implements Serializable{
 	private Integer id;
-	private String nome;
-	private Predio predio;
-	private Unidade unidade;
+	private String nome;	
 	private Municipio municipio;
-		
-	public Pavimento(){
-		predio = new Predio();
-	}
+	private Unidade unidade;
+	private Predio predio;
 	
 	public Integer getId() {
 		return id;

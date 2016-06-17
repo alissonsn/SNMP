@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Municipio implements Serializable{
 		private Integer id;
 		private String nome;
+		
 		public Integer getId() {
 			return id;
 		}

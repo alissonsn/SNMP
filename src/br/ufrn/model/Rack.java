@@ -17,6 +17,7 @@ public class Rack implements Serializable{
 		private Unidade unidade = new Unidade();
 		private Predio predio = new Predio();
 		private Pavimento pavimento = new Pavimento();
+		private Andar andar = new Andar();
 		private Sala sala = new Sala();
 				
 		public Integer getId() {
@@ -60,6 +61,13 @@ public class Rack implements Serializable{
 		}
 		public void setPavimento(Pavimento pavimento) {
 			this.pavimento = pavimento;
+		}
+		
+		public Andar getAndar() {
+			return andar;
+		}
+		public void setAndar(Andar andar) {
+			this.andar = andar;
 		}
 		public Sala getSala() {
 			return sala;

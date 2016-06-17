@@ -11,8 +11,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Predio implements Serializable{
 	private Integer id;
 	private String nome;
-	private Unidade unidade;
 	private Municipio municipio;
+	private Unidade unidade;
+	
 
 	public Integer getId() {
 		return id;
