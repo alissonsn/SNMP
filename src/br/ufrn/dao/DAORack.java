@@ -98,7 +98,8 @@ public class DAORack {
 				rack.setMunicipio(municipio);
 				rack.setUnidade(unidade);
 				rack.setPredio(predio);
-				rack.setPavimento(pavimento);		
+				rack.setPavimento(pavimento);	
+				rack.setAndar(andar);
 				rack.setSala(sala);
 				racks.add(rack);
 			}
@@ -166,7 +167,8 @@ public class DAORack {
 				rack.setMunicipio(municipio);
 				rack.setUnidade(unidade);
 				rack.setPredio(predio);
-				rack.setPavimento(pavimento);		
+				rack.setPavimento(pavimento);	
+				rack.setAndar(andar);
 				rack.setSala(sala);
 		
 				
@@ -265,7 +267,8 @@ public class DAORack {
 				rack.setMunicipio(municipio);
 				rack.setUnidade(unidade);
 				rack.setPredio(predio);
-				rack.setPavimento(pavimento);		
+				rack.setPavimento(pavimento);
+				rack.setAndar(andar);
 				rack.setSala(sala);
 				racks.add(rack);
 			}
