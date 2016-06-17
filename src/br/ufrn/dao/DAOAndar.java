@@ -93,7 +93,7 @@ public class DAOAndar {
 		List<Andar> andares = new ArrayList<Andar>();
 		ResultSet rs;
 		String sql = "select id_municipio, nomemunicipio, id_unidade, nomeunidade, id_predio, nomepredio, id_pavimento, nomepavimento, "
-				+ "id_andar, nomeandar from andar andar INNER JOIN pavimento on id_sala_pavimento = id_pavimento "
+				+ "id_andar, nomeandar from andar andar INNER JOIN pavimento on id_andar_pavimento = id_pavimento "
 				+ "INNER JOIN predio on id_predio = id_pavimento_predio INNER JOIN unidade on id_predio_unidade = id_unidade "
 				+ "INNER JOIN municipio on id_municipio = id_unidade_municipio "
 				+ " where id_pavimento = '" + codigo + "';";

@@ -42,7 +42,7 @@ public class DAOSala {
 		List<Sala> salas = new ArrayList<Sala>();
 		ResultSet rs;
 		String sql = "select id_municipio, nomemunicipio, id_unidade, nomeunidade, id_predio, nomepredio, id_pavimento, "
-				+ "nomepavimento, id_andar, nomeandar id_sala, nomesala "
+				+ "nomepavimento, id_andar, nomeandar, id_sala, nomesala "
 				+ "from sala sala INNER JOIN andar on id_sala_andar = id_andar "
 				+ "INNER JOIN pavimento on id_andar_pavimento = id_pavimento "
 				+ "INNER JOIN predio on id_predio = id_pavimento_predio "
