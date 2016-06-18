@@ -1,4 +1,3 @@
-
 DROP TABLE vlan;
 DROP TABLE vlan_h;
 DROP TABLE modelo;
@@ -7,12 +6,13 @@ DROP TABLE interface_h;
 DROP TABLE switch;
 DROP TABLE switch_h;
 DROP TABLE data;
+DROP TABLE rack;
 DROP TABLE sala;
+DROP TABLE andar;
 DROP TABLE pavimento;
 DROP TABLE predio;
 DROP TABLE unidade;
 DROP TABLE municipio;
-
 
 CREATE TABLE data(
 id_data bigserial UNIQUE,
@@ -46,16 +46,24 @@ id_pavimento_predio int,
 PRIMARY KEY (id_pavimento),
 FOREIGN KEY(id_pavimento_predio) REFERENCES predio(id_predio));
 
+CREATE TABLE andar(
+id_andar bigserial UNIQUE,
+nomeandar varchar(30),
+id_andar_pavimento int,
+PRIMARY KEY (id_andar),
+FOREIGN KEY(id_andar_pavimento) REFERENCES pavimento(id_pavimento));
+
 CREATE TABLE sala(
 id_sala bigserial UNIQUE,
 nomesala varchar(50),
-id_sala_pavimento int,
+id_sala_andar int,
 PRIMARY KEY (id_sala),
-FOREIGN KEY(id_sala_pavimento) REFERENCES pavimento(id_pavimento));
+FOREIGN KEY(id_sala_andar) REFERENCES andar(id_andar));
 
 CREATE TABLE rack(
 id_rack bigserial UNIQUE,
 nomerack varchar(50),
+qtdUS varchar(4),
 id_rack_sala int,
 PRIMARY KEY (id_rack),
 FOREIGN KEY(id_rack_sala) REFERENCES sala(id_sala));
@@ -135,5 +143,4 @@ modelo varchar(50),
 classeInterface varchar(50),
 classeVlan varchar(50),
 PRIMARY KEY (enterprise, modelo));
-
 
