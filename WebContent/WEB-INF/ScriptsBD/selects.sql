@@ -14,5 +14,6 @@ from pavimento pavimento INNER JOIN predio on id_predio = id_pavimento_predio IN
 //Listar todas as salas
 select id_municipio, nomemunicipio, id_unidade, nomeunidade, id_predio, nomepredio, id_pavimento, nomepavimento, id_sala, nomesala from sala sala INNER JOIN pavimento on id_sala_pavimento = id_pavimento INNER JOIN predio on id_predio = id_pavimento_predio INNER JOIN unidade on id_predio_unidade = id_unidade INNER JOIN municipio on id_municipio = id_unidade_municipio;
 
+select id_municipio, nomemunicipio, id_unidade, nomeunidade, id_predio, nomepredio, id_pavimento, nomepavimento, id_andar, nomeandar, id_sala, nomesala, id_rack, nomerack from rack rack INNER JOIN sala on id_rack_sala = id_sala INNER JOIN andar on id_sala_andar = id_andar INNER JOIN pavimento on id_andar_pavimento = id_pavimento INNER JOIN predio on id_predio = id_pavimento_predio INNER JOIN unidade on id_predio_unidade = id_unidade INNER JOIN municipio on id_municipio = id_unidade_municipio where id_rack_sala = '1';
 
 

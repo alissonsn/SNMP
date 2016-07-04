@@ -1,5 +1,6 @@
 package br.ufrn.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -8,20 +9,22 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
-public class Switch {
+public class Switch implements Serializable{
 
 	private Integer id_switch;
 	private Object ip;
 	private Object serialtombo;
-	private Object usuario;
 	private Object senha;
+	private Object usuario;
+	private ArrayList<Porta> interfaces;
 	private Municipio municipio = new Municipio();
 	private Unidade unidade = new Unidade();
 	private Predio predio = new Predio();
 	private Pavimento pavimento = new Pavimento();
+	private Andar andar = new Andar();
 	private Sala sala = new Sala();
+	private Rack rack = new Rack();
 	
-	private ArrayList<Porta> interfaces;
 
 	public Switch(){
 		interfaces = new ArrayList<Porta>();
@@ -59,6 +62,14 @@ public class Switch {
 		this.id_switch = id_switch;
 	}
 
+	public Object getSenha() {
+		return senha;
+	}
+
+	public void setSenha(Object senha) {
+		this.senha = senha;
+	}
+
 	public Object getUsuario() {
 		return usuario;
 	}
@@ -66,14 +77,6 @@ public class Switch {
 	public void setUsuario(Object usuario) {
 		this.usuario = usuario;
 	}
-
-	public Object getSenha() {
-		return senha;
-	}
-
-	public void setSenha(Object senha) {
-		this.senha = senha;
-	}	
 
 	public Municipio getMunicipio() {
 		return municipio;
@@ -114,43 +117,34 @@ public class Switch {
 	public void setSala(Sala sala) {
 		this.sala = sala;
 	}
+	
+	public Andar getAndar() {
+		return andar;
+	}
+
+	public void setAndar(Andar andar) {
+		this.andar = andar;
+	}
+
+	public Rack getRack() {
+		return rack;
+	}
+
+	public void setRack(Rack rack) {
+		this.rack = rack;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
+				+ ((id_switch == null) ? 0 : id_switch.hashCode());
+		result = prime * result
 				+ ((interfaces == null) ? 0 : interfaces.hashCode());
 		result = prime * result + ((ip == null) ? 0 : ip.hashCode());
 		result = prime * result
 				+ ((serialtombo == null) ? 0 : serialtombo.hashCode());
 		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Switch other = (Switch) obj;
-		if (interfaces == null) {
-			if (other.interfaces != null)
-				return false;
-		} else if (!interfaces.equals(other.interfaces))
-			return false;
-		if (ip == null) {
-			if (other.ip != null)
-				return false;
-		} else if (!ip.equals(other.ip))
-			return false;
-		if (serialtombo == null) {
-			if (other.serialtombo != null)
-				return false;
-		} else if (!serialtombo.equals(other.serialtombo))
-			return false;
-		return true;
 	}
 }

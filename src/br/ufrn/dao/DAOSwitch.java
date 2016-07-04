@@ -9,9 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ufrn.conexao.ConnectionFactory;
+import br.ufrn.model.Andar;
 import br.ufrn.model.Municipio;
 import br.ufrn.model.Pavimento;
 import br.ufrn.model.Predio;
+import br.ufrn.model.Rack;
 import br.ufrn.model.Sala;
 import br.ufrn.model.Switch;
 import br.ufrn.model.Unidade;
@@ -68,10 +70,15 @@ public class DAOSwitch {
 	public List<Switch> listarSwitch(){
 		List<Switch> listaSwitchs = new ArrayList<Switch>();
 		ResultSet rs;
-		String sql = "select id_municipio, nomemunicipio, id_unidade, nomeunidade, id_predio, nomepredio, id_pavimento, nomepavimento, "
-				+ "id_sala, nomesala, ip, serialtombo, id_switch from switch INNER JOIN  sala on id_switch_sala = id_sala "
-				+ "INNER JOIN pavimento on id_sala_pavimento = id_pavimento "
-				+ "INNER JOIN predio on id_predio = id_pavimento_predio INNER JOIN unidade on id_predio_unidade = id_unidade "
+		String sql = "select id_municipio, nomemunicipio, id_unidade, nomeunidade, id_predio, nomepredio, id_pavimento, "
+				+ "nomepavimento, id_andar, nomeandar, id_sala, nomesala, id_rack, nomerack, qtdus, ip, "
+				+ "serialtombo, id_switch from switch switch "
+				+ "INNER JOIN rack on id_switch_rack = id_rack "				
+				+ "INNER JOIN sala on id_rack_sala = id_sala "
+				+ "INNER JOIN andar on id_sala_andar = id_andar "
+				+ "INNER JOIN pavimento on id_andar_pavimento = id_pavimento "
+				+ "INNER JOIN predio on id_predio = id_pavimento_predio "
+				+ "INNER JOIN unidade on id_predio_unidade = id_unidade "
 				+ "INNER JOIN municipio on id_municipio = id_unidade_municipio;";
 		Statement st;
 		try {
@@ -94,15 +101,26 @@ public class DAOSwitch {
 				predio.setId(id_predio);
 				predio.setNome(rs.getString("nomepredio"));
 			
-				int id_pavimento = Integer.parseInt(rs.getString("id_pavimento"));
 				Pavimento pavimento = new Pavimento();
+				int id_pavimento = Integer.parseInt(rs.getString("id_pavimento"));
 				pavimento.setId(id_pavimento);
 				pavimento.setNome(rs.getString("nomepavimento"));
 				
+				Andar andar = new Andar();
+				int id_andar = Integer.parseInt(rs.getString("id_andar"));
+				andar.setId(id_andar);
+				andar.setNome(rs.getString("nomeandar"));
+				
 				Sala sala = new Sala();
-				sala.setNome(rs.getString("nomesala"));
 				int id_sala = Integer.parseInt(rs.getString("id_sala"));
 				sala.setId(id_sala);
+				sala.setNome(rs.getString("nomesala"));
+				
+				Rack rack = new Rack();
+				int id_rack = Integer.parseInt(rs.getString("id_rack"));
+				rack.setId(id_rack);
+				rack.setNome(rs.getString("nomerack"));
+				rack.setQtdUS(rs.getString("qtdus"));
 				
 				
 				Switch ativo = new Switch();
@@ -114,7 +132,9 @@ public class DAOSwitch {
 				ativo.setUnidade(unidade);
 				ativo.setPredio(predio);
 				ativo.setPavimento(pavimento);
+				ativo.setAndar(andar);
 				ativo.setSala(sala);
+				ativo.setRack(rack);
 				listaSwitchs.add(ativo);		
 				
 			}

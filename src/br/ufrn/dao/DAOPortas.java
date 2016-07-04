@@ -51,7 +51,7 @@ public class DAOPortas {
 
 	public void adicionarswitch(Switch comutador){
 		//Fazendo uma string com o comando para inserir os dados na tabela interface
-		String sql = "INSERT INTO switch (serialtombo, ip, id_switch_sala) VALUES (?,?,?)";
+		String sql = "INSERT INTO switch (serialtombo, ip, id_switch_rack) VALUES (?,?,?)";
 		try{
 			PreparedStatement ps = conexao.prepareStatement(sql);
 			ps.setString(1, comutador.getSerialtombo().toString());
@@ -73,7 +73,7 @@ public class DAOPortas {
 
 	public void adicionarswitch_h(Switch comutador){
 		//Fazendo uma string com o comando para inserir os dados na tabela interface
-		String sql = "INSERT INTO switch_h (serialtombo, ip, id_switch_sala) VALUES (?,?,?)";
+		String sql = "INSERT INTO switch_h (serialtombo, ip, id_switch_rack) VALUES (?,?,?)";
 		try{
 			PreparedStatement ps = conexao.prepareStatement(sql);
 			ps.setString(1, comutador.getSerialtombo().toString());
