@@ -1,7 +1,0 @@
-select id_interface_snmp, valor_interface, oid_interface_snmp, estado, ligada, tipo_conector, interface.id_porta, velocidade, tipo_vlan, ip, interface.id_switch, vlan from interface interface INNER JOIN vlan vlan on vlan.id_porta = interface.id_porta inner join     switch switch on switch.id_switch = interface.id_switch and switch.serialtombo = '1';
-
-
-select id_interface_snmp, valor_interface, oid_interface_snmp, estado, ligada, tipo_conector, interface_h.id_porta, velocidade, tipo_vlan, ip, interface_h.id_switch, vlan from interface_h interface_h INNER JOIN vlan_h vlan_h on vlan_h.id_porta = interface_h.id_porta inner join     switch_h switch_h on switch_h.id_switch = interface_h.id_switch and switch_h.serialtombo = '1';
-
-
-

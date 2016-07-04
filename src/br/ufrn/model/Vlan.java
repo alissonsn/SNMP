@@ -21,5 +21,5 @@ public class Vlan {
 
 	public void setVlan(Object vlan) {
 		this.vlan = vlan;
-	}
+	}	
 }
