@@ -22,7 +22,7 @@ public class Porta {
 	private Object data;
 	private Object modificacao;
 	private Object aprova;
-	private ArrayList<Vlan> vlan;
+	private ArrayList<VlanSW> vlan;
 
 	public Porta(){
 		id_porta = null;
@@ -136,11 +136,11 @@ public class Porta {
 		this.aprova = aprova;
 	}
 
-	public ArrayList<Vlan> getVlan() {
+	public ArrayList<VlanSW> getVlan() {
 		return vlan;
 	}
 
-	public void setVlan(ArrayList<Vlan> vlan) {
+	public void setVlan(ArrayList<VlanSW> vlan) {
 		this.vlan = vlan;
 	}
 

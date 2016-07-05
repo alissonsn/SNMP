@@ -18,7 +18,7 @@ import org.snmp4j.UserTarget;
 import br.ufrn.conexao.ConnectionFactory;
 import br.ufrn.interfaces.Interfaces;
 import br.ufrn.model.Switch;
-import br.ufrn.model.Vlan;
+import br.ufrn.model.VlanSW;
 import br.ufrn.model.Porta;
 import br.ufrn.service.Consulta;
 
@@ -403,7 +403,7 @@ public class DAOPortas {
 		Object velocidade = new Object();
 		Object valor_interface = new Object();
 		Object tipoVlan = new Object();
-		ArrayList<Vlan> vlan = new ArrayList<Vlan>();
+		ArrayList<VlanSW> vlan = new ArrayList<VlanSW>();
 		ArrayList<Porta> interfacess = new ArrayList<Porta>();
 		//Integer encaminhador = 0;
 		Object ip = new Object();
@@ -422,13 +422,13 @@ public class DAOPortas {
 			rs = st.executeQuery(sql);
 			Object id_porta_anterior = -1;
 			while(rs.next()){
-				Vlan objVlan = new Vlan();
+				VlanSW objVlan = new VlanSW();
 				id_interface = (rs.getString("id_interface_snmp"));
 				if(id_interface.equals(id_porta_anterior)){
 					objVlan.setVlan(rs.getString("vlan"));
 					vlan.add(objVlan);
 				}else{
-					vlan = new ArrayList<Vlan>();
+					vlan = new ArrayList<VlanSW>();
 					interfaces = new Porta();
 					oid_interface = (rs.getString("oid_interface_snmp"));
 					estado = (rs.getString("estado"));
@@ -485,7 +485,7 @@ public class DAOPortas {
 				Object velocidade = new Object();
 				Object valor_interface = new Object();
 				Object tipoVlan = new Object();
-				ArrayList<Vlan> vlan = new ArrayList<Vlan>();
+				ArrayList<VlanSW> vlan = new ArrayList<VlanSW>();
 				ArrayList<Porta> interfacess = new ArrayList<Porta>();
 				Object encaminhador = new Object();
 				Object ip = new Object();
@@ -504,13 +504,13 @@ public class DAOPortas {
 					rs = st.executeQuery(sql);
 					Object id_porta_anterior = -1;
 					while(rs.next()){
-						Vlan objVlan = new Vlan();
+						VlanSW objVlan = new VlanSW();
 						id_interface = (rs.getString("id_interface_snmp"));
 						if(id_interface.equals(id_porta_anterior)){
 							objVlan.setVlan(rs.getString("vlan"));
 							vlan.add(objVlan);
 						}else{
-							vlan = new ArrayList<Vlan>();
+							vlan = new ArrayList<VlanSW>();
 							interfaces = new Porta();
 							oid_interface = (rs.getString("oid_interface_snmp"));
 							estado = (rs.getString("estado"));
@@ -566,7 +566,7 @@ public class DAOPortas {
 				Object velocidade = new Object();
 				Object valor_interface = new Object();
 				Object tipoVlan = new Object();
-				ArrayList<Vlan> vlan = new ArrayList<Vlan>();
+				ArrayList<VlanSW> vlan = new ArrayList<VlanSW>();
 				ArrayList<Porta> interfacess = new ArrayList<Porta>();
 				Object encaminhador = new Object();
 				Object ip = new Object();
@@ -585,13 +585,13 @@ public class DAOPortas {
 					rs = st.executeQuery(sql);
 					Object id_porta_anterior = -1;
 					while(rs.next()){
-						Vlan objVlan = new Vlan();
+						VlanSW objVlan = new VlanSW();
 						id_interface = (rs.getString("id_interface_snmp"));
 						if(id_interface.equals(id_porta_anterior)){
 							objVlan.setVlan(rs.getString("vlan"));
 							vlan.add(objVlan);
 						}else{
-							vlan = new ArrayList<Vlan>();
+							vlan = new ArrayList<VlanSW>();
 							interfaces = new Porta();
 							oid_interface = (rs.getString("oid_interface_snmp"));
 							estado = (rs.getString("estado"));
@@ -646,7 +646,7 @@ public class DAOPortas {
 		Object velocidade = new Object();
 		Object valor_interface = new Object();
 		Object tipoVlan = new Object();
-		ArrayList<Vlan> vlan = new ArrayList<Vlan>();
+		ArrayList<VlanSW> vlan = new ArrayList<VlanSW>();
 		ArrayList<Porta> interfacess = new ArrayList<Porta>();
 		Object encaminhador = new Object();
 		Object ip = new Object();
@@ -665,13 +665,13 @@ public class DAOPortas {
 			rs = st.executeQuery(sql);
 			Object id_porta_anterior = -1;
 			while(rs.next()){
-				Vlan objVlan = new Vlan();
+				VlanSW objVlan = new VlanSW();
 				id_interface = (rs.getString("id_interface_snmp"));
 				if(id_interface.equals(id_porta_anterior)){
 					objVlan.setVlan(rs.getString("vlan"));
 					vlan.add(objVlan);
 				}else{
-					vlan = new ArrayList<Vlan>();
+					vlan = new ArrayList<VlanSW>();
 					interfaces = new Porta();
 					oid_interface = (rs.getString("oid_interface_snmp"));
 					estado = (rs.getString("estado"));

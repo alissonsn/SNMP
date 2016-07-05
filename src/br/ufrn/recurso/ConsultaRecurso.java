@@ -22,12 +22,12 @@ import br.ufrn.dao.DAOConsulta;
 import br.ufrn.dao.DAOData;
 import br.ufrn.dao.DAOPortas;
 import br.ufrn.dao.DAOSwitch;
-import br.ufrn.dao.DAOVlan;
+import br.ufrn.dao.DAOVlanSW;
 import br.ufrn.interfaces.Interfaces;
 import br.ufrn.model.Porta;
 import br.ufrn.model.Registro;
 import br.ufrn.model.Switch;
-import br.ufrn.model.Vlan;
+import br.ufrn.model.VlanSW;
 import br.ufrn.service.Consulta;
 import br.ufrn.service.Credenciais;
 import br.ufrn.service.PortaH3CService;
@@ -38,7 +38,7 @@ public class ConsultaRecurso {
 	private Credenciais credenciais;
 	private Consulta consulta;
 	private DAOPortas daoportas;
-	private DAOVlan daovlan;
+	private DAOVlanSW daovlan;
 	private DAOData daodata;
 	private DAOSwitch daoswitch;
 	private Snmp snmp;
@@ -55,7 +55,7 @@ public class ConsultaRecurso {
 		consulta = new Consulta();
 		try {
 			daoportas = new DAOPortas();
-			daovlan = new DAOVlan();
+			daovlan = new DAOVlanSW();
 			daodata = new DAOData();
 			daoswitch = new DAOSwitch();
 			modificacao = "";
@@ -190,7 +190,7 @@ public class ConsultaRecurso {
 	@GET
 	@Path("/vlans/")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public List<Vlan> verVlan(){
+	public List<VlanSW> verVlan(){
 		return daovlan.getAll();
 	}
 
@@ -199,7 +199,7 @@ public class ConsultaRecurso {
 	@GET
 	@Path("/vlans/{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public List<Vlan> verTodasVlans(@PathParam("id") String id_switch){
+	public List<VlanSW> verTodasVlans(@PathParam("id") String id_switch){
 		return daovlan.getVlan(id_switch);
 	}
 
