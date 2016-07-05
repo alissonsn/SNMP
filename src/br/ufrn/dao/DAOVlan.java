@@ -44,7 +44,7 @@ public class DAOVlan {
 	public List<Vlan> listarVlans(){
 		List<Vlan> vlans = new ArrayList<Vlan>();
 		ResultSet rs;
-		String sql = "select id_vlan, nomevlan, faixaIP, nomeunidade, gateway, dns, dchp from vlan;";
+		String sql = "select id_vlan, nomevlan, faixaIP, gateway, dns, dhcp from vlan;";
 		Statement st;
 		try {
 			st = conexao.createStatement();
@@ -74,7 +74,7 @@ public class DAOVlan {
 	public Vlan listarVlan(String codigo){
 		Vlan vlan = new Vlan();
 		ResultSet rs;
-		String sql = "select id_vlan, nomevlan, faixaIP, nomeunidade, gateway, dns, dchp from vlan"
+		String sql = "select id_vlan, nomevlan, faixaIP, gateway, dns, dhcp from vlan"
 				+ " where id_vlan = '" + codigo + "';";
 		Statement st;
 		try {
@@ -97,6 +97,23 @@ public class DAOVlan {
 		return vlan;
 	}
 
+	public void editarVlan(Vlan vlan){
+		String sql = "UPDATE vlan set nomevlan = '"+ vlan.getNomevlan()+ "',"
+				+ " faixaIP = '"+ vlan.getFaixaIP()+ "', "
+				+ " gateway = '"+ vlan.getGateway()+ "', "
+				+ " dns = '"+ vlan.getDns()+"', "
+				+ " dhcp = '"+ vlan.getDhcp()+ "'"
+				+ "where id_vlan = '" + vlan.getId()+ "';";
+		try{
+			PreparedStatement ps = conexao.prepareStatement(sql);
+			//ps.setArray(i, inte.get(i));
+			ps.execute();
+			ps.close();
+		}catch(SQLException erro){
+			throw new RuntimeException(erro);
+		}
+	}
+	
 	public void deletarVlan(int id){
 		String sql = "DELETE FROM vlan where id_vlan = '" + id+ "';";
 		try{

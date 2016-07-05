@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 public class Vlan implements Serializable{
+	
 	private Integer id;
 	private String nomevlan;
 	private String faixaIP;

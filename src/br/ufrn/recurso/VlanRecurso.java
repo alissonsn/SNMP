@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import br.ufrn.dao.DAOAndar;
 import br.ufrn.dao.DAOVlan;
 import br.ufrn.model.Andar;
+import br.ufrn.model.Unidade;
 import br.ufrn.model.Vlan;
 
 @Path("/vlan")
@@ -26,9 +27,17 @@ public class VlanRecurso {
 	@POST
 	@Path("/add")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public void adicionarVlan(String local){
 		Gson gson = new Gson();
 		Vlan vlan = gson.fromJson(local, Vlan.class);
+		
+		System.out.println("Nome da vlan: " + vlan.getNomevlan());
+		System.out.println("Faixa de ip: " + vlan.getFaixaIP());
+		System.out.println("Gateway: " + vlan.getGateway());
+		System.out.println("DHCP: " + vlan.getDhcp());
+		System.out.println("DNS: " + vlan.getDns());
+		
 		daoVlan.adicionarVlan(vlan);
 	}
 
@@ -46,6 +55,15 @@ public class VlanRecurso {
 		return daoVlan.listarVlan(id);
 	}
 
+	@PUT
+	@Path("/edit/{id}")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public void editarVlan(String local){
+		Gson gson = new Gson();
+		Vlan vlan = gson.fromJson(local, Vlan.class);
+		daoVlan.editarVlan(vlan);
+	}
+	
 	@DELETE
 	@Path("/remove/{id}")
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
