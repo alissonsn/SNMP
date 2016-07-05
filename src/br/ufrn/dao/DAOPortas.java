@@ -125,7 +125,9 @@ public class DAOPortas {
 		//varrendo o arrylist das portas
 		for (int i = 0; i < valor.size(); i++) {
 			//Fazendo uma string com o comando para inserir os dados na tabela interface
-			String sql = "INSERT INTO interface (id_switch, id_data, tipo_vlan, velocidade, estado, ligada, tipo_conector, id_interface_snmp, oid_interface_snmp, valor_interface, modificacao, aprova) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO interface (id_switch, id_data, tipo_vlan, velocidade, estado, ligada, "
+					+ "tipo_conector, id_interface_snmp, oid_interface_snmp, valor_interface, "
+					+ "modificacao, aprova) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 			try{
 				PreparedStatement ps = conexao.prepareStatement(sql);
 				ps.setLong(1, id_sw);
@@ -243,7 +245,9 @@ public class DAOPortas {
 		//varrendo o arrylist das portas
 		for (int i = 0; i < valor.size(); i++) {
 			//Fazendo uma string com o comando para inserir os dados na tabela interface
-			String sql = "INSERT INTO interface_h (id_switch, id_data, tipo_vlan, velocidade, estado, ligada, tipo_conector, id_interface_snmp, oid_interface_snmp, valor_interface, modificacao, aprova) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO interface_h (id_switch, id_data, tipo_vlan, velocidade, estado, ligada, "
+					+ "tipo_conector, id_interface_snmp, oid_interface_snmp, valor_interface, modificacao, "
+					+ "aprova) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 			try{
 				PreparedStatement ps = conexao.prepareStatement(sql);
 				ps.setLong(1, id_sw);
@@ -491,8 +495,8 @@ public class DAOPortas {
 				ResultSet rs;
 				String sql = "select id_interface_snmp, valor_interface, oid_interface_snmp, estado, "
 						+ "ligada, tipo_conector, interface.id_porta, velocidade, tipo_vlan, ip, "
-						+ "interface.id_switch, vlan from interface interface INNER JOIN vlan "
-						+ "vlan on vlan.id_porta = interface.id_porta inner join switch switch "
+						+ "interface.id_switch, vlan from interface interface INNER JOIN vlansw "
+						+ "vlansw on vlansw.id_porta = interface.id_porta inner join switch switch "
 						+ "on switch.id_switch = interface.id_switch and switch.serialtombo= '"
 						+ id_switch + "' order by id_porta;";
 				System.out.println("Imprindo sql Atual " +sql);
@@ -572,8 +576,8 @@ public class DAOPortas {
 				ResultSet rs;
 				String sql = "select id_interface_snmp, valor_interface, oid_interface_snmp, estado, "
 						+ "ligada, tipo_conector, interface_h.id_porta, velocidade, tipo_vlan, ip, "
-						+ "interface_h.id_switch, vlan from interface_h interface_h INNER JOIN vlan_h "
-						+ "vlan_h on vlan_h.id_porta = interface_h.id_porta inner join switch_h switch_h "
+						+ "interface_h.id_switch, vlan from interface_h interface_h INNER JOIN vlansw_h "
+						+ "vlansw_h on vlansw_h.id_porta = interface_h.id_porta inner join switch_h switch_h "
 						+ "on switch_h.id_switch = interface_h.id_switch and switch_h.serialtombo= '"
 						+ id_switch + "' order by id_porta;";
 				System.out.println("Imprindo sql Atual " +sql);
@@ -652,8 +656,8 @@ public class DAOPortas {
 		ResultSet rs;
 		String sql = "select id_interface_snmp, valor_interface, oid_interface_snmp, estado, "
 				+ "ligada, tipo_conector, interface_h.id_porta, velocidade, tipo_vlan, ip, "
-				+ "interface_h.id_switch, vlan from interface_h interface_h INNER JOIN vlan_h "
-				+ "vlan_h on vlan_h.id_porta = interface_h.id_porta inner join switch_h switch_h "
+				+ "interface_h.id_switch, vlan from interface_h interface_h INNER JOIN vlansw_h "
+				+ "vlansw_h on vlansw_h.id_porta = interface_h.id_porta inner join switch_h switch_h "
 				+ "on switch_h.id_switch = interface_h.id_switch and switch_h.serialtombo= '"
 				+ id_switch + "' order by id_porta;";
 		System.out.println("Imprindo sql Atual " +sql);
@@ -748,7 +752,10 @@ public class DAOPortas {
 		ArrayList<Porta> list_portasLivres = new ArrayList<Porta>();
 		Object Interface = new Object();
 		ResultSet rs;
-		String sql = "select valor_interface from vlan_h INNER JOIN interface_h on vlan_h.id_porta = interface_h.id_porta and interface_h.id_switch ='" + id_switch + "'" + " and vlan_h.vlan='" + vlan + "'" + " and interface_h.estado ='Down';";
+		String sql = "select valor_interface from vlansw_h "
+				+ "INNER JOIN interface_h on vlansw_h.id_porta = interface_h.id_porta and "
+				+ "interface_h.id_switch ='" + id_switch + "'" + " and vlansw_h.vlan='" + vlan + "'" + " "
+						+ "and interface_h.estado ='Down';";
 		try{
 			Statement st = conexao.createStatement();
 			rs = st.executeQuery(sql);
@@ -775,7 +782,9 @@ public class DAOPortas {
 		ArrayList<Porta> list_portasLivres = new ArrayList<Porta>();
 		Object Interface = new Object();
 		ResultSet rs;
-		String sql = "select valor_interface from vlan_h INNER JOIN interface_h on vlan_h.id_porta = interface_h.id_porta and interface_h.id_switch ='" + id_switch + "'" + " and interface_h.estado ='" +liga +"';";
+		String sql = "select valor_interface from vlansw_h INNER JOIN interface_h on vlansw_h.id_porta = "
+				+ "interface_h.id_porta and interface_h.id_switch ='" + id_switch + "'" + " "
+						+ "and interface_h.estado ='" +liga +"';";
 		try{
 			Statement st = conexao.createStatement();
 			rs = st.executeQuery(sql);

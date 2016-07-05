@@ -107,7 +107,7 @@ public class DAOVlanSW {
 				//ID da porta recuperado pelo tombo e a interface
 				id_porta = buscarPorta(tombo, array.get(k));
 				//Fazendo uma string com o comando para inserir os dados na tabela interface
-				String sql = "INSERT INTO vlan (id_porta, vlan) VALUES (?,?)";
+				String sql = "INSERT INTO vlansw (id_porta, vlan) VALUES (?,?)";
 				try{
 					PreparedStatement ps = conexao.prepareStatement(sql);
 					ps.setInt(1, id_porta);
@@ -191,7 +191,7 @@ public class DAOVlanSW {
 				//ID da porta recuperado pelo tombo e a interface
 				id_porta = buscarPorta_h(tombo, array.get(k));
 				//Fazendo uma string com o comando para inserir os dados na tabela interface
-				String sql = "INSERT INTO vlan_h (id_porta, vlan) VALUES (?,?)";
+				String sql = "INSERT INTO vlansw_h (id_porta, vlan) VALUES (?,?)";
 				try{
 					PreparedStatement ps = conexao.prepareStatement(sql);
 					ps.setInt(1, id_porta);
@@ -255,7 +255,7 @@ public class DAOVlanSW {
 		DAOPortas daoporta = new DAOPortas();
 		ArrayList<String> idPorta = daoporta.selecionarIdPorta(idSwitch);
 		for (int i = 0; i < idPorta.size(); i++) {
-			String sql = "DELETE from vlan where id_porta = '" + idPorta.get(i) + "';" ;
+			String sql = "DELETE from vlansw where id_porta = '" + idPorta.get(i) + "';" ;
 			try{
 				PreparedStatement ps = conexao.prepareStatement(sql);
 				//ps.setArray(i, inte.get(i));
@@ -270,7 +270,7 @@ public class DAOVlanSW {
 	public List<VlanSW> getAll(){
 		ArrayList<VlanSW> vlan = new ArrayList<VlanSW>();
 		ResultSet rs;
-		String sql = "select distinct vlan from vlan;";
+		String sql = "select distinct vlan from vlansw;";
 		Statement st;
 		try {
 			st = conexao.createStatement();
@@ -297,8 +297,8 @@ public class DAOVlanSW {
 	public List<VlanSW> getVlan(String id_switch){
 		ArrayList<VlanSW> vlan = new ArrayList<VlanSW>();
 		ResultSet rs;
-		String sql = "select distinct vlan from vlan "
-				+ "INNER JOIN interface on vlan.id_porta = interface.id_porta "
+		String sql = "select distinct vlan from vlansw "
+				+ "INNER JOIN interface on vlansw.id_porta = interface.id_porta "
 				+ "and interface.id_switch = '" + id_switch + "';";
 		Statement st;
 		try {
@@ -330,9 +330,9 @@ public class DAOVlanSW {
 		//ArrayList<Object> id_switch = new ArrayList<Object>();
 
 		ResultSet rs;
-		String sql = "select distinct id_switch from vlan "
-				+ "INNER JOIN interface on vlan.id_porta = interface.id_porta "
-				+ "and vlan.vlan = '" + vlan + "';";
+		String sql = "select distinct id_switch from vlansw "
+				+ "INNER JOIN interface on vlansw.id_porta = interface.id_porta "
+				+ "and vlansw.vlan = '" + vlan + "';";
 		Statement st;
 		try {
 			st = conexao.createStatement();
