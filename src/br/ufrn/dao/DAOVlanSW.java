@@ -270,7 +270,7 @@ public class DAOVlanSW {
 	public List<VlanSW> getAll(){
 		ArrayList<VlanSW> vlan = new ArrayList<VlanSW>();
 		ResultSet rs;
-		String sql = "select distinct vlan from vlansw;";
+		String sql = "select distinct vlan from vlansw ORDER BY vlan asc;";
 		Statement st;
 		try {
 			st = conexao.createStatement();

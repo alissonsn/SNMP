@@ -25,14 +25,15 @@ public class DAOVlan {
 
 	public void adicionarVlan(Vlan vlan){
 		//Fazendo uma string com o comando para inserir os dados na tabela interface
-		String sql = "INSERT INTO vlan (nomevlan, faixaIP, gateway, dns, dhcp) VALUES (?,?,?,?,?)";
+		String sql = "INSERT INTO vlan (nomevlan, faixaIP, mascara, gateway, dns, dhcp) VALUES (?,?,?,?,?,?)";
 		try{
 			PreparedStatement ps = conexao.prepareStatement(sql);
 			ps.setString(1, vlan.getNomevlan());
 			ps.setString(2, vlan.getFaixaIP());
-			ps.setString(3, vlan.getGateway());
-			ps.setString(4, vlan.getDns());
-			ps.setString(5, vlan.getDhcp());
+			ps.setString(3, vlan.getMascara());
+			ps.setString(4, vlan.getGateway());
+			ps.setString(5, vlan.getDns());
+			ps.setString(6, vlan.getDhcp());
 			//ps.setArray(i, inte.get(i));
 			ps.execute();
 			ps.close();
@@ -44,7 +45,7 @@ public class DAOVlan {
 	public List<Vlan> listarVlans(){
 		List<Vlan> vlans = new ArrayList<Vlan>();
 		ResultSet rs;
-		String sql = "select id_vlan, nomevlan, faixaIP, gateway, dns, dhcp from vlan;";
+		String sql = "select id_vlan, nomevlan, faixaIP, mascara, gateway, dns, dhcp from vlan;";
 		Statement st;
 		try {
 			st = conexao.createStatement();
@@ -56,6 +57,7 @@ public class DAOVlan {
 				vlan.setId(id_vlan);
 				vlan.setNomevlan(rs.getString("nomevlan"));
 				vlan.setFaixaIP(rs.getString("faixaIP"));
+				vlan.setMascara(rs.getString("mascara"));
 				vlan.setGateway(rs.getString("gateway"));
 				vlan.setDns(rs.getString("dns"));
 				vlan.setDhcp(rs.getString("dhcp"));
@@ -74,7 +76,7 @@ public class DAOVlan {
 	public Vlan listarVlan(String codigo){
 		Vlan vlan = new Vlan();
 		ResultSet rs;
-		String sql = "select id_vlan, nomevlan, faixaIP, gateway, dns, dhcp from vlan"
+		String sql = "select id_vlan, nomevlan, faixaIP, mascara, gateway, dns, dhcp from vlan"
 				+ " where id_vlan = '" + codigo + "';";
 		Statement st;
 		try {
@@ -85,6 +87,7 @@ public class DAOVlan {
 				vlan.setId(id_vlan);
 				vlan.setNomevlan(rs.getString("nomevlan"));
 				vlan.setFaixaIP(rs.getString("faixaIP"));
+				vlan.setMascara(rs.getString("mascara"));
 				vlan.setGateway(rs.getString("gateway"));
 				vlan.setDns(rs.getString("dns"));
 				vlan.setDhcp(rs.getString("dhcp"));
@@ -97,9 +100,28 @@ public class DAOVlan {
 		return vlan;
 	}
 
+	public boolean vlanValida(String vlan) {
+		boolean autenticar = false;
+		String sql = "select * from vlan where " + "nomevlan='"+vlan+"';";
+		try{
+			PreparedStatement ps = conexao.prepareStatement(sql);
+			ResultSet rm = ps.executeQuery();
+			if(rm.next()){
+				autenticar = true;
+			}
+			rm.close();
+			ps.close();
+		}catch(SQLException erro){
+			throw new RuntimeException(erro);
+		}
+		return autenticar;
+
+	}
+	
 	public void editarVlan(Vlan vlan){
 		String sql = "UPDATE vlan set nomevlan = '"+ vlan.getNomevlan()+ "',"
 				+ " faixaIP = '"+ vlan.getFaixaIP()+ "', "
+						+ " mascara = '"+ vlan.getMascara()+ "', "
 				+ " gateway = '"+ vlan.getGateway()+ "', "
 				+ " dns = '"+ vlan.getDns()+"', "
 				+ " dhcp = '"+ vlan.getDhcp()+ "'"

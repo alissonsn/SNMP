@@ -193,7 +193,7 @@ public class ConsultaRecurso {
 	public List<VlanSW> verVlan(){
 		return daovlan.getAll();
 	}
-
+	
 
 	//Pega as vlans de um determinado switch
 	@GET
@@ -290,16 +290,16 @@ public class ConsultaRecurso {
 			return  daoportas.PortasLivres(id_switch, vlan);
 	}
 
-		//Retorna todas as portas livres de determinada vlan
-		@GET
-		@Path("/porta/{id_switch}/{estado}")
-		@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-		public ArrayList<Porta> PortaEstado(
-					@PathParam("id_switch") String id_switch,
-					@PathParam("estado") String estado)
-					{
-				return  daoportas.PortasEstado(id_switch, estado);
-		}
+	//Retorna todas as portas livres de determinada vlan
+	@GET
+	@Path("/porta/{id_switch}/{estado}")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public ArrayList<Porta> PortaEstado(
+				@PathParam("id_switch") String id_switch,
+				@PathParam("estado") String estado)
+				{
+			return  daoportas.PortasEstado(id_switch, estado);
+	}
 
 /*
 	//Retorna todas as configuracoes do switch da tablea historico

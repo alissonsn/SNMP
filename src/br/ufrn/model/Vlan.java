@@ -15,6 +15,7 @@ public class Vlan implements Serializable{
 	private Integer id;
 	private String nomevlan;
 	private String faixaIP;
+	private String mascara;
 	private String gateway;
 	private String dns;
 	private String dhcp;
@@ -36,6 +37,12 @@ public class Vlan implements Serializable{
 	}
 	public void setFaixaIP(String faixaIP) {
 		this.faixaIP = faixaIP;
+	}
+	public String getMascara() {
+		return mascara;
+	}
+	public void setMascara(String mascara) {
+		this.mascara = mascara;
 	}
 	public String getGateway() {
 		return gateway;

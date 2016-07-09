@@ -31,13 +31,6 @@ public class VlanRecurso {
 	public void adicionarVlan(String local){
 		Gson gson = new Gson();
 		Vlan vlan = gson.fromJson(local, Vlan.class);
-		
-		System.out.println("Nome da vlan: " + vlan.getNomevlan());
-		System.out.println("Faixa de ip: " + vlan.getFaixaIP());
-		System.out.println("Gateway: " + vlan.getGateway());
-		System.out.println("DHCP: " + vlan.getDhcp());
-		System.out.println("DNS: " + vlan.getDns());
-		
 		daoVlan.adicionarVlan(vlan);
 	}
 
@@ -55,6 +48,14 @@ public class VlanRecurso {
 		return daoVlan.listarVlan(id);
 	}
 
+	//Retorna true se existe a vlan e false caso contrario
+	@GET
+	@Path("/nome/{nome}")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public boolean vlanValida(@PathParam("nome") String vlan){
+		return daoVlan.vlanValida(vlan);
+		}
+	
 	@PUT
 	@Path("/edit/{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
