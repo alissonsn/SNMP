@@ -14,6 +14,7 @@ public class Vlan implements Serializable{
 	
 	private Integer id;
 	private String nomevlan;
+	private String numerovlan;
 	private String faixaIP;
 	private String mascara;
 	private String gateway;
@@ -31,6 +32,12 @@ public class Vlan implements Serializable{
 	}
 	public void setNomevlan(String nomevlan) {
 		this.nomevlan = nomevlan;
+	}
+	public String getNumerovlan() {
+		return numerovlan;
+	}
+	public void setNumerovlan(String numerovlan) {
+		this.numerovlan = numerovlan;
 	}
 	public String getFaixaIP() {
 		return faixaIP;

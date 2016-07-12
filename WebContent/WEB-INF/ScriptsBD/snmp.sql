@@ -1,5 +1,6 @@
 DROP TABLE vlan;
-DROP TABLE vlan_h;
+DROP TABLE vlanSW;
+DROP TABLE vlanSW_h;
 DROP TABLE modelo;
 DROP TABLE interface;
 DROP TABLE interface_h;
@@ -97,6 +98,18 @@ FOREIGN KEY (id_data) REFERENCES data(id_data));
 
 CREATE TABLE vlan
 (
+id_vlan bigserial UNIQUE,
+nomevlan varchar(100),
+numerovlan varchar(15),
+faixaIP varchar(100),
+mascara varchar(15),
+gateway varchar(100),
+dns varchar(100),
+dhcp varchar(100),
+PRIMARY KEY (numerovlan));
+
+CREATE TABLE vlanSW
+(
 id_porta bigint,
 vlan varchar(50),
 PRIMARY KEY (id_porta,vlan),
@@ -129,7 +142,7 @@ PRIMARY KEY (id_porta, id_switch),
 FOREIGN KEY (id_data) REFERENCES data(id_data),
 FOREIGN KEY (id_switch) REFERENCES switch_h(id_switch));
 
-CREATE TABLE vlan_h
+CREATE TABLE vlanSW_h
 (
 id_porta bigint,
 vlan varchar(50),
