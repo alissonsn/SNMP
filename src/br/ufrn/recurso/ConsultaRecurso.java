@@ -194,6 +194,15 @@ public class ConsultaRecurso {
 		return daovlan.getAll();
 	}
 
+	//Todos os switches de um determinado rack
+	@GET
+	@Path("/switchs/rack/{id}")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public List<Switch> verSwitchesRack(@PathParam("id") String idRack){
+			return daoswitch.listarSwitchRack(idRack);
+		}
+	
+	
 	//Pega as vlans de um determinado switch pelo id
 	@GET
 	@Path("/vlans/id/{id}")
