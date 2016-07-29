@@ -218,7 +218,8 @@ public class DAOVlanSW {
 	private Integer buscarPorta_h(String id_switch, String id_interface_snmp) {
 		ResultSet rs;
 		Integer id_porta = 0;
-		String sql = "select id_porta from interface_h where id_switch = '" + id_switch+ "' AND id_interface_snmp = " + id_interface_snmp + ";";
+		String sql = "select id_porta from interface_h where id_switch = '" 
+						+ id_switch + "' AND id_interface_snmp = " + id_interface_snmp + ";";
 		try{
 			Statement st = conexao.createStatement();
 			rs = st.executeQuery(sql);
@@ -323,7 +324,36 @@ public class DAOVlanSW {
 		return vlan;
 	}
 
+	public List<VlanSW> pegarVlansSwitch(String serialtombo){
+		ArrayList<VlanSW> vlan = new ArrayList<VlanSW>();
+		ResultSet rs;
+		String sql = "select distinct vlan from interface interface "
+				+ "INNER JOIN vlansw vlansw on vlansw.id_porta = interface.id_porta "
+				+ "INNER JOIN switch switch on switch.id_switch = interface.id_switch and switch.serialtombo = "
+				+ "'" + serialtombo + "';";
+		Statement st;
+		try {
+			st = conexao.createStatement();
+			rs = st.executeQuery(sql);
+			while(rs.next()){
+				VlanSW objVlan = new VlanSW();
+				//interfaces = new Interfaces();
+				objVlan.setVlan(rs.getString("vlan"));
+				vlan.add(objVlan);
+				//interfaces.setVlan(vlan);
+				//listVlan.add(comutador);
+				//System.out.println(modelo);
+			}
 
+			//listVlan.add(interfaces);
+			st.close();
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return vlan;
+	}
+	
 
 	public List<Switch> getSwitchVlan(String vlan){
 		List<Switch> listSwitches= new ArrayList<Switch>();

@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.snmp4j.Snmp;
 import org.snmp4j.UserTarget;
@@ -913,4 +914,9 @@ public class DAOPortas {
 		}
 		return idPorta;
 	}
+	
+	
+	
+	
+	
 }

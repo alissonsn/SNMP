@@ -193,16 +193,23 @@ public class ConsultaRecurso {
 	public List<VlanSW> verVlan(){
 		return daovlan.getAll();
 	}
-	
 
-	//Pega as vlans de um determinado switch
+	//Pega as vlans de um determinado switch pelo id
 	@GET
-	@Path("/vlans/{id}")
+	@Path("/vlans/id/{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public List<VlanSW> verTodasVlans(@PathParam("id") String id_switch){
+	public List<VlanSW> verTodasVlansSwitchID(@PathParam("id") String id_switch){
 		return daovlan.getVlan(id_switch);
 	}
-
+	
+	//Pega as vlans de um determinado switch pelo id
+	@GET
+	@Path("/vlans/tombo/{tombo}")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public List<VlanSW> verTodasVlansSwitchTombo(@PathParam("tombo") String serialtombo){
+		return daovlan.pegarVlansSwitch(serialtombo);
+	}
+	
 	//Retorna os switches que possuem esta vlan
 	@GET
 	@Path("/vlan/{id}")

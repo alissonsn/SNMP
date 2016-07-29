@@ -74,7 +74,7 @@ public class DAOVlan {
 		return vlans;
 	}
 	
-	
+	//Listar vlan pelo ID
 	public Vlan listarVlan(String codigo){
 		Vlan vlan = new Vlan();
 		ResultSet rs;
@@ -103,6 +103,35 @@ public class DAOVlan {
 		return vlan;
 	}
 
+	//Listar vlan pelo Numero
+	public Vlan listarVlanNumero(String codigo){
+			Vlan vlan = new Vlan();
+			ResultSet rs;
+			String sql = "select id_vlan, nomevlan, numerovlan, faixaIP, mascara, gateway, dns, dhcp from vlan"
+					+ " where numerovlan = '" + codigo + "';";
+			Statement st;
+			try {
+				st = conexao.createStatement();
+				rs = st.executeQuery(sql);
+				while(rs.next()){
+					int id_vlan = Integer.parseInt(rs.getString("id_vlan")); 
+					vlan.setId(id_vlan);
+					vlan.setNomevlan(rs.getString("nomevlan"));
+					vlan.setNumerovlan(rs.getString("numerovlan"));
+					vlan.setFaixaIP(rs.getString("faixaIP"));
+					vlan.setMascara(rs.getString("mascara"));
+					vlan.setGateway(rs.getString("gateway"));
+					vlan.setDns(rs.getString("dns"));
+					vlan.setDhcp(rs.getString("dhcp"));
+				}
+				st.close();
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return vlan;
+		}
+	
 	public boolean vlanValida(String vlan) {
 		boolean autenticar = false;
 		String sql = "select * from vlan where " + "numerovlan='"+vlan+"';";

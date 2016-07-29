@@ -47,7 +47,14 @@ public class VlanRecurso {
 	public Vlan verVlan(@PathParam("id") String id){
 		return daoVlan.listarVlan(id);
 	}
-
+	
+	@GET
+	@Path("/{id}")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public Vlan configVlan(@PathParam("id") String id){
+		return daoVlan.listarVlanNumero(id);
+	}
+	
 	//Retorna true se existe a vlan e false caso contrario
 	@GET
 	@Path("/nome/{nome}")
