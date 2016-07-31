@@ -414,8 +414,8 @@ public class DAOPortas {
 		ResultSet rs;
 		String sql = "select id_interface_snmp, valor_interface, oid_interface_snmp, estado, "
 				+ "ligada, tipo_conector, interface.id_porta, velocidade, tipo_vlan, ip, "
-				+ "interface.id_switch, vlan from interface interface INNER JOIN vlan "
-				+ "vlan on vlan.id_porta = interface.id_porta inner join switch switch "
+				+ "interface.id_switch, vlan from interface interface INNER JOIN vlansw "
+				+ "vlansw on vlansw.id_porta = interface.id_porta inner join switch switch "
 				+ "on switch.id_switch = interface.id_switch and switch.serialtombo= '"
 				+ id_switch + "' order by id_porta;";
 		System.out.println("Imprindo sql Atual " +sql);

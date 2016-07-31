@@ -57,10 +57,18 @@ public class VlanRecurso {
 	
 	//Retorna true se existe a vlan e false caso contrario
 	@GET
-	@Path("/nome/{nome}")
+	@Path("/valida/{nome}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public boolean vlanValida(@PathParam("nome") String vlan){
 		return daoVlan.vlanValida(vlan);
+	}
+	
+	//Retorna true se existe a vlan e false caso contrario
+	@GET
+	@Path("/nome/{nome}")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public Vlan vlanNome(@PathParam("nome") String vlan){
+		return daoVlan.listarVlanNumero(vlan);
 		}
 	
 	@PUT

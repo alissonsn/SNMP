@@ -242,6 +242,7 @@ public class ConsultaRecurso {
 		return  config;
 	}
 
+	//Lista a configuracao do switch
 	@GET
 	@Path("/switche/{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
