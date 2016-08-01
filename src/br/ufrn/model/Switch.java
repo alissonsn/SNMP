@@ -14,6 +14,7 @@ public class Switch implements Serializable{
 	private Integer id_switch;
 	private Object ip;
 	private Object serialtombo;
+	private Object posicaoRack;
 	private Object senha;
 	private Object usuario;
 	private ArrayList<Porta> interfaces;
@@ -44,6 +45,14 @@ public class Switch implements Serializable{
 
 	public void setSerialtombo(Object serialtombo) {
 		this.serialtombo = serialtombo;
+	}
+	
+	public Object getPosicaoRack() {
+		return posicaoRack;
+	}
+
+	public void setPosicaoRack(Object posicaoRack) {
+		this.posicaoRack = posicaoRack;
 	}
 
 	public Object getIp() {
