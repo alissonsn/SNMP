@@ -80,8 +80,6 @@ public class ConsultaRecurso {
 			) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
 		Gson gson = new Gson();
 		Switch comutador = gson.fromJson(ativo, Switch.class);
-		System.out.println("Nome do rack "+ comutador.getRack().getNome());
-		System.out.println("Codigo do rack "+ comutador.getRack().getId());
 		
 		snmp = credenciais.snmp();
 		target = credenciais.target(comutador.getIp().toString(), comutador.getUsuario().toString());

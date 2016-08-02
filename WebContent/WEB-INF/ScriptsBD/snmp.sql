@@ -73,6 +73,7 @@ CREATE TABLE switch(
 id_switch bigserial UNIQUE,
 ip varchar(44) UNIQUE,
 serialtombo varchar(44) UNIQUE,
+posicao_rack varchar(50),
 id_switch_rack int,
 PRIMARY KEY (ip, serialtombo),
 FOREIGN KEY(id_switch_rack) REFERENCES rack(id_rack));
@@ -119,6 +120,7 @@ CREATE TABLE switch_h(
 id_switch bigserial UNIQUE,
 ip varchar(44),
 serialtombo varchar(44),
+posicao_rack varchar(50),
 id_switch_rack int,
 PRIMARY KEY (ip, serialtombo),
 FOREIGN KEY(id_switch_rack) REFERENCES rack(id_rack));
@@ -157,3 +159,9 @@ classeInterface varchar(50),
 classeVlan varchar(50),
 PRIMARY KEY (enterprise, modelo));
 
+CREATE TABLE raspberry
+(
+id_raspberry bigint UNIQUE,
+id_switch bigint,
+PRIMARY KEY(id_raspberry),
+FOREIGN KEY (id_switch) REFERENCES switch(id_switch));

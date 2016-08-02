@@ -49,14 +49,13 @@ public class DAOPortas {
 
 	public void adicionarswitch(Switch comutador){
 		//Fazendo uma string com o comando para inserir os dados na tabela interface
-		String sql = "INSERT INTO switch (serialtombo, ip, posicao_rack, id_switch_rack) VALUES (?,?,?,?)";
+		String sql = "INSERT INTO switch (ip, serialtombo, posicao_rack, id_switch_rack) VALUES (?,?,?,?)";
 		try{
 			PreparedStatement ps = conexao.prepareStatement(sql);
-			ps.setString(1, comutador.getSerialtombo().toString());
-			ps.setString(2, comutador.getIp().toString());
+			ps.setString(1, comutador.getIp().toString());
+			ps.setString(2, comutador.getSerialtombo().toString());
 			ps.setString(3, comutador.getPosicaoRack().toString());
-			ps.setLong(4, comutador.getSala().getId());
-			//ps.setArray(i, inte.get(i));
+			ps.setLong(4, comutador.getRack().getId());
 			ps.execute();
 			ps.close();
 		}catch(SQLException erro){
@@ -72,14 +71,13 @@ public class DAOPortas {
 
 	public void adicionarswitch_h(Switch comutador){
 		//Fazendo uma string com o comando para inserir os dados na tabela interface
-		String sql = "INSERT INTO switch_h (serialtombo, ip, posicao_rack, id_switch_rack) VALUES (?,?,?,?)";
+		String sql = "INSERT INTO switch_h (ip, serialtombo, posicao_rack, id_switch_rack) VALUES (?,?,?,?)";
 		try{
 			PreparedStatement ps = conexao.prepareStatement(sql);
-			ps.setString(1, comutador.getSerialtombo().toString());
-			ps.setString(2, comutador.getIp().toString());
+			ps.setString(1, comutador.getIp().toString());
+			ps.setString(2, comutador.getSerialtombo().toString());
 			ps.setString(3, comutador.getPosicaoRack().toString());
-			ps.setLong(4, comutador.getSala().getId());
-			//ps.setArray(i, inte.get(i));
+			ps.setLong(4, comutador.getRack().getId());
 			ps.execute();
 			ps.close();
 		}catch(SQLException erro){

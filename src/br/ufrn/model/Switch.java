@@ -11,6 +11,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Switch implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6524072503768636037L;
+	/**
+	 * 
+	 */
+	
 	private Integer id_switch;
 	private Object ip;
 	private Object serialtombo;

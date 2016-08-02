@@ -71,7 +71,7 @@ public class DAOSwitch {
 		List<Switch> listaSwitchs = new ArrayList<Switch>();
 		ResultSet rs;
 		String sql = "select id_municipio, nomemunicipio, id_unidade, nomeunidade, id_predio, nomepredio, id_pavimento, "
-				+ "nomepavimento, id_andar, nomeandar, id_sala, nomesala, id_rack, nomerack, qtdus, posicaoRack, ip, "
+				+ "nomepavimento, id_andar, nomeandar, id_sala, nomesala, id_rack, nomerack, qtdus, posicao_rack, ip, "
 				+ "serialtombo, id_switch from switch switch "
 				+ "INNER JOIN rack on id_switch_rack = id_rack "				
 				+ "INNER JOIN sala on id_rack_sala = id_sala "
@@ -126,7 +126,7 @@ public class DAOSwitch {
 				Switch ativo = new Switch();
 				int id_switch = Integer.parseInt(rs.getString("id_switch"));
 				ativo.setId_switch(id_switch);
-				ativo.setPosicaoRack(rs.getString("posicaoRack"));
+				ativo.setPosicaoRack(rs.getString("posicao_rack"));
 				ativo.setSerialtombo(rs.getString("serialtombo"));
 				ativo.setIp(rs.getString("ip"));
 				ativo.setMunicipio(municipio);
@@ -151,7 +151,7 @@ public class DAOSwitch {
 		List<Switch> listaSwitchs = new ArrayList<Switch>();
 		ResultSet rs;
 		String sql = "select id_municipio, nomemunicipio, id_unidade, nomeunidade, id_predio, nomepredio, id_pavimento, "
-				+ "nomepavimento, id_andar, nomeandar, id_sala, nomesala, id_rack, nomerack, qtdus, posicaoRack, ip, "
+				+ "nomepavimento, id_andar, nomeandar, id_sala, nomesala, id_rack, nomerack, qtdus, posicao_rack, ip, "
 				+ "serialtombo, id_switch from switch switch "
 				+ "INNER JOIN rack on id_switch_rack = id_rack "				
 				+ "INNER JOIN sala on id_rack_sala = id_sala "
@@ -207,7 +207,7 @@ public class DAOSwitch {
 				Switch ativo = new Switch();
 				int id_switch = Integer.parseInt(rs.getString("id_switch"));
 				ativo.setId_switch(id_switch);
-				ativo.setPosicaoRack(rs.getString("posicaoRack"));
+				ativo.setPosicaoRack(rs.getString("posicao_rack"));
 				ativo.setSerialtombo(rs.getString("serialtombo"));
 				ativo.setIp(rs.getString("ip"));
 				ativo.setMunicipio(municipio);
