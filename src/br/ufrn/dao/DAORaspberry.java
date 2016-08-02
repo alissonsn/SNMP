@@ -127,4 +127,18 @@ public class DAORaspberry {
 		return listaRaspberry;
 	}
 	
+	public void atualizarRaspberry(Raspberry raspberry){
+		String sql = "UPDATE raspberry set id_raspberry ='"+ raspberry.getId_raspberry() + "' "
+				+ "where id_raspberry = '" + raspberry.getId_raspberry() + "'";
+		try{
+			PreparedStatement ps = conexao.prepareStatement(sql);
+			//ps.setArray(i, inte.get(i));
+			ps.execute();
+			ps.close();
+		}catch(SQLException erro){
+			throw new RuntimeException(erro);
+		}
+	}
+	
+	
 }
