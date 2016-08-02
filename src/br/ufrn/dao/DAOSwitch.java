@@ -81,6 +81,7 @@ public class DAOSwitch {
 				+ "INNER JOIN unidade on id_predio_unidade = id_unidade "
 				+ "INNER JOIN municipio on id_municipio = id_unidade_municipio;";
 		Statement st;
+		System.out.println(sql);
 		try {
 			st = conexao.createStatement();
 			rs = st.executeQuery(sql);
