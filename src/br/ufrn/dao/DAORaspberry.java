@@ -228,5 +228,16 @@ public class DAORaspberry {
 		}
 	}
 	
+	public void deletarRaspberry(int id){
+		String sql = "DELETE FROM raspberry where id_raspberry = '" + id+ "';";
+		try{
+			PreparedStatement ps = conexao.prepareStatement(sql);
+			//ps.setArray(i, inte.get(i));
+			ps.execute();
+			ps.close();
+		}catch(SQLException erro){
+			throw new RuntimeException(erro);
+		}
+	}
 	
 }

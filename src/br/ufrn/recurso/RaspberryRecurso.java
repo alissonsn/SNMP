@@ -2,6 +2,8 @@ package br.ufrn.recurso;
 
 import java.util.List;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -53,4 +55,13 @@ public class RaspberryRecurso {
 		Raspberry raspberry = gson.fromJson(local, Raspberry.class);
 		daoRaspberry.atualizarRaspberry(raspberry);
 	}
+	
+	@DELETE
+	@Path("/remove/{id}")
+	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public void deletarRaspberry(@PathParam("id") int id){
+		daoRaspberry.deletarRaspberry(id);
+	}
+	
 }
