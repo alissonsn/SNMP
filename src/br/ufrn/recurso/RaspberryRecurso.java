@@ -6,6 +6,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -15,6 +16,7 @@ import br.ufrn.dao.DAORaspberry;
 import br.ufrn.model.Rack;
 import br.ufrn.model.Raspberry;
 import br.ufrn.model.Switch;
+import br.ufrn.model.Unidade;
 
 @Path("/raspberry")
 public class RaspberryRecurso {
@@ -34,6 +36,13 @@ public class RaspberryRecurso {
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public List<Raspberry> listarTodos(){
 		return  daoRaspberry.listarRaspberries();
+	}
+	
+	@GET
+	@Path("/consulta/{id}")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public Raspberry verRaspberry(@PathParam("id") String id){
+		return daoRaspberry.listarRaspberry(id);
 	}
 	
 	@PUT

@@ -112,6 +112,7 @@ public class DAOUnidade {
 				unidade.setId(id);
 				unidade.setNome(rs.getString("nomeunidade"));
 				int id_municipio = Integer.parseInt(rs.getString("id_unidade_municipio"));
+				
 				Municipio municipio = new Municipio();
 				municipio.setId(id_municipio);
 				municipio.setNome(rs.getString("nomemunicipio"));
