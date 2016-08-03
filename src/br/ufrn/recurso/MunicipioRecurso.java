@@ -14,7 +14,7 @@ import com.google.gson.Gson;
 import br.ufrn.dao.DAOMunicipio;
 import br.ufrn.model.Municipio;
 
-@Path("/local")
+@Path("/municipio")
 public class MunicipioRecurso {
 	private DAOMunicipio daomunicipio = new DAOMunicipio();
 
