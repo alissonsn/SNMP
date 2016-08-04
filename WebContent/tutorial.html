@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html lang="en" class="ie6 ielt8"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="ie7 ielt8"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="ie8"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>SNMP</title>
+<link rel="stylesheet" type="text/css" href="./design/css/style.css" />
+<link rel="stylesheet" type="text/css" href="./design/css/estilo.css" />
+
+</head>
+<body>
+	<div class="container">
+		<section id="content">
+			<div class="button">
+			<h1>Descrição das URLS</h1>
+			<br>
+			
+			<h2>Municipio</h2>
+			
+			<ul>
+				<li>Criar Municipio</li>
+				<ul>
+					<li>POST http://snmp.info.ufrn.br:8080/SNMP/rest/municipio/add</li>
+				</ul>
+				<li>Listar todos os Municipios</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/municipio/consulta</li>
+				</ul>
+				<li>Listar Municipio por seu id</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/municipio/consulta/{id}</li>
+				</ul>
+				<li>Editar Municipio</li>
+				<ul>
+					<li>PUT http://snmp.info.ufrn.br:8080/SNMP/rest/municipio/edit/{id}</li>
+				</ul>
+				<li>Deletar Municipio</li>
+				<ul>
+					<li>DELETE http://snmp.info.ufrn.br:8080/SNMP/rest/municipio/remove/{id}</li>
+				</ul>
+			<br>
+			
+			<h2>Unidade</h2>
+				<li>Criar Unidade</li>
+				<ul>
+					<li>POST http://snmp.info.ufrn.br:8080/SNMP/rest/unidade/add</li>
+				</ul>
+				<li>Listar Todas as Unidades</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/unidade/consulta</li>
+				</ul>
+				<li>Listar Unidade por seu id</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/unidade/consulta/{id}</li>
+				</ul>
+				<li>Listar Unidades de um Municipio </li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/unidade/consulta/municipio/{id}</li>
+				</ul>
+				<li>Editar Unidade</li>
+				<ul>
+					<li>PUT http://snmp.info.ufrn.br:8080/SNMP/rest/unidade/edit/{id}</li>
+				</ul>
+				<li>Deletar Unidade</li>
+				<ul>
+					<li>DELETE http://snmp.info.ufrn.br:8080/SNMP/rest/unidade/remove/{id}</li>
+				</ul>
+				<br>
+			<h2>Predio</h2>
+				<li>Criar Predio</li>
+								<ul>
+					<li>POST http://snmp.info.ufrn.br:8080/SNMP/rest/predio/add</li>
+				</ul>
+					<li>Listar Todos os Predios</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/predio/consulta</li>
+				</ul>
+				<li>Listar Predio por seu id</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/predio/consulta/{id}</li>
+				</ul>
+				<li>Listar Predios de uma Unidade</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/predio/consulta/unidade/{id}</li>
+				</ul>
+				<li>Editar Predio</li>
+				<ul>
+					<li>PUT http://snmp.info.ufrn.br:8080/SNMP/rest/predio/edit/{id}</li>
+				</ul>
+				<li>Deletar Predio</li>
+				<ul>
+					<li>DELETE http://snmp.info.ufrn.br:8080/SNMP/rest/predio/remove/{id}</li>
+				</ul>
+				<br>		
+			
+				<h2>Pavimento</h2>
+				<li>Criar Pavimento</li>
+				<ul>
+					<li>POST http://snmp.info.ufrn.br:8080/SNMP/rest/pavimento/add</li>
+				</ul>
+					<li>Listar Todos os Pavimentos</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/pavimento/consulta</li>
+				</ul>
+				<li>Listar Pavimento por seu id</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/pavimento/consulta/{id}</li>
+				</ul>
+				
+				<li>Listar Pavimento de um Predio</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/pavimento/consulta/predio/{id}</li>
+				</ul>
+				<li>Editar Predio</li>
+				<ul>
+					<li>PUT http://snmp.info.ufrn.br:8080/SNMP/rest/pavimento/edit/{id}</li>
+				</ul>
+				<li>Deletar Predio</li>
+				<ul>
+					<li>DELETE http://snmp.info.ufrn.br:8080/SNMP/rest/pavimento/remove/{id}</li>
+				</ul>
+				<br>
+			
+				<h2>Andar</h2>
+				<li>Criar Andar</li>
+				<ul>
+					<li>POST http://snmp.info.ufrn.br:8080/SNMP/rest/andar/add</li>
+				</ul>
+					<li>Listar Todos os Andares</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/andar/consulta</li>
+				</ul>
+				<li>Listar Andar por seu id</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/andar/consulta/{id}</li>
+				</ul>
+				<li>Listar Andares de um Pavimento</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/andar/consulta/pavimento/{id}</li>
+				</ul>
+				<li>Editar Andar</li>
+				<ul>
+					<li>PUT http://snmp.info.ufrn.br:8080/SNMP/rest/andar/edit/{id}</li>
+				</ul>
+				<li>Deletar Andar</li>
+				<ul>
+					<li>DELETE http://snmp.info.ufrn.br:8080/SNMP/rest/andar/remove/{id}</li>
+				</ul>
+				<br>
+			
+			<h2>Sala</h2>
+				<li>Criar Sala</li>
+				<ul>
+					<li>POST http://snmp.info.ufrn.br:8080/SNMP/rest/sala/add</li>
+				</ul>
+					<li>Listar Todos os Salas</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/sala/consulta</li>
+				</ul>
+				<li>Listar Sala por seu id</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/sala/consulta/{id}</li>
+				</ul>
+				<li>Listar Salas de um Andar</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/sala/consulta/andar/{id}</li>
+				</ul>
+				<li>Editar Sala</li>
+				<ul>
+					<li>PUT http://snmp.info.ufrn.br:8080/SNMP/rest/sala/edit/{id}</li>
+				</ul>
+				<li>Deletar Sala</li>
+				<ul>
+					<li>DELETE http://snmp.info.ufrn.br:8080/SNMP/rest/sala/remove/{id}</li>
+				</ul>
+				<br>
+			
+			<h2>Rack</h2>
+				<li>Criar Rack</li>
+				<ul>
+					<li>POST http://snmp.info.ufrn.br:8080/SNMP/rest/rack/add</li>
+				</ul>
+					<li>Listar Todos os Racks</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/rack/consulta</li>
+				</ul>
+				<li>Listar Rack por seu id</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/rack/consulta/{id}</li>
+				</ul>
+				<li>Listar Racks de uma Sala</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/rack/consulta/sala/{id}</li>
+				</ul>
+				<li>Editar Rack</li>
+				<ul>
+					<li>PUT http://snmp.info.ufrn.br:8080/SNMP/rest/rack/edit/{id}</li>
+				</ul>
+				<li>Deletar Rack</li>
+				<ul>
+					<li>DELETE http://snmp.info.ufrn.br:8080/SNMP/rest/rack/remove/{id}</li>
+				</ul>
+				<br>
+			
+				<h2>Registro de Modelo</h2>
+				<li>Criar Registro</li>
+				<ul>
+					<li>POST http://snmp.info.ufrn.br:8080/SNMP/rest/registro/add</li>
+				</ul>
+					<li>Listar Todos os Registros</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/registro/consulta</li>
+				</ul>
+				<li>Listar Registro por seu id</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/registro/consulta/{id}</li>
+				</ul>
+				<li>Editar Registro</li>
+				<ul>
+					<li>PUT http://snmp.info.ufrn.br:8080/SNMP/rest/registro/edit/{id}</li>
+				</ul>
+				<li>Deletar Registro</li>
+				<ul>
+					<li>DELETE http://snmp.info.ufrn.br:8080/SNMP/rest/registro/remove/{id}</li>
+				</ul>
+				<br>
+			
+							<h2>Switch</h2>
+				<li>Criar Switch</li>
+				<ul>
+					<li>POST http://snmp.info.ufrn.br:8080/SNMP/rest/consulta/switch</li>
+				</ul>
+					<li>Listar Todos os Switches de um Rack</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/consulta/switchs/rack/{id}</li>
+				</ul>
+					<li>Listar Todas as Vlans já capturadas</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/consulta/vlans</li>
+				</ul>
+					<li>Listar Todas as Vlans de um switch</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/consulta/vlans/id/{id}</li>
+				</ul>
+					<li>Listar Todas as Vlans de um switch</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/consulta/vlans/tombo/{tombo}</li>
+				</ul>
+					<li>Listar Todos os Switches que possuem determinada vlan</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/consulta/vlan/{id}</li>
+				</ul>
+					<li>Comparar Configuração do switch</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/consulta/switch/{id}</li>
+				</ul>
+					<li>Listar Configuração do switch</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/consulta/switche/{id}</li>
+				</ul>
+					<li>Listar Todos os Switches</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/consulta/todos</li>
+				</ul>
+					<li>Listar Todas as Configurações do Switche</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/consulta/config/{id}</li>
+				</ul>
+					<li>Listar as Portas livres que se encontram numa vlan do Switche</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/consulta/porta/{vlan}/{id}</li>
+				</ul>
+					<li>Listar as Portas que se encontram numa vlan e com determinado estado do Switche</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/consulta/porta/{id_switch}/{estado}</li>
+				</ul>
+				<br>
+				
+			<h2>Raspberry</h2>
+					<li>Criar Raspberry</li>
+				<ul>
+					<li>POST http://snmp.info.ufrn.br:8080/SNMP/rest/raspberry/add</li>
+				</ul>
+					<li>Listar Todos os Raspberries</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/raspberry/consulta</li>
+				</ul>
+				<li>Listar Raspberry por seu id</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/raspberry/consulta/{id}</li>
+				</ul>
+				<li>Editar Raspberry</li>
+				<ul>
+					<li>PUT http://snmp.info.ufrn.br:8080/SNMP/rest/raspberry/edit/{id}</li>
+				</ul>
+				<li>Deletar Raspberry</li>
+				<ul>
+					<li>DELETE http://snmp.info.ufrn.br:8080/SNMP/rest/raspberry/remove/{id}</li>
+				</ul>
+			
+			</ul>			
+			</div>
+			<!-- button -->
+		</section>
+		<!-- content -->
+	</div>
+	<!-- container -->
+</body>
+</html>

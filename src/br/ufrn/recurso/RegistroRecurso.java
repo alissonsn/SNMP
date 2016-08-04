@@ -65,7 +65,7 @@ public class RegistroRecurso {
 	}
 
 	@PUT
-	@Path("/modelo/{id}")
+	@Path("/edit/{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public void ModificarModelos(String modelo){
 		Gson gson = new Gson();
