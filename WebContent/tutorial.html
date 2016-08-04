@@ -301,7 +301,37 @@
 				<ul>
 					<li>DELETE http://snmp.info.ufrn.br:8080/SNMP/rest/raspberry/remove/{id}</li>
 				</ul>
-			
+				<br>
+				
+			<h2>Vlan</h2>	
+				<li>Criar Vlan</li>	
+				<ul>
+					<li>POST http://snmp.info.ufrn.br:8080/SNMP/rest/vlan/add</li>
+				</ul>
+					<li>Listar Todas as Vlans</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/vlan/consulta</li>
+				</ul>
+					<li>Listar Vlan por seu id</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/vlan/consulta/{id}</li>
+				</ul>
+					<li>Listar Vlan por seu numero</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/vlan/{numero}</li>
+				</ul>
+					<li>Retorna true se existe a vlan</li>
+				<ul>
+					<li>GET http://snmp.info.ufrn.br:8080/SNMP/rest/vlan/valida/{numero}</li>
+				</ul>
+					<li>Editar Vlan</li>
+				<ul>
+					<li>PUT http://snmp.info.ufrn.br:8080/SNMP/rest/vlan/edit/{id}</li>
+				</ul>
+					<li>Deletar Vlan</li>
+				<ul>
+					<li>DELETE http://snmp.info.ufrn.br:8080/SNMP/rest/vlan/remove/{id}</li>
+				</ul>
 			</ul>			
 			</div>
 			<!-- button -->
