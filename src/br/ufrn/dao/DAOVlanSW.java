@@ -294,7 +294,7 @@ public class DAOVlanSW {
 		}
 		return vlan;
 	}
-
+	
 	public List<VlanSW> getVlan(String id_switch){
 		ArrayList<VlanSW> vlan = new ArrayList<VlanSW>();
 		ResultSet rs;

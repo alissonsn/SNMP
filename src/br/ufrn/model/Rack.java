@@ -13,12 +13,12 @@ public class Rack implements Serializable{
 		private Integer id;
 		private String nome;
 		private String qtdUS;
-		private Municipio municipio = new Municipio();
-		private Unidade unidade = new Unidade();
-		private Predio predio = new Predio();
-		private Pavimento pavimento = new Pavimento();
-		private Andar andar = new Andar();
-		private Sala sala = new Sala();
+		private Municipio municipio;
+		private Unidade unidade;
+		private Predio predio;
+		private Pavimento pavimento;
+		private Andar andar;
+		private Sala sala;
 				
 		public Integer getId() {
 			return id;

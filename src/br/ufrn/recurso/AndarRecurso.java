@@ -16,7 +16,6 @@ import com.google.gson.Gson;
 
 import br.ufrn.dao.DAOAndar;
 import br.ufrn.model.Andar;
-import br.ufrn.model.Sala;
 
 @Path("/andar")
 public class AndarRecurso {
