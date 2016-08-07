@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -18,20 +17,15 @@ import org.snmp4j.UserTarget;
 
 import com.google.gson.Gson;
 
-import br.ufrn.dao.DAOConsulta;
 import br.ufrn.dao.DAOData;
 import br.ufrn.dao.DAOPortas;
 import br.ufrn.dao.DAOSwitch;
 import br.ufrn.dao.DAOVlanSW;
-import br.ufrn.interfaces.Interfaces;
 import br.ufrn.model.Porta;
-import br.ufrn.model.Registro;
 import br.ufrn.model.Switch;
 import br.ufrn.model.VlanSW;
 import br.ufrn.service.Consulta;
 import br.ufrn.service.Credenciais;
-import br.ufrn.service.PortaH3CService;
-
 
 @Path("/consulta")
 public class ConsultaRecurso {

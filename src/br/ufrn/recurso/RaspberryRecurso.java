@@ -15,10 +15,7 @@ import javax.ws.rs.core.MediaType;
 import com.google.gson.Gson;
 
 import br.ufrn.dao.DAORaspberry;
-import br.ufrn.model.Rack;
 import br.ufrn.model.Raspberry;
-import br.ufrn.model.Switch;
-import br.ufrn.model.Unidade;
 
 @Path("/raspberry")
 public class RaspberryRecurso {
@@ -44,7 +41,7 @@ public class RaspberryRecurso {
 	@Path("/consulta/{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Raspberry verRaspberry(@PathParam("id") String id){
-		return daoRaspberry.listarRaspberry(id);
+		return daoRaspberry.listarRaspberriesSwitch(id);
 	}
 	
 	@PUT

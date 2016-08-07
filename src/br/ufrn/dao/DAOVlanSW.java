@@ -218,7 +218,7 @@ public class DAOVlanSW {
 	private Integer buscarPorta_h(String id_switch, String id_interface_snmp) {
 		ResultSet rs;
 		Integer id_porta = 0;
-		String sql = "select id_porta from interface_h where id_switch = '" 
+		String sql = "select id_porta from interface_h where id_interface_switch = '" 
 						+ id_switch + "' AND id_interface_snmp = " + id_interface_snmp + ";";
 		try{
 			Statement st = conexao.createStatement();
@@ -237,7 +237,8 @@ public class DAOVlanSW {
 	private Integer buscarPorta(String id_switch, String id_interface_snmp) {
 		ResultSet rs;
 		Integer id_porta = 0;
-		String sql = "select id_porta from interface where id_switch = '" + id_switch+ "' AND id_interface_snmp = " + id_interface_snmp + ";";
+		String sql = "select id_porta from interface where id_interface_switch = '" 
+						+ id_switch + "' AND id_interface_snmp = " + id_interface_snmp + ";";
 		try{
 			Statement st = conexao.createStatement();
 			rs = st.executeQuery(sql);
@@ -300,7 +301,7 @@ public class DAOVlanSW {
 		ResultSet rs;
 		String sql = "select distinct vlan from vlansw "
 				+ "INNER JOIN interface on vlansw.id_porta = interface.id_porta "
-				+ "and interface.id_switch = '" + id_switch + "';";
+				+ "and interface.id_interface_switch = '" + id_switch + "';";
 		Statement st;
 		try {
 			st = conexao.createStatement();
@@ -329,7 +330,7 @@ public class DAOVlanSW {
 		ResultSet rs;
 		String sql = "select distinct vlan from interface interface "
 				+ "INNER JOIN vlansw vlansw on vlansw.id_porta = interface.id_porta "
-				+ "INNER JOIN switch switch on switch.id_switch = interface.id_switch and switch.serialtombo = "
+				+ "INNER JOIN switch switch on switch.id_switch = interface.id_interface_switch and switch.serialtombo = "
 				+ "'" + serialtombo + "';";
 		Statement st;
 		try {

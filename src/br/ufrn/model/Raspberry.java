@@ -1,25 +1,26 @@
 package br.ufrn.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 public class Raspberry implements Serializable{
 
 	private Integer id_raspberry;
-	private Municipio municipio;
-	private Unidade unidade;
-	private Predio predio;
-	private Pavimento pavimento;
-	private Andar andar;
-	private Sala sala;
-	private Rack rack;
-	private Switch comutador;
+	private Municipio municipio = new Municipio();
+	private Unidade unidade = new Unidade();
+	private Predio predio = new Predio();
+	private Pavimento pavimento = new Pavimento();
+	private Andar andar = new Andar();
+	private Sala sala = new Sala();
+	private Rack rack = new Rack();
+	private Switch comutador = new Switch();
 	
 	
 	public Integer getId_raspberry() {

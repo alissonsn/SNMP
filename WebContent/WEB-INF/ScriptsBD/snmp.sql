@@ -1,3 +1,4 @@
+DROP TABLE raspberry;
 DROP TABLE vlan;
 DROP TABLE vlanSW;
 DROP TABLE vlanSW_h;
@@ -81,7 +82,7 @@ FOREIGN KEY(id_switch_rack) REFERENCES rack(id_rack));
 CREATE TABLE interface
 (
 id_porta bigserial UNIQUE,
-id_switch int,
+id_interface_switch int,
 id_data int,
 tipo_vlan varchar(50),
 velocidade varchar(50),
@@ -93,8 +94,8 @@ oid_interface_snmp varchar(50),
 valor_interface varchar(50),
 modificacao varchar(20),
 aprova varchar(20),
-PRIMARY KEY (id_porta, id_switch),
-FOREIGN KEY (id_switch) REFERENCES switch(id_switch),
+PRIMARY KEY (id_porta, id_interface_switch),
+FOREIGN KEY (id_interface_switch) REFERENCES switch(id_switch),
 FOREIGN KEY (id_data) REFERENCES data(id_data));
 
 CREATE TABLE vlan
@@ -128,7 +129,7 @@ FOREIGN KEY(id_switch_rack) REFERENCES rack(id_rack));
 CREATE TABLE interface_h
 (
 id_porta bigserial UNIQUE,
-id_switch int,
+id_interface_switch int,
 id_data int,
 tipo_vlan varchar(50),
 velocidade varchar(50),
@@ -140,9 +141,9 @@ oid_interface_snmp varchar(50),
 valor_interface varchar(50),
 modificacao varchar(20),
 aprova varchar(20),
-PRIMARY KEY (id_porta, id_switch),
+PRIMARY KEY (id_porta, id_interface_switch),
 FOREIGN KEY (id_data) REFERENCES data(id_data),
-FOREIGN KEY (id_switch) REFERENCES switch_h(id_switch));
+FOREIGN KEY (id_interface_switch) REFERENCES switch_h(id_switch));
 
 CREATE TABLE vlanSW_h
 (
@@ -162,6 +163,6 @@ PRIMARY KEY (enterprise, modelo));
 CREATE TABLE raspberry
 (
 id_raspberry bigint UNIQUE,
-id_switch bigint,
+id_raspberry_switch bigint,
 PRIMARY KEY(id_raspberry),
-FOREIGN KEY (id_switch) REFERENCES switch(id_switch));
+FOREIGN KEY (id_raspberry_switch) REFERENCES switch(id_switch));
