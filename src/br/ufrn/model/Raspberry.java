@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Raspberry implements Serializable{
 
 	private Integer id_raspberry;
+	private String interface_raspberry;
 	private Municipio municipio = new Municipio();
 	private Unidade unidade = new Unidade();
 	private Predio predio = new Predio();
@@ -28,6 +29,12 @@ public class Raspberry implements Serializable{
 	}
 	public void setId_raspberry(Integer id_raspberry) {
 		this.id_raspberry = id_raspberry;
+	}
+	public String getInterface_raspberry() {
+		return interface_raspberry;
+	}
+	public void setInterface_raspberry(String interface_raspberry) {
+		this.interface_raspberry = interface_raspberry;
 	}
 	public Municipio getMunicipio() {
 		return municipio;
@@ -76,7 +83,5 @@ public class Raspberry implements Serializable{
 	}
 	public void setComutador(Switch comutador) {
 		this.comutador = comutador;
-	}
-	
-	
+	}	
 }
