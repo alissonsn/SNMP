@@ -1,5 +1,6 @@
 package br.ufrn.recurso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -15,11 +16,15 @@ import javax.ws.rs.core.MediaType;
 import com.google.gson.Gson;
 
 import br.ufrn.dao.DAORaspberry;
+import br.ufrn.dao.DAOVlan;
 import br.ufrn.model.Raspberry;
+import br.ufrn.model.Vlan;
+import br.ufrn.model.VlanSW;
 
 @Path("/raspberry")
 public class RaspberryRecurso {
 	private DAORaspberry daoRaspberry = new DAORaspberry();
+	private DAOVlan daovlan = new DAOVlan();
 	
 	@POST
 	@Path("/add")
@@ -43,6 +48,32 @@ public class RaspberryRecurso {
 	public Raspberry verRaspberry(@PathParam("id") String id){
 		return daoRaspberry.listarRaspberriesSwitch(id);
 	}
+	
+	@GET
+	@Path("/consulta/vlan/{id}")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public List<Vlan> verRaspberryVlan(@PathParam("id") String id){
+		Raspberry raspberry = daoRaspberry.listarRaspberriesSwitch(id);
+		System.out.println("Vlans: "+raspberry.getComutador().getInterfaces().get(0).getVlan().get(0).getVlan());
+		System.out.println("Vlans: "+raspberry.getComutador().getInterfaces().get(0).getVlan().get(1).getVlan());
+		System.out.println("Vlans: "+raspberry.getComutador().getInterfaces().get(0).getVlan().get(2).getVlan());
+		int tamanho = raspberry.getComutador().getInterfaces().get(0).getVlan().size();
+		ArrayList<Vlan> listaVlan = new ArrayList<Vlan>();
+		for (int i = 0; i < tamanho; i++) {
+			VlanSW vlan = raspberry.getComutador().getInterfaces().get(0).getVlan().get(i);
+			if (daovlan.vlanValida(vlan.getVlan().toString())) {
+				System.out.println("Vlan: "+ daovlan.listarVlanNumero(vlan.getVlan().toString()));
+				listaVlan.add(daovlan.listarVlanNumero(vlan.getVlan().toString()));
+			}else{
+				
+			}	
+			
+		}
+		
+		return listaVlan;
+	}
+	
+	
 	
 	@PUT
 	@Path("/edit/{id}")
