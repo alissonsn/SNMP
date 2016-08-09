@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 
 import br.ufrn.dao.DAORaspberry;
 import br.ufrn.dao.DAOVlan;
+import br.ufrn.model.Interface_Raspberry;
 import br.ufrn.model.Raspberry;
 import br.ufrn.model.Vlan;
 import br.ufrn.model.VlanSW;
@@ -32,7 +33,18 @@ public class RaspberryRecurso {
 	public void adicionarRaspberry(String local){
 		Gson gson = new Gson();
 		Raspberry raspberry = gson.fromJson(local, Raspberry.class);
-		daoRaspberry.adicionarRaspbery(raspberry);
+		
+		
+		Interface_Raspberry interface_Raspberry = new Interface_Raspberry();
+		interface_Raspberry.setId_interface_raspberry(raspberry.getInterface_raspberry());
+		interface_Raspberry.setRaspberry(raspberry);
+		
+		if (daoRaspberry.rapsberryExistente(raspberry.getId_raspberry())) {
+			daoRaspberry.adicionarInterfaceRaspbery(interface_Raspberry);
+		}else{
+			daoRaspberry.adicionarRaspbery(raspberry);
+			daoRaspberry.adicionarInterfaceRaspbery(interface_Raspberry);
+		}
 	}
 	
 	@GET

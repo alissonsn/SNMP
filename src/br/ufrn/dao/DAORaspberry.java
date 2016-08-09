@@ -10,6 +10,7 @@ import java.util.List;
 
 import br.ufrn.conexao.ConnectionFactory;
 import br.ufrn.model.Andar;
+import br.ufrn.model.Interface_Raspberry;
 import br.ufrn.model.Municipio;
 import br.ufrn.model.Pavimento;
 import br.ufrn.model.Porta;
@@ -30,15 +31,10 @@ public class DAORaspberry {
 	}
 	
 	public void adicionarRaspbery(Raspberry raspberry){
-		String sql = "INSERT INTO raspberry (id_raspberry, id_raspberry_switch,interface_raspberry) VALUES (?,?,?)";
-		System.out.println("SQL: " + sql);
+		String sql = "INSERT INTO raspberry (id_raspberry) VALUES (?)";
 		try{
 			PreparedStatement ps = conexao.prepareStatement(sql);
-			System.out.println("Id raspberry: " + raspberry.getId_raspberry());
-			System.out.println("Id switch: " + raspberry.getComutador().getId_switch());
 			ps.setLong(1, raspberry.getId_raspberry());
-			ps.setLong(2, raspberry.getComutador().getId_switch());
-			ps.setString(3, raspberry.getInterface_raspberry());
 			ps.execute();
 			ps.close();
 		}catch(SQLException erro){
@@ -46,25 +42,49 @@ public class DAORaspberry {
 		}
 	}
 
+	public void adicionarInterfaceRaspbery(Interface_Raspberry interface_rapsberry){
+		String sql = "INSERT INTO interface_raspberry (interface, id_raspberry, id_switch) VALUES (?,?,?)";
+		System.out.println("SQL: " + sql);
+		try{
+			PreparedStatement ps = conexao.prepareStatement(sql);
+			ps.setString(1, interface_rapsberry.getId_interface_raspberry());
+			ps.setLong(2, interface_rapsberry.getRaspberry().getId_raspberry());
+			ps.setLong(3, interface_rapsberry.getRaspberry().getComutador().getId_switch());
+			ps.execute();
+			ps.close();
+		}catch(SQLException erro){
+			throw new RuntimeException(erro);
+		}
+	}
+	
 	public List<Raspberry> listarRaspberries(){
 		List<Raspberry> listaRaspberry = new ArrayList<Raspberry>();
 		ResultSet rs;
-		String sql = "select id_municipio, nomemunicipio, id_unidade, nomeunidade, id_predio, nomepredio, id_pavimento, "
-				+ "nomepavimento, id_andar, nomeandar, id_sala, nomesala, id_rack, nomerack, qtdus, posicao_rack, ip, "
-				+ "serialtombo, id_switch, id_raspberry, interface_raspberry from raspberry raspberry "
-				+ "INNER JOIN switch on id_raspberry_switch = id_switch "
-				+ "INNER JOIN rack on id_switch_rack = id_rack "				
+		Object id_interface = new Object();
+		ArrayList<VlanSW> vlan = new ArrayList<VlanSW>();
+		ArrayList<Porta> interfacess = new ArrayList<Porta>();
+		Switch comutador = new Switch();
+		String sql = "select distinct id_municipio, nomemunicipio, id_unidade, nomeunidade, id_predio, nomepredio, "
+				+ "id_pavimento, nomepavimento, id_andar, nomeandar, id_sala, nomesala, id_rack, nomerack, qtdus, "
+				+ "posicao_rack, ip, serialtombo, switch.id_switch, vlan, raspberry.id_raspberry, interface_raspberry "
+				+ "from raspberry raspberry  "
+				+ "INNER JOIN interface_raspberry on interface_raspberry.id_raspberry = raspberry.id_raspberry "
+				+ "INNER JOIN switch on switch.id_switch = interface_raspberry.id_switch "
+				+ "INNER JOIN rack on id_switch_rack = id_rack "
 				+ "INNER JOIN sala on id_rack_sala = id_sala "
 				+ "INNER JOIN andar on id_sala_andar = id_andar "
 				+ "INNER JOIN pavimento on id_andar_pavimento = id_pavimento "
 				+ "INNER JOIN predio on id_predio = id_pavimento_predio "
 				+ "INNER JOIN unidade on id_predio_unidade = id_unidade "
-				+ "INNER JOIN municipio on id_municipio = id_unidade_municipio;";
+				+ "INNER JOIN municipio on id_municipio = id_unidade_municipio "
+				+ "INNER JOIN interface interface on switch.id_switch = interface.id_interface_switch "
+				+ "INNER JOIN vlansw vlansw on vlansw.id_porta = interface.id_porta ";
 		Statement st;
 		System.out.println(sql);
 		try {
 			st = conexao.createStatement();
 			rs = st.executeQuery(sql);
+			Object id_porta_anterior = -1;
 			while(rs.next()){
 				
 				Municipio municipio = new Municipio();
@@ -101,19 +121,11 @@ public class DAORaspberry {
 				int id_rack = Integer.parseInt(rs.getString("id_rack"));
 				rack.setId(id_rack);
 				rack.setNome(rs.getString("nomerack"));
-				rack.setQtdUS(rs.getString("qtdus"));
+				rack.setQtdUS(rs.getString("qtdus"));				
 				
 				
-				Switch ativo = new Switch();
-				int id_switch = Integer.parseInt(rs.getString("id_switch"));
-				ativo.setId_switch(id_switch);
-				ativo.setPosicaoRack(rs.getString("posicao_rack"));
-				ativo.setSerialtombo(rs.getString("serialtombo"));
-				ativo.setIp(rs.getString("ip"));
-				
-				Raspberry raspberry = new Raspberry();
 				int id_raspberry = Integer.parseInt(rs.getString("id_raspberry"));
-				
+				Raspberry raspberry = new Raspberry();
 				raspberry.setId_raspberry(id_raspberry);
 				raspberry.setInterface_raspberry(rs.getString("interface_raspberry"));
 				raspberry.setMunicipio(municipio);
@@ -123,7 +135,26 @@ public class DAORaspberry {
 				raspberry.setAndar(andar);
 				raspberry.setSala(sala);
 				raspberry.setRack(rack);
-				raspberry.setComutador(ativo);
+				VlanSW objVlan = new VlanSW();
+				if(id_interface.equals(id_porta_anterior)){
+					objVlan.setVlan(rs.getString("vlan"));
+					vlan.add(objVlan);
+				}else{
+					vlan = new ArrayList<VlanSW>();
+					interfaces = new Porta();
+					objVlan.setVlan(rs.getString("vlan"));
+					vlan.add(objVlan);
+					int id_switch = Integer.parseInt(rs.getString("id_switch"));
+					interfaces.setVlan(vlan);
+					interfacess.add(interfaces);
+					comutador.setId_switch(id_switch);
+					comutador.setPosicaoRack(rs.getString("posicao_rack"));
+					comutador.setSerialtombo(rs.getString("serialtombo"));
+					comutador.setIp(rs.getString("ip"));
+					comutador.setInterfaces(interfacess);
+					id_porta_anterior = id_interface;
+				}
+				raspberry.setComutador(comutador);
 				listaRaspberry.add(raspberry);
 				
 				
@@ -136,6 +167,25 @@ public class DAORaspberry {
 		return listaRaspberry;
 	}
 	
+	
+	public boolean rapsberryExistente(int codigo_raspberry){
+		boolean autenticar = false;
+		String sql = "select * from raspberry where id_raspberry ='"+ codigo_raspberry+ "';";
+		try{
+			PreparedStatement ps = conexao.prepareStatement(sql);
+			ResultSet rm = ps.executeQuery();
+			if(rm.next()){
+				autenticar = true;
+			}
+			rm.close();
+			ps.close();
+		}catch(SQLException erro){
+			throw new RuntimeException(erro);
+		}
+		return autenticar;
+
+}
+	
 	//Listar Todas as configurações dos raspberries
 	public Raspberry listarRaspberriesSwitch(String codigo_raspberry){
 		Object id_interface = new Object();
@@ -146,9 +196,12 @@ public class DAORaspberry {
 		Raspberry raspberry = new Raspberry();
 		
 		ResultSet rs;
-		String sql = "select distinct id_municipio, nomemunicipio, id_unidade, nomeunidade, id_predio, nomepredio, id_pavimento, nomepavimento, "
-				+ "id_andar, nomeandar, id_sala, nomesala, id_rack, nomerack, qtdus, posicao_rack, ip, serialtombo, id_switch, vlan, id_raspberry, interface_raspberry "
-				+ "from raspberry raspberry INNER JOIN switch on id_raspberry_switch = id_switch "
+		String sql = "select distinct id_municipio, nomemunicipio, id_unidade, nomeunidade, id_predio, nomepredio, "
+				+ "id_pavimento, nomepavimento, id_andar, nomeandar, id_sala, nomesala, id_rack, nomerack, qtdus, "
+				+ "posicao_rack, ip, serialtombo, switch.id_switch, vlan, raspberry.id_raspberry, interface_raspberry "
+				+ "from raspberry raspberry  "
+				+ "INNER JOIN interface_raspberry on interface_raspberry.id_raspberry = raspberry.id_raspberry "
+				+ "INNER JOIN switch on switch.id_switch = interface_raspberry.id_switch "
 				+ "INNER JOIN rack on id_switch_rack = id_rack "
 				+ "INNER JOIN sala on id_rack_sala = id_sala "
 				+ "INNER JOIN andar on id_sala_andar = id_andar "
@@ -158,7 +211,7 @@ public class DAORaspberry {
 				+ "INNER JOIN municipio on id_municipio = id_unidade_municipio "
 				+ "INNER JOIN interface interface on switch.id_switch = interface.id_interface_switch "
 				+ "INNER JOIN vlansw vlansw on vlansw.id_porta = interface.id_porta "
-				+ "where id_raspberry = '"+ codigo_raspberry  + "';";
+				+ "where raspberry.id_raspberry = '"+ codigo_raspberry  + "';";
 		System.out.println("Imprindo sql Atual " +sql);
 		try{
 			Statement st = conexao.createStatement();
