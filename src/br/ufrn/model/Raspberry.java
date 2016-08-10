@@ -1,7 +1,7 @@
 package br.ufrn.model;
 
 import java.io.Serializable;
-
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -14,6 +14,7 @@ public class Raspberry implements Serializable{
 
 	private Integer id_raspberry;
 	private String interface_raspberry;
+	private List<Interface_Raspberry> lista_Interface_Raspberry;
 	private Municipio municipio = new Municipio();
 	private Unidade unidade = new Unidade();
 	private Predio predio = new Predio();
@@ -35,6 +36,14 @@ public class Raspberry implements Serializable{
 	}
 	public void setInterface_raspberry(String interface_raspberry) {
 		this.interface_raspberry = interface_raspberry;
+	}
+	
+	public List<Interface_Raspberry> getLista_Interface_Raspberry() {
+		return lista_Interface_Raspberry;
+	}
+	public void setLista_Interface_Raspberry(
+			List<Interface_Raspberry> lista_Interface_Raspberry) {
+		this.lista_Interface_Raspberry = lista_Interface_Raspberry;
 	}
 	public Municipio getMunicipio() {
 		return municipio;

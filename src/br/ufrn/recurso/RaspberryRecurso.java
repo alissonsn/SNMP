@@ -36,7 +36,7 @@ public class RaspberryRecurso {
 		
 		
 		Interface_Raspberry interface_Raspberry = new Interface_Raspberry();
-		interface_Raspberry.setId_interface_raspberry(raspberry.getInterface_raspberry());
+		interface_Raspberry.setInterface_raspberry(raspberry.getInterface_raspberry());
 		interface_Raspberry.setRaspberry(raspberry);
 		
 		if (daoRaspberry.rapsberryExistente(raspberry.getId_raspberry())) {

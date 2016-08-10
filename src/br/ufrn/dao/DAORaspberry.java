@@ -47,7 +47,7 @@ public class DAORaspberry {
 		System.out.println("SQL: " + sql);
 		try{
 			PreparedStatement ps = conexao.prepareStatement(sql);
-			ps.setString(1, interface_rapsberry.getId_interface_raspberry());
+			ps.setString(1, interface_rapsberry.getInterface_raspberry());
 			ps.setLong(2, interface_rapsberry.getRaspberry().getId_raspberry());
 			ps.setLong(3, interface_rapsberry.getRaspberry().getComutador().getId_switch());
 			ps.execute();
@@ -64,6 +64,8 @@ public class DAORaspberry {
 		ArrayList<VlanSW> vlan = new ArrayList<VlanSW>();
 		ArrayList<Porta> interfacess = new ArrayList<Porta>();
 		Switch comutador = new Switch();
+		List<Interface_Raspberry> lista_Interface_Raspberry = new ArrayList<Interface_Raspberry>();
+		
 		String sql = "select distinct id_municipio, nomemunicipio, id_unidade, nomeunidade, id_predio, nomepredio, "
 				+ "id_pavimento, nomepavimento, id_andar, nomeandar, id_sala, nomesala, id_rack, nomerack, qtdus, "
 				+ "posicao_rack, ip, serialtombo, switch.id_switch, vlan, raspberry.id_raspberry, interface_raspberry "
@@ -127,6 +129,13 @@ public class DAORaspberry {
 				int id_raspberry = Integer.parseInt(rs.getString("id_raspberry"));
 				Raspberry raspberry = new Raspberry();
 				raspberry.setId_raspberry(id_raspberry);
+				List<Interface_Raspberry> listaInterface_raspberry = new ArrayList<Interface_Raspberry>();
+				Interface_Raspberry  interface_raspberry = new Interface_Raspberry();
+				
+				
+				
+				//listaInterface_raspberry.add(rs.getString("interface_raspberry"));
+				
 				raspberry.setInterface_raspberry(rs.getString("interface_raspberry"));
 				raspberry.setMunicipio(municipio);
 				raspberry.setUnidade(unidade);
@@ -155,6 +164,7 @@ public class DAORaspberry {
 					id_porta_anterior = id_interface;
 				}
 				raspberry.setComutador(comutador);
+				
 				listaRaspberry.add(raspberry);
 				
 				
@@ -198,7 +208,7 @@ public class DAORaspberry {
 		ResultSet rs;
 		String sql = "select distinct id_municipio, nomemunicipio, id_unidade, nomeunidade, id_predio, nomepredio, "
 				+ "id_pavimento, nomepavimento, id_andar, nomeandar, id_sala, nomesala, id_rack, nomerack, qtdus, "
-				+ "posicao_rack, ip, serialtombo, switch.id_switch, vlan, raspberry.id_raspberry, interface_raspberry "
+				+ "posicao_rack, ip, serialtombo, switch.id_switch, vlan, raspberry.id_raspberry, interface "
 				+ "from raspberry raspberry  "
 				+ "INNER JOIN interface_raspberry on interface_raspberry.id_raspberry = raspberry.id_raspberry "
 				+ "INNER JOIN switch on switch.id_switch = interface_raspberry.id_switch "
@@ -257,7 +267,7 @@ public class DAORaspberry {
 				
 				int id_raspberry = Integer.parseInt(rs.getString("id_raspberry"));
 				raspberry.setId_raspberry(id_raspberry);
-				raspberry.setInterface_raspberry(rs.getString("interface_raspberry"));
+				raspberry.setInterface_raspberry(rs.getString("interface"));
 				raspberry.setMunicipio(municipio);
 				raspberry.setUnidade(unidade);
 				raspberry.setPredio(predio);

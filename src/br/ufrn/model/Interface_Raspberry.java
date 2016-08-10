@@ -13,20 +13,26 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Interface_Raspberry implements Serializable{
 
 	
-	private String id_interface_raspberry;
+	private String interface_raspberry;
 	private Raspberry raspberry = new Raspberry();
+	private Switch comutador = new Switch();
 	
-	
-	public String getId_interface_raspberry() {
-		return id_interface_raspberry;
+	public String getInterface_raspberry() {
+		return interface_raspberry;
 	}
-	public void setId_interface_raspberry(String id_interface_raspberry) {
-		this.id_interface_raspberry = id_interface_raspberry;
+	public void setInterface_raspberry(String interface_raspberry) {
+		this.interface_raspberry = interface_raspberry;
 	}
 	public Raspberry getRaspberry() {
 		return raspberry;
 	}
 	public void setRaspberry(Raspberry raspberry) {
 		this.raspberry = raspberry;
-	}	
+	}
+	public Switch getComutador() {
+		return comutador;
+	}
+	public void setComutador(Switch comutador) {
+		this.comutador = comutador;
+	}
 }

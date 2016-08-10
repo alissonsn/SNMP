@@ -414,7 +414,7 @@ public class DAOPortas {
 		ResultSet rs;
 		String sql = "select id_interface_snmp, valor_interface, oid_interface_snmp, estado, "
 				+ "ligada, tipo_conector, interface.id_porta, velocidade, tipo_vlan, ip, "
-				+ "interface.id_switch, vlan from interface interface INNER JOIN vlansw "
+				+ "id_switch, vlan from interface interface INNER JOIN vlansw "
 				+ "vlansw on vlansw.id_porta = interface.id_porta inner join switch switch "
 				+ "on switch.id_switch = interface.id_interface_switch and switch.serialtombo= '"
 				+ id_switch + "' order by id_porta;";
@@ -496,7 +496,7 @@ public class DAOPortas {
 				ResultSet rs;
 				String sql = "select id_interface_snmp, valor_interface, oid_interface_snmp, estado, "
 						+ "ligada, tipo_conector, interface.id_porta, velocidade, tipo_vlan, ip, "
-						+ "interface.id_switch, vlan from interface interface INNER JOIN vlansw "
+						+ "id_switch, vlan from interface interface INNER JOIN vlansw "
 						+ "vlansw on vlansw.id_porta = interface.id_porta inner join switch switch "
 						+ "on switch.id_switch = interface.id_interface_switch and switch.serialtombo= '"
 						+ id_switch + "' order by id_porta;";
@@ -577,7 +577,7 @@ public class DAOPortas {
 				ResultSet rs;
 				String sql = "select id_interface_snmp, valor_interface, oid_interface_snmp, estado, "
 						+ "ligada, tipo_conector, interface_h.id_porta, velocidade, tipo_vlan, ip, "
-						+ "interface_h.id_switch, vlan from interface_h interface_h INNER JOIN vlansw_h "
+						+ "id_switch, vlan from interface_h interface_h INNER JOIN vlansw_h "
 						+ "vlansw_h on vlansw_h.id_porta = interface_h.id_porta inner join switch_h switch_h "
 						+ "on switch_h.id_switch = interface_h.id_interface_switch and switch_h.serialtombo= '"
 						+ id_switch + "' order by id_porta;";
@@ -657,7 +657,7 @@ public class DAOPortas {
 		ResultSet rs;
 		String sql = "select id_interface_snmp, valor_interface, oid_interface_snmp, estado, "
 				+ "ligada, tipo_conector, interface_h.id_porta, velocidade, tipo_vlan, ip, "
-				+ "interface_h.id_switch, vlan from interface_h interface_h INNER JOIN vlansw_h "
+				+ "id_switch, vlan from interface_h interface_h INNER JOIN vlansw_h "
 				+ "vlansw_h on vlansw_h.id_porta = interface_h.id_porta inner join switch_h switch_h "
 				+ "on switch_h.id_switch = interface_h.id_interface_switch and switch_h.serialtombo= '"
 				+ id_switch + "' order by id_porta;";

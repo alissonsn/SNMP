@@ -71,6 +71,13 @@ public class RegistroRecurso {
 		Gson gson = new Gson();
 		Registro model = gson.fromJson(modelo, Registro.class);
 
+		
+		registro.setEnterprise(model.getEnterprise());
+		registro.setModelo(model.getModelo());
+		registro.setClassePorta("br.ufrn.service." + model.getClassePorta());
+		registro.setClasseVlan("br.ufrn.service." + model.getClasseVlan());
+		
+		
 		/*
 		String classePorta = model.getClassePorta();
 		String classevlan = model.getClasseVlan();
@@ -82,7 +89,7 @@ public class RegistroRecurso {
 		model.setEnterprise(enterprise);
 		model.setClassePorta(classePorta);
 		model.setClasseVlan(classevlan);*/
-		daoRegistro.atualizarModelo(model);
+		daoRegistro.atualizarModelo(registro);
 
 	}
 
