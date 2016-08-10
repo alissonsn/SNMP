@@ -31,10 +31,12 @@ public class DAORaspberry {
 	}
 	
 	public void adicionarRaspbery(Raspberry raspberry){
-		String sql = "INSERT INTO raspberry (id_raspberry) VALUES (?)";
+		String sql = "INSERT INTO raspberry (id_raspberry, posicao_rack, id_raspberry_rack) VALUES (?,?,?)";
 		try{
 			PreparedStatement ps = conexao.prepareStatement(sql);
 			ps.setLong(1, raspberry.getId_raspberry());
+			ps.setString(2, raspberry.getPosicaoRack());
+			ps.setLong(3, raspberry.getRack().getId());
 			ps.execute();
 			ps.close();
 		}catch(SQLException erro){
@@ -64,11 +66,11 @@ public class DAORaspberry {
 		ArrayList<VlanSW> vlan = new ArrayList<VlanSW>();
 		ArrayList<Porta> interfacess = new ArrayList<Porta>();
 		Switch comutador = new Switch();
-		List<Interface_Raspberry> lista_Interface_Raspberry = new ArrayList<Interface_Raspberry>();
+		
 		
 		String sql = "select distinct id_municipio, nomemunicipio, id_unidade, nomeunidade, id_predio, nomepredio, "
 				+ "id_pavimento, nomepavimento, id_andar, nomeandar, id_sala, nomesala, id_rack, nomerack, qtdus, "
-				+ "posicao_rack, ip, serialtombo, switch.id_switch, vlan, raspberry.id_raspberry, interface_raspberry "
+				+ "raspberry.posicao_rack, ip, serialtombo, switch.id_switch, vlan, raspberry.id_raspberry, interface_raspberry "
 				+ "from raspberry raspberry  "
 				+ "INNER JOIN interface_raspberry on interface_raspberry.id_raspberry = raspberry.id_raspberry "
 				+ "INNER JOIN switch on switch.id_switch = interface_raspberry.id_switch "
@@ -199,16 +201,15 @@ public class DAORaspberry {
 	//Listar Todas as configurações dos raspberries
 	public Raspberry listarRaspberriesSwitch(String codigo_raspberry){
 		Object id_interface = new Object();
-		
 		ArrayList<VlanSW> vlan = new ArrayList<VlanSW>();
 		ArrayList<Porta> interfacess = new ArrayList<Porta>();
-		Switch comutador = new Switch();
 		Raspberry raspberry = new Raspberry();
+		ArrayList<Interface_Raspberry> lista_interface_raspberry = new ArrayList<Interface_Raspberry>();
 		
 		ResultSet rs;
 		String sql = "select distinct id_municipio, nomemunicipio, id_unidade, nomeunidade, id_predio, nomepredio, "
 				+ "id_pavimento, nomepavimento, id_andar, nomeandar, id_sala, nomesala, id_rack, nomerack, qtdus, "
-				+ "posicao_rack, ip, serialtombo, switch.id_switch, vlan, raspberry.id_raspberry, interface "
+				+ "raspberry.posicao_rack, ip, serialtombo, switch.id_switch, vlan, raspberry.id_raspberry, interface "
 				+ "from raspberry raspberry  "
 				+ "INNER JOIN interface_raspberry on interface_raspberry.id_raspberry = raspberry.id_raspberry "
 				+ "INNER JOIN switch on switch.id_switch = interface_raspberry.id_switch "
@@ -265,9 +266,13 @@ public class DAORaspberry {
 				rack.setQtdUS(rs.getString("qtdus"));				
 				
 				
+				Interface_Raspberry interface_Raspberry = new Interface_Raspberry();
+				interface_Raspberry.setInterface_raspberry(rs.getString("interface"));
+				
+				
 				int id_raspberry = Integer.parseInt(rs.getString("id_raspberry"));
 				raspberry.setId_raspberry(id_raspberry);
-				raspberry.setInterface_raspberry(rs.getString("interface"));
+				//raspberry.setInterface_raspberry(rs.getString("interface"));
 				raspberry.setMunicipio(municipio);
 				raspberry.setUnidade(unidade);
 				raspberry.setPredio(predio);
@@ -287,14 +292,18 @@ public class DAORaspberry {
 					int id_switch = Integer.parseInt(rs.getString("id_switch"));
 					interfaces.setVlan(vlan);
 					interfacess.add(interfaces);
+					Switch comutador = new Switch();
 					comutador.setId_switch(id_switch);
 					comutador.setPosicaoRack(rs.getString("posicao_rack"));
 					comutador.setSerialtombo(rs.getString("serialtombo"));
 					comutador.setIp(rs.getString("ip"));
 					comutador.setInterfaces(interfacess);
 					id_porta_anterior = id_interface;
+					interface_Raspberry.setComutador(comutador);
+					lista_interface_raspberry.add(interface_Raspberry);
+					
 				}
-				raspberry.setComutador(comutador);
+				raspberry.setLista_Interface_Raspberry(lista_interface_raspberry);
 				
 			}
 			//config.add(comutador);

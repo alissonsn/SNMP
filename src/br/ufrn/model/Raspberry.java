@@ -14,6 +14,7 @@ public class Raspberry implements Serializable{
 
 	private Integer id_raspberry;
 	private String interface_raspberry;
+	private String posicaoRack;
 	private List<Interface_Raspberry> lista_Interface_Raspberry;
 	private Municipio municipio = new Municipio();
 	private Unidade unidade = new Unidade();
@@ -36,8 +37,13 @@ public class Raspberry implements Serializable{
 	}
 	public void setInterface_raspberry(String interface_raspberry) {
 		this.interface_raspberry = interface_raspberry;
+	}	
+	public String getPosicaoRack() {
+		return posicaoRack;
 	}
-	
+	public void setPosicaoRack(String posicaoRack) {
+		this.posicaoRack = posicaoRack;
+	}
 	public List<Interface_Raspberry> getLista_Interface_Raspberry() {
 		return lista_Interface_Raspberry;
 	}
