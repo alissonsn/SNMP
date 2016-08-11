@@ -302,13 +302,13 @@ public class DAORaspberry {
 			Statement st = conexao.createStatement();
 			rs = st.executeQuery(sql);
 			int id = -1;
+			System.out.println("Tamanho Inicial da lista: " + lista_interface_raspberry.size());
 			while(rs.next()){
-				
-				
 				id_switch = Integer.parseInt(rs.getString("id_switch"));
 				if (id_switch == id) {
 					System.out.println("id do swith Igual : " + id_switch);
-					interface_Raspberry.setComutador(comutador);
+					System.out.println("Tamanho da lista no if : " + lista_interface_raspberry.size());
+					//interface_Raspberry.setComutador(comutador);
 				}else{
 					comutador = new Switch();
 					interface_Raspberry = new Interface_Raspberry();
@@ -316,26 +316,21 @@ public class DAORaspberry {
 					comutador.setPosicaoRack(rs.getString("posicao_rack"));
 					comutador.setIp(rs.getString("ip"));
 					interface_Raspberry.setComutador(comutador);
-					id = id_switch;
-					
-						
-					
+					interface_Raspberry.setInterface_raspberry(rs.getString("interface"));
+					lista_interface_raspberry.add(interface_Raspberry);
+					id = id_switch;	
 					System.out.println("id do swith diferente: " + id_switch);
-					
+					System.out.println("Tamanho da lista no else : " + lista_interface_raspberry.size());
 				}
-				
-				interface_Raspberry.setInterface_raspberry(rs.getString("interface"));
 				//interface_Raspberry.setComutador(comutador);
-				
+				System.out.println("Tamanho da lista fora do condicional: " + lista_interface_raspberry.size());
 				
 				int id_raspberry = Integer.parseInt(rs.getString("id_raspberry"));
 				raspberry.setId_raspberry(id_raspberry);
 				raspberry.setPosicaoRack(rs.getString("posicao_rack"));
 				//raspberry.setInterface_raspberry(rs.getString("interface"));
-				lista_interface_raspberry.add(interface_Raspberry);
+				//lista_interface_raspberry.add(interface_Raspberry);
 				raspberry.setLista_Interface_Raspberry(lista_interface_raspberry);
-				
-							
 			}
 			//config.add(comutador);
 			st.close();
