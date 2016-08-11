@@ -16,14 +16,14 @@ public class Raspberry implements Serializable{
 	private String interface_raspberry;
 	private String posicaoRack;
 	private List<Interface_Raspberry> lista_Interface_Raspberry;
-	private Municipio municipio = new Municipio();
-	private Unidade unidade = new Unidade();
-	private Predio predio = new Predio();
-	private Pavimento pavimento = new Pavimento();
-	private Andar andar = new Andar();
-	private Sala sala = new Sala();
-	private Rack rack = new Rack();
-	private Switch comutador = new Switch();
+	private Municipio municipio = null;
+	private Unidade unidade = null;
+	private Predio predio = null;
+	private Pavimento pavimento = null;
+	private Andar andar = null;
+	private Sala sala = null;
+	private Rack rack = null;
+	private Switch comutador = null;
 	
 	
 	public Integer getId_raspberry() {

@@ -14,8 +14,8 @@ public class Interface_Raspberry implements Serializable{
 
 	
 	private String interface_raspberry;
-	private Raspberry raspberry = new Raspberry();
-	private Switch comutador = new Switch();
+	private Raspberry raspberry = null;
+	private Switch comutador = null;
 	
 	public String getInterface_raspberry() {
 		return interface_raspberry;

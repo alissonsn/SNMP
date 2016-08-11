@@ -200,111 +200,75 @@ public class DAORaspberry {
 	
 	//Listar Todas as configurações dos raspberries
 	public Raspberry listarRaspberriesSwitch(String codigo_raspberry){
-		Object id_interface = new Object();
 		ArrayList<VlanSW> vlan = new ArrayList<VlanSW>();
 		ArrayList<Porta> interfacess = new ArrayList<Porta>();
 		Raspberry raspberry = new Raspberry();
+		Interface_Raspberry interface_Raspberry = new Interface_Raspberry();
+		Switch comutador = new Switch();
+		int id_switch = 0;	
 		ArrayList<Interface_Raspberry> lista_interface_raspberry = new ArrayList<Interface_Raspberry>();
 		
 		ResultSet rs;
-		String sql = "select distinct id_municipio, nomemunicipio, id_unidade, nomeunidade, id_predio, nomepredio, "
-				+ "id_pavimento, nomepavimento, id_andar, nomeandar, id_sala, nomesala, id_rack, nomerack, qtdus, "
-				+ "raspberry.posicao_rack, ip, serialtombo, switch.id_switch, vlan, raspberry.id_raspberry, interface "
+		String sql = "select distinct ip, switch.id_switch, vlan, raspberry.posicao_rack, raspberry.id_raspberry, interface "
 				+ "from raspberry raspberry  "
 				+ "INNER JOIN interface_raspberry on interface_raspberry.id_raspberry = raspberry.id_raspberry "
-				+ "INNER JOIN switch on switch.id_switch = interface_raspberry.id_switch "
-				+ "INNER JOIN rack on id_switch_rack = id_rack "
-				+ "INNER JOIN sala on id_rack_sala = id_sala "
-				+ "INNER JOIN andar on id_sala_andar = id_andar "
-				+ "INNER JOIN pavimento on id_andar_pavimento = id_pavimento "
-				+ "INNER JOIN predio on id_predio = id_pavimento_predio "
-				+ "INNER JOIN unidade on id_predio_unidade = id_unidade "
-				+ "INNER JOIN municipio on id_municipio = id_unidade_municipio "
+				+ "INNER JOIN switch on interface_raspberry.id_switch = switch.id_switch "
 				+ "INNER JOIN interface interface on switch.id_switch = interface.id_interface_switch "
 				+ "INNER JOIN vlansw vlansw on vlansw.id_porta = interface.id_porta "
-				+ "where raspberry.id_raspberry = '"+ codigo_raspberry  + "';";
+				+ "where raspberry.id_raspberry = '"+ codigo_raspberry  + "' order by id_switch;";
 		System.out.println("Imprindo sql Atual " +sql);
 		try{
 			Statement st = conexao.createStatement();
 			rs = st.executeQuery(sql);
-			Object id_porta_anterior = -1;
+			int id = -1;
 			while(rs.next()){
-				Municipio municipio = new Municipio();
-				int id_municipio = Integer.parseInt(rs.getString("id_municipio")); 
-				municipio.setId(id_municipio);
-				municipio.setNome(rs.getString("nomemunicipio"));
-				
-				Unidade unidade = new Unidade();
-				int id_unidade= Integer.parseInt(rs.getString("id_unidade"));
-				unidade.setId(id_unidade);
-				unidade.setNome(rs.getString("nomeunidade"));
+				VlanSW objVlan = new VlanSW();
+				String vlann = "";
+				id_switch = Integer.parseInt(rs.getString("id_switch"));
+				if (id_switch == id) {	
+					vlann  =  (rs.getString("vlan"));
+					objVlan.setVlan(vlann);
+					vlan.add(objVlan);
+					System.out.println("id do swith Igual : " + id_switch);				
+					System.out.println("Vlan igual " +vlann);
+				}else{
+					comutador = new Switch();
+					comutador.setId_switch(id_switch);
+					comutador.setPosicaoRack(rs.getString("posicao_rack"));
+					comutador.setIp(rs.getString("ip"));
+					comutador.setInterfaces(interfacess);
+					vlan = new ArrayList<VlanSW>();
+					interfaces = new Porta();
+					vlann  =  (rs.getString("vlan"));
+					objVlan.setVlan(vlann);
+					vlan.add(objVlan);
+					interfaces.setVlan(vlan);
+					interfacess.add(interfaces);
+					id = id_switch;
 					
-				Predio predio = new Predio();
-				int id_predio = Integer.parseInt(rs.getString("id_predio"));
-				predio.setId(id_predio);
-				predio.setNome(rs.getString("nomepredio"));
-			
-				Pavimento pavimento = new Pavimento();
-				int id_pavimento = Integer.parseInt(rs.getString("id_pavimento"));
-				pavimento.setId(id_pavimento);
-				pavimento.setNome(rs.getString("nomepavimento"));
-				
-				Andar andar = new Andar();
-				int id_andar = Integer.parseInt(rs.getString("id_andar"));
-				andar.setId(id_andar);
-				andar.setNome(rs.getString("nomeandar"));
-				
-				Sala sala = new Sala();
-				int id_sala = Integer.parseInt(rs.getString("id_sala"));
-				sala.setId(id_sala);
-				sala.setNome(rs.getString("nomesala"));
-				
-				Rack rack = new Rack();
-				int id_rack = Integer.parseInt(rs.getString("id_rack"));
-				rack.setId(id_rack);
-				rack.setNome(rs.getString("nomerack"));
-				rack.setQtdUS(rs.getString("qtdus"));				
+						
+					
+					System.out.println("id do swith diferente: " + id_switch);
+					System.out.println("Vlan Diferente " +vlann);
+				}
 				
 				
-				Interface_Raspberry interface_Raspberry = new Interface_Raspberry();
+
+				
 				interface_Raspberry.setInterface_raspberry(rs.getString("interface"));
+				interface_Raspberry.setComutador(comutador);
 				
 				
 				int id_raspberry = Integer.parseInt(rs.getString("id_raspberry"));
 				raspberry.setId_raspberry(id_raspberry);
+				raspberry.setPosicaoRack(rs.getString("posicao_rack"));
 				//raspberry.setInterface_raspberry(rs.getString("interface"));
-				raspberry.setMunicipio(municipio);
-				raspberry.setUnidade(unidade);
-				raspberry.setPredio(predio);
-				raspberry.setPavimento(pavimento);
-				raspberry.setAndar(andar);
-				raspberry.setSala(sala);
-				raspberry.setRack(rack);
-				VlanSW objVlan = new VlanSW();
-				if(id_interface.equals(id_porta_anterior)){
-					objVlan.setVlan(rs.getString("vlan"));
-					vlan.add(objVlan);
-				}else{
-					vlan = new ArrayList<VlanSW>();
-					interfaces = new Porta();
-					objVlan.setVlan(rs.getString("vlan"));
-					vlan.add(objVlan);
-					int id_switch = Integer.parseInt(rs.getString("id_switch"));
-					interfaces.setVlan(vlan);
-					interfacess.add(interfaces);
-					Switch comutador = new Switch();
-					comutador.setId_switch(id_switch);
-					comutador.setPosicaoRack(rs.getString("posicao_rack"));
-					comutador.setSerialtombo(rs.getString("serialtombo"));
-					comutador.setIp(rs.getString("ip"));
-					comutador.setInterfaces(interfacess);
-					id_porta_anterior = id_interface;
-					interface_Raspberry.setComutador(comutador);
-					lista_interface_raspberry.add(interface_Raspberry);
-					
-				}
+				lista_interface_raspberry.add(interface_Raspberry);
 				raspberry.setLista_Interface_Raspberry(lista_interface_raspberry);
 				
+				
+				
+							
 			}
 			//config.add(comutador);
 			st.close();
