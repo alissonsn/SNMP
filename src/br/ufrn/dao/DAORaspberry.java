@@ -279,6 +279,74 @@ public class DAORaspberry {
 		return raspberry;
 	}	
 	
+	//Listar Todas as configurações dos raspberries
+	public Raspberry listarRaspberriesSwitchh(String codigo_raspberry){
+		ArrayList<VlanSW> vlan = new ArrayList<VlanSW>();
+		ArrayList<Porta> interfacess = new ArrayList<Porta>();
+		Raspberry raspberry = new Raspberry();
+		Interface_Raspberry interface_Raspberry = new Interface_Raspberry();
+		Switch comutador = new Switch();
+		int id_switch = 0;	
+		ArrayList<Interface_Raspberry> lista_interface_raspberry = new ArrayList<Interface_Raspberry>();
+		
+		ResultSet rs;
+		String sql = "select distinct ip, switch.id_switch, raspberry.posicao_rack, raspberry.id_raspberry, interface "
+				+ "from raspberry raspberry  "
+				+ "INNER JOIN interface_raspberry on interface_raspberry.id_raspberry = raspberry.id_raspberry "
+				+ "INNER JOIN switch on interface_raspberry.id_switch = switch.id_switch "
+				//+ "INNER JOIN interface interface on switch.id_switch = interface.id_interface_switch "
+				//+ "INNER JOIN vlansw vlansw on vlansw.id_porta = interface.id_porta "
+				+ "where raspberry.id_raspberry = '"+ codigo_raspberry  + "' order by id_switch;";
+		System.out.println("Imprindo sql Atual " +sql);
+		try{
+			Statement st = conexao.createStatement();
+			rs = st.executeQuery(sql);
+			int id = -1;
+			while(rs.next()){
+				
+				
+				id_switch = Integer.parseInt(rs.getString("id_switch"));
+				if (id_switch == id) {
+					System.out.println("id do swith Igual : " + id_switch);
+					interface_Raspberry.setComutador(comutador);
+				}else{
+					comutador = new Switch();
+					interface_Raspberry = new Interface_Raspberry();
+					comutador.setId_switch(id_switch);
+					comutador.setPosicaoRack(rs.getString("posicao_rack"));
+					comutador.setIp(rs.getString("ip"));
+					interface_Raspberry.setComutador(comutador);
+					id = id_switch;
+					
+						
+					
+					System.out.println("id do swith diferente: " + id_switch);
+					
+				}
+				
+				interface_Raspberry.setInterface_raspberry(rs.getString("interface"));
+				//interface_Raspberry.setComutador(comutador);
+				
+				
+				int id_raspberry = Integer.parseInt(rs.getString("id_raspberry"));
+				raspberry.setId_raspberry(id_raspberry);
+				raspberry.setPosicaoRack(rs.getString("posicao_rack"));
+				//raspberry.setInterface_raspberry(rs.getString("interface"));
+				lista_interface_raspberry.add(interface_Raspberry);
+				raspberry.setLista_Interface_Raspberry(lista_interface_raspberry);
+				
+							
+			}
+			//config.add(comutador);
+			st.close();
+			rs.close();
+		}catch(SQLException erro){
+			throw new RuntimeException(erro);
+		}
+		return raspberry;
+	}	
+	
+	
 	public void atualizarRaspberry(Raspberry raspberry){
 		String sql = "UPDATE raspberry set id_raspberry ='"+ raspberry.getId_raspberry() + "' "
 				+ "where id_raspberry = '" + raspberry.getId_raspberry() + "'";
