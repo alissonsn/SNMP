@@ -302,32 +302,33 @@ public class DAORaspberry {
 			Statement st = conexao.createStatement();
 			rs = st.executeQuery(sql);
 			int id = -1;
-			System.out.println("Tamanho Inicial da lista: " + lista_interface_raspberry.size());
+			//System.out.println("Tamanho Inicial da lista: " + lista_interface_raspberry.size());
 			while(rs.next()){
 				id_switch = Integer.parseInt(rs.getString("id_switch"));
 				VlanSW objVlan = new VlanSW();
 				String vlann = "";
+				
 				if (id_switch == id) {
-					System.out.println("id do swith Igual : " + id_switch);
-					System.out.println("Tamanho da lista no if : " + lista_interface_raspberry.size());
+					
 					vlann = (rs.getString("vlan"));
 					objVlan.setVlan(vlann);
 					vlan.add(objVlan);
+					System.out.println("id do swith no if : " + id_switch);
+					System.out.println("Tamanho da lista interface no if : " + lista_interface_raspberry.size());
 					System.out.println("Vlan no if: " + vlann);
 					System.out.println("Tamanho da lista de vlans no if: " + vlan.size());
+					System.out.println("Tamanho da lista de portas no if: " + comutador.getInterfaces().size());
 				}else{
 					interface_Raspberry = new Interface_Raspberry();
-					
-					
 					vlan = new ArrayList<VlanSW>();
 					interfaces = new Porta();
 					vlann  =  (rs.getString("vlan"));
 					objVlan.setVlan(vlann);
 					vlan.add(objVlan);
+					interfaces = new Porta();
 					interfaces.setVlan(vlan);
 					interfacess.add(interfaces);
 					comutador = new Switch();
-					
 					comutador.setId_switch(id_switch);
 					comutador.setPosicaoRack(rs.getString("posicao_rack"));
 					comutador.setIp(rs.getString("ip"));
@@ -339,14 +340,16 @@ public class DAORaspberry {
 					interface_Raspberry.setInterface_raspberry(rs.getString("interface"));
 					lista_interface_raspberry.add(interface_Raspberry);
 					id = id_switch;	
-					System.out.println("id do swith diferente: " + id_switch);
-					System.out.println("Tamanho da lista no else : " + lista_interface_raspberry.size());
+					System.out.println("id do swith no else: " + id_switch);
+					System.out.println("Tamanho da lista de interface no else : " + lista_interface_raspberry.size());
 					System.out.println("Vlan no else: " + vlann);
 					System.out.println("Tamanho da lista de vlans no else: " + vlan.size());
+					System.out.println("Tamanho da lista de portas no else: " + comutador.getInterfaces().size());
 				}
 				//interface_Raspberry.setComutador(comutador);
-				System.out.println("Tamanho da lista fora do condicional: " + lista_interface_raspberry.size());
-				
+				System.out.println("Tamanho da lista de interfaces fora do condicional: " + lista_interface_raspberry.size());
+				System.out.println("Tamanho da lista de vlans fora do condicional: " + vlan.size());
+				System.out.println("Tamanho da lista de portas fora do condicional: " + comutador.getInterfaces().size());
 				int id_raspberry = Integer.parseInt(rs.getString("id_raspberry"));
 				raspberry.setId_raspberry(id_raspberry);
 				raspberry.setPosicaoRack(rs.getString("posicao_rack"));
