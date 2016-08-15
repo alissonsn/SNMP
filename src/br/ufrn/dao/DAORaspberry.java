@@ -306,6 +306,7 @@ public class DAORaspberry {
 					vlan = new ArrayList<VlanSW>();
 					Porta interfaces = new Porta();
 					comutador = new Switch();
+					interfacess = new ArrayList<Porta>();
 					
 					vlann  =  (rs.getString("vlan"));
 					objVlan.setVlan(vlann);
