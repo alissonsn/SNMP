@@ -13,7 +13,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Raspberry implements Serializable{
 
 	private Integer id_raspberry;
-	private String interface_raspberry;
 	private String posicaoRack;
 	private List<Interface_Raspberry> lista_Interface_Raspberry;
 	private Municipio municipio = null;
@@ -31,12 +30,6 @@ public class Raspberry implements Serializable{
 	}
 	public void setId_raspberry(Integer id_raspberry) {
 		this.id_raspberry = id_raspberry;
-	}
-	public String getInterface_raspberry() {
-		return interface_raspberry;
-	}
-	public void setInterface_raspberry(String interface_raspberry) {
-		this.interface_raspberry = interface_raspberry;
 	}	
 	public String getPosicaoRack() {
 		return posicaoRack;

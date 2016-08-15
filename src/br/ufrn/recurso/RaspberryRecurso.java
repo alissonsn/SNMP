@@ -34,17 +34,17 @@ public class RaspberryRecurso {
 		Gson gson = new Gson();
 		Raspberry raspberry = gson.fromJson(local, Raspberry.class);
 		
-		
+		/*
 		Interface_Raspberry interface_Raspberry = new Interface_Raspberry();
 		interface_Raspberry.setInterface_raspberry(raspberry.getInterface_raspberry());
 		interface_Raspberry.setRaspberry(raspberry);
 		
 		if (daoRaspberry.rapsberryExistente(raspberry.getId_raspberry())) {
 			daoRaspberry.adicionarInterfaceRaspbery(interface_Raspberry);
-		}else{
+		}else{*/
 			daoRaspberry.adicionarRaspbery(raspberry);
-			daoRaspberry.adicionarInterfaceRaspbery(interface_Raspberry);
-		}
+			//daoRaspberry.adicionarInterfaceRaspbery(interface_Raspberry);
+		//}
 	}
 	
 	@GET

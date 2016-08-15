@@ -43,21 +43,6 @@ public class DAORaspberry {
 			throw new RuntimeException(erro);
 		}
 	}
-
-	public void adicionarInterfaceRaspbery(Interface_Raspberry interface_rapsberry){
-		String sql = "INSERT INTO interface_raspberry (interface, id_raspberry, id_switch) VALUES (?,?,?)";
-		System.out.println("SQL: " + sql);
-		try{
-			PreparedStatement ps = conexao.prepareStatement(sql);
-			ps.setString(1, interface_rapsberry.getInterface_raspberry());
-			ps.setLong(2, interface_rapsberry.getRaspberry().getId_raspberry());
-			ps.setLong(3, interface_rapsberry.getRaspberry().getComutador().getId_switch());
-			ps.execute();
-			ps.close();
-		}catch(SQLException erro){
-			throw new RuntimeException(erro);
-		}
-	}
 	
 	public List<Raspberry> listarRaspberries(){
 		List<Raspberry> listaRaspberry = new ArrayList<Raspberry>();
@@ -138,7 +123,7 @@ public class DAORaspberry {
 				
 				//listaInterface_raspberry.add(rs.getString("interface_raspberry"));
 				
-				raspberry.setInterface_raspberry(rs.getString("interface_raspberry"));
+				//raspberry.setInterface_raspberry(rs.getString("interface_raspberry"));
 				raspberry.setMunicipio(municipio);
 				raspberry.setUnidade(unidade);
 				raspberry.setPredio(predio);
@@ -307,9 +292,7 @@ public class DAORaspberry {
 				id_switch = Integer.parseInt(rs.getString("id_switch"));
 				VlanSW objVlan = new VlanSW();
 				String vlann = "";
-				
 				if (id_switch == id) {
-					
 					vlann = (rs.getString("vlan"));
 					objVlan.setVlan(vlann);
 					vlan.add(objVlan);
@@ -321,14 +304,16 @@ public class DAORaspberry {
 				}else{
 					interface_Raspberry = new Interface_Raspberry();
 					vlan = new ArrayList<VlanSW>();
-					interfaces = new Porta();
+					Porta interfaces = new Porta();
+					comutador = new Switch();
+					
 					vlann  =  (rs.getString("vlan"));
 					objVlan.setVlan(vlann);
 					vlan.add(objVlan);
-					interfaces = new Porta();
+					
 					interfaces.setVlan(vlan);
 					interfacess.add(interfaces);
-					comutador = new Switch();
+					
 					comutador.setId_switch(id_switch);
 					comutador.setPosicaoRack(rs.getString("posicao_rack"));
 					comutador.setIp(rs.getString("ip"));
@@ -355,8 +340,9 @@ public class DAORaspberry {
 				raspberry.setPosicaoRack(rs.getString("posicao_rack"));
 				//raspberry.setInterface_raspberry(rs.getString("interface"));
 				//lista_interface_raspberry.add(interface_Raspberry);
-				raspberry.setLista_Interface_Raspberry(lista_interface_raspberry);
+				
 			}
+			raspberry.setLista_Interface_Raspberry(lista_interface_raspberry);
 			//config.add(comutador);
 			st.close();
 			rs.close();
