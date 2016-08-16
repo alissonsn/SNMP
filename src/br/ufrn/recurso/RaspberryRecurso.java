@@ -62,13 +62,6 @@ public class RaspberryRecurso {
 	}
 	
 	@GET
-	@Path("/consulta/teste/{id}")
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Raspberry verRaspberr(@PathParam("id") String id){
-		return daoRaspberry.listarRaspberriesSwitchh(id);
-	}
-	
-	@GET
 	@Path("/consulta/vlan/{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public List<Vlan> verRaspberryVlan(@PathParam("id") String id){
