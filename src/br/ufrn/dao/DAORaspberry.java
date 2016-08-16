@@ -20,6 +20,7 @@ import br.ufrn.model.Raspberry;
 import br.ufrn.model.Sala;
 import br.ufrn.model.Switch;
 import br.ufrn.model.Unidade;
+import br.ufrn.model.Vlan;
 import br.ufrn.model.VlanSW;
 
 public class DAORaspberry {
@@ -266,7 +267,7 @@ public class DAORaspberry {
 	
 	//Listar Todas as configurações dos raspberries
 	public Raspberry listarRaspberriesSwitchh(String codigo_raspberry){
-		ArrayList<VlanSW> vlan = new ArrayList<VlanSW>();
+		ArrayList<Vlan> listavlan = new ArrayList<Vlan>();
 		ArrayList<Porta> interfacess = new ArrayList<Porta>();
 		Raspberry raspberry = new Raspberry();
 		Interface_Raspberry interface_Raspberry = new Interface_Raspberry();
@@ -275,12 +276,14 @@ public class DAORaspberry {
 		ArrayList<Interface_Raspberry> lista_interface_raspberry = new ArrayList<Interface_Raspberry>();
 		
 		ResultSet rs;
-		String sql = "select distinct ip, switch.id_switch, vlan,raspberry.posicao_rack, raspberry.id_raspberry, interface "
-				+ "from raspberry raspberry  "
+		String sql = "select distinct ip, switch.id_switch, vlan,raspberry.posicao_rack, raspberry.id_raspberry, "
+				+ "interface, numerovlan, faixaip, mascara, gateway, dns, dhcp "
+				+ "from raspberry raspberry "
 				+ "INNER JOIN interface_raspberry on interface_raspberry.id_raspberry = raspberry.id_raspberry "
 				+ "INNER JOIN switch on interface_raspberry.id_switch = switch.id_switch "
 				+ "INNER JOIN interface interface on switch.id_switch = interface.id_interface_switch "
 				+ "INNER JOIN vlansw vlansw on vlansw.id_porta = interface.id_porta "
+				+ "INNER JOIN vlan vlan on vlan.numerovlan = vlansw.vlan "
 				+ "where raspberry.id_raspberry = '"+ codigo_raspberry  + "' order by id_switch;";
 		System.out.println("Imprindo sql Atual " +sql);
 		try{
@@ -290,29 +293,50 @@ public class DAORaspberry {
 			//System.out.println("Tamanho Inicial da lista: " + lista_interface_raspberry.size());
 			while(rs.next()){
 				id_switch = Integer.parseInt(rs.getString("id_switch"));
-				VlanSW objVlan = new VlanSW();
-				String vlann = "";
+				Vlan objVlan = new Vlan();
+				String numerovlan = "";
+				String faixaip = "";
+				String mascara = "";
+				String gateway = "";
+				String dns = "";
+				String dhcp = "";
+				
 				if (id_switch == id) {
-					vlann = (rs.getString("vlan"));
-					objVlan.setVlan(vlann);
-					vlan.add(objVlan);
-					System.out.println("id do swith no if : " + id_switch);
-					System.out.println("Tamanho da lista interface no if : " + lista_interface_raspberry.size());
-					System.out.println("Vlan no if: " + vlann);
-					System.out.println("Tamanho da lista de vlans no if: " + vlan.size());
-					System.out.println("Tamanho da lista de portas no if: " + comutador.getInterfaces().size());
+					numerovlan = (rs.getString("numerovlan"));
+					faixaip = (rs.getString("faixaip"));
+					mascara = (rs.getString("mascara"));
+					gateway = (rs.getString("gateway"));
+					dns = (rs.getString("dns"));
+					dhcp = (rs.getString("dhcp"));
+					objVlan.setNumerovlan(numerovlan);
+					objVlan.setFaixaIP(faixaip);
+					objVlan.setMascara(mascara);
+					objVlan.setGateway(gateway);
+					objVlan.setDns(dns);
+					objVlan.setDhcp(dhcp);
+					listavlan.add(objVlan);
 				}else{
 					interface_Raspberry = new Interface_Raspberry();
-					vlan = new ArrayList<VlanSW>();
+					listavlan = new ArrayList<Vlan>();
 					Porta interfaces = new Porta();
 					comutador = new Switch();
 					interfacess = new ArrayList<Porta>();
 					
-					vlann  =  (rs.getString("vlan"));
-					objVlan.setVlan(vlann);
-					vlan.add(objVlan);
+					numerovlan = (rs.getString("numerovlan"));
+					faixaip = (rs.getString("faixaip"));
+					mascara = (rs.getString("mascara"));
+					gateway = (rs.getString("gateway"));
+					dns = (rs.getString("dns"));
+					dhcp = (rs.getString("dhcp"));
+					objVlan.setNumerovlan(numerovlan);
+					objVlan.setFaixaIP(faixaip);
+					objVlan.setMascara(mascara);
+					objVlan.setGateway(gateway);
+					objVlan.setDns(dns);
+					objVlan.setDhcp(dhcp);
+					listavlan.add(objVlan);
 					
-					interfaces.setVlan(vlan);
+					interfaces.setListaVlan(listavlan);
 					interfacess.add(interfaces);
 					
 					comutador.setId_switch(id_switch);
@@ -321,21 +345,11 @@ public class DAORaspberry {
 					comutador.setInterfaces(interfacess);
 					
 					
-					
 					interface_Raspberry.setComutador(comutador);
 					interface_Raspberry.setInterface_raspberry(rs.getString("interface"));
 					lista_interface_raspberry.add(interface_Raspberry);
-					id = id_switch;	
-					System.out.println("id do swith no else: " + id_switch);
-					System.out.println("Tamanho da lista de interface no else : " + lista_interface_raspberry.size());
-					System.out.println("Vlan no else: " + vlann);
-					System.out.println("Tamanho da lista de vlans no else: " + vlan.size());
-					System.out.println("Tamanho da lista de portas no else: " + comutador.getInterfaces().size());
+					id = id_switch;
 				}
-				//interface_Raspberry.setComutador(comutador);
-				System.out.println("Tamanho da lista de interfaces fora do condicional: " + lista_interface_raspberry.size());
-				System.out.println("Tamanho da lista de vlans fora do condicional: " + vlan.size());
-				System.out.println("Tamanho da lista de portas fora do condicional: " + comutador.getInterfaces().size());
 				int id_raspberry = Integer.parseInt(rs.getString("id_raspberry"));
 				raspberry.setId_raspberry(id_raspberry);
 				raspberry.setPosicaoRack(rs.getString("posicao_rack"));
