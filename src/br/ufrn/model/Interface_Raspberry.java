@@ -15,15 +15,15 @@ public class Interface_Raspberry implements Serializable{
 
 	
 	private String interface_raspberry;
-	private Raspberry raspberry = new Raspberry();
-	private Switch comutador = new Switch();
-	private Municipio municipio = new Municipio();
-	private Unidade unidade = new Unidade();
-	private Predio predio = new Predio();
-	private Pavimento pavimento = new Pavimento();
-	private Andar andar = new Andar();
-	private Sala sala = new Sala();
-	private Rack rack = new Rack();
+	private Raspberry raspberry = null;
+	private Switch comutador = null;
+	private Municipio municipio = null;
+	private Unidade unidade = null;
+	private Predio predio = null;
+	private Pavimento pavimento = null;
+	private Andar andar = null;
+	private Sala sala = null;
+	private Rack rack = null;
 	
 	public String getInterface_raspberry() {
 		return interface_raspberry;
